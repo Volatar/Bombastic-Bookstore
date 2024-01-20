@@ -4,7 +4,12 @@ Each persons background in software development:
 
 
 Taylor Sanderson:
-
+Started learning programming with C++
+Discovered Python and not going back
+Taken every Python course at Wake Tech
+Some experience with databases (including a class on them)
+One big personal project (a discord bot) with some database use in it
+Previous semester led a difficult group project in the disastrous CSC-256 but got an A
 
 Daniel Stanton:
 
