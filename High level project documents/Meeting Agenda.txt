@@ -1,5 +1,18 @@
 Agenda 
-1-20-24
 
+1-20-24
 Talk about everyones background in software development
 Plan for next meeting
+
+1-23-24
+Go over notes on project plan
+Decide on web framework we will use
+Decide on visualization library
+
+1-27-24
+Fuzzy Search library					Daniel
+Visualization library choice			Matthew
+Flask vs Django							Tanner
+Book database							Stefan
+Project Plan							Taylor
+Assign stuff for this half week

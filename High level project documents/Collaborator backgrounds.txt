@@ -12,13 +12,34 @@ One big personal project (a discord bot) with some database use in it
 Previous semester led a difficult group project in the disastrous CSC-256 but got an A
 
 Daniel Stanton:
-
+Computer programming and development
+Python
+C++
+Java
+Some database experience
+Little UI stuff (HTML mostly)
+Has done projects with heavy inheritance
+Did a python store app previously
+Discord bot (my man!)
 
 Matthew Wilamowski:
-
+Data science major
+Mostly comfortable with python
+SQL
+rusty HTML
+Mostly self-taught (going back to Win 95)
+Made an inventory management system for a bookstore in a previous project
 
 Stefan Slaczka:
-
+Computer programming and development (last semester)
+Lot of self projects (web apps)
+Sever focus on programming
+Python
+Java
+AWS
 
 Tanner Plishka:
-
+Databases
+Some python
+Works at Fidelity
+UX
