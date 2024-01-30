@@ -21,7 +21,7 @@ Assign stuff for this half week
 Basic Flask app							Matthew
 1000 books web scrape					Tanner
 Assignments:
-	Home Page (not index)				Stefan?
-	Database design						Daniel?
-	Pull from openLibrary API			somebody else
-	Login page							also someone else
+	Home Page (not index)				Stefan
+	Database design						Daniel
+	Pull from openLibrary API			Tanner
+	Login page							Matthew
