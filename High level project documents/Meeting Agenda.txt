@@ -16,3 +16,12 @@ Flask vs Django							Tanner
 Book database							Stefan
 Project Plan							Taylor
 Assign stuff for this half week
+
+1-30-24
+Basic Flask app							Matthew
+1000 books web scrape					Tanner
+Assignments:
+	Home Page (not index)				Stefan?
+	Database design						Daniel?
+	Pull from openLibrary API			somebody else
+	Login page							also someone else
