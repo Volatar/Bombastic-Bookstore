@@ -42,7 +42,7 @@ h2 {
 }
 
 .search-input {
-    position: fixed;
+    position: absolute;
     width: 70%;
     margin-left: 20%;
     top: 10%;
@@ -66,10 +66,24 @@ button {
 }
 
 .book-details{
-    position: fixed;
-    top: 30%;
-    width: 80%;
+    position: absolute;
+    margin-top: -15%;
+    width: 75%;
     margin-left: 15%;
+    margin-right: 15%;
+    height: 60%;
+    background-size: cover;
+}
+
+.book-cover {
+    position: absolute;
+    height: 90%;
+}
+
+.book-info {
+    position: absolute;
+    right: 40%;
+    z-index: 1; 
 }
 
 .shopping-cart{
