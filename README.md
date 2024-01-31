@@ -40,4 +40,6 @@ Input the following command: `pip install -r requirements.txt`
 
 ![](https://i.imgur.com/j9KTgad.png)
 
+Input the following command to install Flask in the same way as the last step: `pip install flask`
+
 You are now ready to run the application.
