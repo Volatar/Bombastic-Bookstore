@@ -1,0 +1,43 @@
+<!--
+    Note when running on the app the css won't load will add in issues
+    https://github.com/Volatar/Bombastic-Bookstore/issues/1
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bombastic Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <h2>Bombastic Books</h2>
+    <div class="search-container">
+        <div class="search-by">
+            <h4>Search by</h4>
+            <button class="search-option" id="title">Title</button>
+            <br/>
+            <button class="search-option" id="author">Author</button>
+            <br/>
+            <button class="search-option" id="genre">Genre</button>
+            <br/>
+            <button class="search-option" id="price">Price</button>
+        </div>
+    </div>
+        <div class="search-input">
+            <input type="text" id="searchKeyword" placeholder="Search by Keyword"/>
+            <button id="searchButton">Search</button>
+        </div>
+        <div class="book-details">
+            <img src="/" alt="Book Cover" id="bookCover">
+            <h4 class="book-info" id="bookTitle">Title</h4>
+            <h4 class="book-info" id="bookPrice">Price</h4>
+            <h4 class="book-info" id="bookAvailability">Availability</h4>
+        </div>
+        <div class="shopping-cart">
+            Shopping cart
+        </div>
+</body>
+</html>
