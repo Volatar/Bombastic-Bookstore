@@ -1,0 +1,34 @@
+import requests
+
+def search_open_library(title):
+    base_url = "http://openlibrary.org/search.json"
+    params = {'title': title}
+    response = requests.get(base_url, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        works = data.get('docs', [])
+        if works:
+            # Needs work to include other data fields we want!!!!
+            work = works[0]
+            result = f"Title: {work.get('title', ['N/A'])}\n" \
+                     f"Author: {', '.join(work.get('author_name', ['N/A']))}\n" \
+                     f"---------------------------------------------\n"
+            return result
+        else:
+            return f"Book {title} not found on Open Library."
+    else:
+        return f"Failed: {response.status_code}"
+
+# Read in titles_only.txt file
+with open('titles_only.txt', 'r', encoding='utf-8') as file:
+    book_titles = [line.strip() for line in file]
+
+# Open a file for writing
+with open('search_open_library.txt', 'w', encoding='utf-8') as output_file:
+    # Make a call to the API for each book title and write information to the file
+    for book_title in book_titles:
+        result = search_open_library(book_title)
+        output_file.write(result)
+
+print("Search results written to search_open_library.txt")
