@@ -25,9 +25,13 @@ def login():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = 'Invalid'
         else:
-            return redirect(url_for('home'))
+            return redirect(url_for('profile'))
     return render_template('login.html', error=error)
 
+# This functions adds a placeholder profile page, accessed by logging in
+@app.route("/profile")
+def profile():
+    return render_template('profile.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
