@@ -1,43 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bombastic Books</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='home.css') }}"
+    />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
-
-</head>
-<body>
+  </head>
+  <body>
     <h2>Bombastic Books</h2>
     <div class="search-container">
-        <div class="search-by">
-            <h4>Search by</h4>
-            <button class="search-option" id="title" data-placeholder="Search by Title">Title</button>
-            <br/>
-            <button class="search-option" id="author" data-placeholder="Search by Author">Author</button>
-            <br/>
-            <button class="search-option" id="genre" data-placeholder="Search by Genre">Genre</button>
-            <br/>
-            <button class="search-option" id="price" data-placeholder="Search by Price">Price</button>
-        </div>
+      <div class="search-by">
+        <h4>Search by</h4>
+        <button
+          class="search-option"
+          id="title"
+          data-placeholder="Search by Title"
+        >
+          Title
+        </button>
+        <br />
+        <button
+          class="search-option"
+          id="author"
+          data-placeholder="Search by Author"
+        >
+          Author
+        </button>
+        <br />
+        <button
+          class="search-option"
+          id="genre"
+          data-placeholder="Search by Genre"
+        >
+          Genre
+        </button>
+        <br />
+        <button
+          class="search-option"
+          id="price"
+          data-placeholder="Search by Price"
+        >
+          Price
+        </button>
+      </div>
     </div>
-        <div class="search-input">
-            <input type="text" id="searchKeyword" placeholder="Search by Title"/>
-            <button id="searchButton">Search</button>
-        </div>
-        <div class="book-details">
-            <img class="book-cover" alt="Book Cover" id="bookCover"src="https://covers.openlibrary.org/b/isbn/9780062024046.jpg" />
-            <h4 class="book-info" id="bookTitle">Title</h4>
-            <br/>
-            <h4 class="book-info" id="bookPrice">Price</h4>
-            <br/>
-            <h4 class="book-info" id="bookAvailability">Availability</h4>
-        </div>
-        <div class="shopping-cart">
-            Shopping cart
-        </div>
-</body>
+    <div class="search-input">
+      <input type="text" id="searchKeyword" placeholder="Search by Title" />
+      <button id="searchButton">Search</button>
+    </div>
+    <div class="book-details">
+      <div class="book-card"> 
+        <!-- 
+            For making a book details page just get ride of this class="book-card" div and css Then just change some css
+        -->
+        <!--
+            This is just a basic look so when seeing if the book will show with the background
+        -->
+        <img
+          class="book-cover"
+          alt="Book Cover"
+          id="bookCover"
+          src="https://covers.openlibrary.org/b/isbn/9780062024046.jpg"
+        />
+        <h4 class="book-info" id="bookTitle">Title</h4>
+        <h4 class="book-info" id="bookPrice">Price</h4>
+        <h4 class="book-info" id="bookAvailability">Availability</h4>
+      </div>
+    </div>
+    <div class="shopping-cart">Shopping cart</div>
+  </body>
 </html>

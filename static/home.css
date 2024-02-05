@@ -66,24 +66,34 @@ button {
 }
 
 .book-details{
+    display: flex;
     position: absolute;
     margin-top: -15%;
-    width: 75%;
+    width: 30%;
     margin-left: 15%;
     margin-right: 15%;
-    height: 60%;
+    height: fit-content;
     background-size: cover;
 }
 
+.book-card {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 30%;
+    flex-direction: column;
+    align-items: center;
+}
+
 .book-cover {
-    position: absolute;
-    height: 90%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .book-info {
-    position: absolute;
-    right: 40%;
-    z-index: 1; 
+    width: 100%;
+    text-align: center;
 }
 
 .shopping-cart{
