@@ -13,7 +13,7 @@
     <title>Bombastic Books</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='home.css') }}"
+      href="{{ url_for('static', filename='display.css') }}"
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
@@ -60,26 +60,28 @@
       <input type="text" id="searchKeyword" placeholder="Search by Title" />
       <button id="searchButton">Search</button>
     </div>
-      <!-- Stefan's comment:
+    <!-- Stefan's comment:
               To make this optimal, we are going to make this part OOP. This is just a layout explanation 
               for later on to make implementing it a lot easier.
       -->
     <div class="book-details">
-      <div class="book-card"> 
+      <div class="book-card">
         <img
           class="book-cover"
           alt="Book Cover"
           id="bookCover"
           src="https://covers.openlibrary.org/b/isbn/9780062024046.jpg"
         />
+      </div>
+      <div class="book-info-layout">
         <h4 class="book-info" id="bookTitle">Title</h4>
-        <h4 class="book-info" id="bookPrice">Price</h4>
+        <h4 class="book-info" id="bookPrice">Price: 20.99</h4>
         <h4 class="book-info" id="bookAvailability">Availability</h4>
+        <button class="add-to-cart">Add to cart</button>
       </div>
     </div>
     <div class="shopping-cart">Shopping cart
-      <button class="checkout-button">checkout</button>
-
+        <button class="checkout-button">checkout</button>
     </div>
   </body>
 </html>

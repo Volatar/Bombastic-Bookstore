@@ -1,3 +1,5 @@
+/* Stefan's JS*/
+
 document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.search-option');
     var input = document.getElementById('searchKeyword');

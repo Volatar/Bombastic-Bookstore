@@ -1,3 +1,6 @@
+/* Stefan's JS*/
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Get the src attribute from the img tag
     const imgSrc = document.getElementById('bookCover').src;
