@@ -1,4 +1,6 @@
 import requests
+import random
+
 
 def search_open_library(title):
     base_url = "http://openlibrary.org/search.json"
@@ -9,11 +11,31 @@ def search_open_library(title):
         data = response.json()
         works = data.get('docs', [])
         if works:
-            # Needs work to include other data fields we want!!!!
+            # Getting the last ISBN result
+            last_isbn = works[0].get('isbn', ['N/A'])[-1]
+
+            # Getting the first result for genre, publisher, and category
+            first_genre = works[0].get('subject', ['N/A'])[0]
+            first_publisher = works[0].get('publisher', 'N/A')[0]
+            first_category = works[0].get('subject', ['N/A'])[0]
+            first_publish_date = works[0].get('publish_date', ['N/A'])[0]
+
+            # random price between 4.99 and 24.99
+            price = round(random.uniform(4.99, 24.99), 2)
+            formatted_price = "{:.2f}".format(price)
+
+            # Remaining code remains the same
             work = works[0]
             result = f"Title: {work.get('title', ['N/A'])}\n" \
                      f"Author: {', '.join(work.get('author_name', ['N/A']))}\n" \
+                     f"Categories: {first_category}\n" \
+                     f"Genres: {first_genre}\n" \
+                     f"Publisher: {first_publisher}\n" \
+                     f"Publish Date: {first_publish_date}\n" \
+                     f"ISBN: {last_isbn}\n" \
+                     f"Price: ${formatted_price}\n" \
                      f"---------------------------------------------\n"
+
             return result
         else:
             return f"Book {title} not found on Open Library."
