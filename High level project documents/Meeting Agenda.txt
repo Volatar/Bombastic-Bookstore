@@ -39,3 +39,10 @@ Assignments:
 	Create Database script						Daniel
 	Enhance API search with database fields		Tanner
 		Need to pull data such as ISBN
+		
+2-10-24
+API update				Tanner
+Database				Daniel
+Login					Matthew
+Front Page				Stefan
+Sprint Retrospective	All

@@ -34,3 +34,10 @@ Daniel Stanton			yes
 Matthew Wilamowski		yes
 Stefan Slaczka			no
 Tanner Plishka			yes
+
+2-10-24
+Taylor Sanderson		
+Daniel Stanton			
+Matthew Wilamowski		
+Stefan Slaczka			
+Tanner Plishka			

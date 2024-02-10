@@ -14,11 +14,12 @@ if response.status_code == 200:
     # Locate elements containing the list of books
     book_list_elements = soup.find_all('li')
 
-    # Scrape the text of book list. Starting at the 4th list value and Stopping after 1004 list values due to unneeded text before and after.
+    # Scrape the text of book list. Starting at the 4th list value
+    # and Stopping after 1004 list values due to unneeded text before and after.
     book_list = [element.get_text(strip=True) for element in book_list_elements[4:1004]]
 
     # Open a file for writing. 
-    ###Do we need this? This gives title, author, and year in the .txt file
+    # Do we need this? This gives title, author, and year in the .txt file
     with open('book_list.txt', 'w', encoding='utf-8') as file:
         for book in book_list:
             file.write(book + '\n')

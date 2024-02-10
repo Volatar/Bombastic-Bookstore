@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def create_database():
     try:
         # Connect to SQLite database (creates it if it doesn't exist)
@@ -20,6 +21,7 @@ def create_database():
     except sqlite3.Error as e:
         print("Error creating database:", e)
 
+
 def create_table(table_name, columns):
     try:
         # Connect to SQLite database
@@ -37,6 +39,7 @@ def create_table(table_name, columns):
     except sqlite3.Error as e:
         print("Error creating table:", e)
 
+
 def remove_table(table_name):
     try:
         # Connect to SQLite database
@@ -52,6 +55,7 @@ def remove_table(table_name):
 
     except sqlite3.Error as e:
         print("Error removing table:", e)
+
 
 def insert_data_from_file(table_name, file_name):
     try:
@@ -72,6 +76,7 @@ def insert_data_from_file(table_name, file_name):
     except sqlite3.Error as e:
         print("Error inserting data:", e)
 
+
 def display_table_contents(table_name):
     try:
         # Connect to SQLite database
@@ -89,6 +94,7 @@ def display_table_contents(table_name):
 
     except sqlite3.Error as e:
         print("Error displaying table contents:", e)
+
 
 if __name__ == "__main__":
     create_database()

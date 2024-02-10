@@ -42,6 +42,7 @@ def search_open_library(title):
     else:
         return f"Failed: {response.status_code}"
 
+
 # Read in titles_only.txt file
 with open('titles_only.txt', 'r', encoding='utf-8') as file:
     book_titles = [line.strip() for line in file]
