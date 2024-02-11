@@ -46,3 +46,8 @@ Database				Daniel
 Login					Matthew
 Front Page				Stefan
 Sprint Retrospective	All
+
+Assignments:
+	Database script continued 		Daniel
+	Continuing login stuff			Matthew
+
