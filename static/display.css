@@ -65,29 +65,44 @@ button {
     cursor: pointer;
 }
 
-.book-details{
-    display: grid;
-    /* Adjust this for the number of books :D */
-    grid-template-columns: repeat(auto-fill, minmax(10%, 1fr));
-    gap: 1%;
+.book-details {
+    display: flex;
+    gap: 5%;
     width: 80%;
     margin: -15% 15% 0 15%;
 }
 
 .book-card {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    height: fit-content;
 }
 
 .book-cover {
-    width: 100%;
+    flex: 1;
+    width: 40%;
     object-fit: cover;
 }
 
+.book-info-layout{
+    width: 40%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .book-info {
-    width: 100%;
-    text-align: center;
+    font-size: 1.5rem;
+    flex: 1;
+    padding: 3%;
+}
+
+.add-to-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
 }
 
 .shopping-cart{
