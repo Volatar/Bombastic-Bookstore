@@ -1,6 +1,5 @@
 import sqlite3
 
-
 def create_database():
     try:
         # Connect to SQLite database (creates it if it doesn't exist)
@@ -21,7 +20,6 @@ def create_database():
     except sqlite3.Error as e:
         print("Error creating database:", e)
 
-
 def create_table(table_name, columns):
     try:
         # Connect to SQLite database
@@ -39,7 +37,6 @@ def create_table(table_name, columns):
     except sqlite3.Error as e:
         print("Error creating table:", e)
 
-
 def remove_table(table_name):
     try:
         # Connect to SQLite database
@@ -56,26 +53,48 @@ def remove_table(table_name):
     except sqlite3.Error as e:
         print("Error removing table:", e)
 
+def read_book_info(file_path):
+    book_info = {}
+    with open(file_path, 'r') as file:
+        for line in file:
+            key, value = line.strip().split(': ', 1)
+            book_info[key] = value
+    return book_info
 
-def insert_data_from_file(table_name, file_name):
-    try:
-        # Connect to SQLite database
-        conn = sqlite3.connect('example.db')
-        cursor = conn.cursor()
+def create_table_if_not_exists(cursor):
+    cursor.execute('''CREATE TABLE IF NOT EXISTS books (
+                        title TEXT,
+                        author TEXT,
+                        genres TEXT,
+                        publisher TEXT,
+                        publish_date TEXT,
+                        isbn TEXT,
+                        price TEXT
+                    )''')
 
-        # Read data from file and insert into the table
-        with open(file_name, 'r') as file:
-            for line in file:
-                data = line.strip().split(',')
-                cursor.execute(f"INSERT INTO {table_name} VALUES (?, ?, ?)", data)
+def insert_book_info(cursor, book_info):
+    cursor.execute('''INSERT INTO books VALUES (
+                        :title, :author, :genres,
+                        :publisher, :publish_date, :isbn, :price
+                    )''', book_info)
 
-        # Commit changes
-        conn.commit()
-        print("Data inserted successfully!")
+file_path = 'search_open_library.txt'  # Replace 'book_info.txt' with the path to your text file
 
-    except sqlite3.Error as e:
-        print("Error inserting data:", e)
+# Read book info from the text file
+book_info = read_book_info(file_path)
 
+# Connect to SQLite database
+conn = sqlite3.connect('books.db')  # Connect to or create if not exists the database
+cursor = conn.cursor()
+
+# Create table if not exists
+create_table_if_not_exists(cursor)
+
+# Insert book info into the database
+insert_book_info(cursor, book_info)
+
+# Commit changes
+conn.commit()
 
 def display_table_contents(table_name):
     try:
@@ -95,9 +114,7 @@ def display_table_contents(table_name):
     except sqlite3.Error as e:
         print("Error displaying table contents:", e)
 
-
 if __name__ == "__main__":
     create_database()
     create_table("books", "id INTEGER PRIMARY KEY, title TEXT, author TEXT")
-    insert_data_from_file("books", "books_data.txt")
     display_table_contents("books")
