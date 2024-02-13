@@ -51,3 +51,14 @@ Assignments:
 	Database script continued 		Daniel
 	Continuing login stuff			Matthew
 
+2-13-24
+Database script continued 		Daniel
+Continuing login stuff			Matthew
+What's Tanner been doing?		Tanner
+What's Stefan been doing?		Stefan
+
+Assignments:
+	Database script					Tanner
+	Login continued (SQL Alchemy)	Matthew
+	Login CSS						Stefan
+	Sort out SQLite problem			Daniel
