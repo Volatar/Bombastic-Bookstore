@@ -8800,7 +8800,7 @@ def extract_info(text):
 books_info = extract_info(text)
 
 # Create SQLite database and table
-conn = sqlite3.connect('books_test.db')
+conn = sqlite3.connect('books.db')
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS books
              (Title TEXT, Author TEXT, Genre TEXT, Publisher TEXT, Publish_Date TEXT, ISBN TEXT, Price TEXT)''')
