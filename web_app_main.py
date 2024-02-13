@@ -2,9 +2,12 @@
 # Flask Website v1
 
 from flask import Flask, render_template, redirect, url_for, request
+from forms import LoginForm
 
 app = Flask(__name__)
 
+# this creates the secret key for the app
+app.config['SECRET_KEY'] = 'capstone'
 
 # Separate function for home page content
 def get_home_content():
@@ -20,17 +23,26 @@ def home():
     # Change the file to see the changes in the file on the server
     return render_template("home.html", content=content)
 
-
-# This function adds a preliminary login ("http://127.0.0.1:5000/login")
-@app.route("/login", methods=['GET', 'POST'])
+@app.route('/login')
 def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid'
-        else:
-            return redirect(url_for('profile'))
-    return render_template('login.html', error=error)
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me))
+        return redirect('/static/index.html')
+    return render_template('login.html', title='Sign In', form=form)
+
+
+# This is the old function adds a preliminary login ("http://127.0.0.1:5000/login")
+#@app.route("/login", methods=['GET', 'POST'])
+#def login():
+    #error = None
+    #if request.method == 'POST':
+        #if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            #error = 'Invalid'
+        #else:
+            #return redirect(url_for('profile'))
+    #return render_template('login.html', error=error)
 
 
 # This functions adds a placeholder profile page, accessed by logging in

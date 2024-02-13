@@ -1,8 +1,31 @@
 <!--
-This is simple login form I found from a quick Google search.
+This version 2 login form I found from a quick Google search.
  We can change or remove as needed
 -->
 
+<html>
+  <h1>Sign In</h1>
+  <body>
+    <a href='/'>Home</a>
+  <hr>
+
+  </body>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</html>
+
+<!-- Version 1 below
 <html>
   <head>
     <title>login page</title>
@@ -26,3 +49,4 @@ This is simple login form I found from a quick Google search.
     </div>
   </body>
 </html>
+-->
