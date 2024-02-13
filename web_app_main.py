@@ -9,6 +9,7 @@ app = Flask(__name__)
 # this creates the secret key for the app
 app.config['SECRET_KEY'] = 'capstone'
 
+
 # Separate function for home page content
 def get_home_content():
     return "Hello World! This is the starter version of our website <h1>HELLO<h1>"
@@ -23,6 +24,7 @@ def home():
     # Change the file to see the changes in the file on the server
     return render_template("home.html", content=content)
 
+
 @app.route('/login')
 def login():
     form = LoginForm()
@@ -34,15 +36,15 @@ def login():
 
 
 # This is the old function adds a preliminary login ("http://127.0.0.1:5000/login")
-#@app.route("/login", methods=['GET', 'POST'])
-#def login():
-    #error = None
-    #if request.method == 'POST':
-        #if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            #error = 'Invalid'
-        #else:
-            #return redirect(url_for('profile'))
-    #return render_template('login.html', error=error)
+# @app.route("/login", methods=['GET', 'POST'])
+# def login():
+    # error = None
+    # if request.method == 'POST':
+        # if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            # error = 'Invalid'
+        # else:
+            # return redirect(url_for('profile'))
+    # return render_template('login.html', error=error)
 
 
 # This functions adds a placeholder profile page, accessed by logging in
