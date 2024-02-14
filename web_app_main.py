@@ -1,8 +1,9 @@
 # Bombastic Bookstore
 # Flask Website v1
 
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, flash, url_for, request
 from forms import LoginForm
+# from config import Config (working on a separate config file for secret key & SQLAlchemy DB stuff)
 
 app = Flask(__name__)
 
@@ -23,26 +24,31 @@ def home():
     # Change the file to see the changes in the file on the server
     return render_template("home.html", content=content)
 
-@app.route('/login')
+# This is the v2 Login function.
+# Currently entering anything in the user and password fields logs in a user.
+# Leaving either/both fields blank gives an error message.
+# Returning to the login page after having logged in shows the flash message.
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
+        flash('Logged In! {}, remember_me={}'.format(
             form.username.data, form.remember_me))
-        return redirect('/static/index.html')
+        return redirect(url_for('profile'))
     return render_template('login.html', title='Sign In', form=form)
 
 
+# I'm hanging on to this for now because I'm pondering making it into a temporary backdoor, like entering admin
 # This is the old function adds a preliminary login ("http://127.0.0.1:5000/login")
-#@app.route("/login", methods=['GET', 'POST'])
-#def login():
-    #error = None
-    #if request.method == 'POST':
-        #if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            #error = 'Invalid'
-        #else:
-            #return redirect(url_for('profile'))
-    #return render_template('login.html', error=error)
+# @app.route("/login", methods=['GET', 'POST'])
+# def login():
+    # error = None
+    # if request.method == 'POST':
+        # if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            # error = 'Invalid'
+        # else:
+            # return redirect(url_for('profile'))
+    # return render_template('login.html', error=error)
 
 
 # This functions adds a placeholder profile page, accessed by logging in
