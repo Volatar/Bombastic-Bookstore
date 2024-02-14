@@ -18,7 +18,7 @@ def home():
     # Render the home page content using the separate function
     content = get_home_content()
     # Change the file to see the changes in the file on the server
-    return render_template("home.html", content=content)
+    return render_template("display.html", content=content)
 
 
 # This function adds a preliminary login ("http://127.0.0.1:5000/login")
