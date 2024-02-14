@@ -38,7 +38,6 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-# I'm hanging on to this for now because I'm pondering making it into a temporary backdoor, like entering admin
 # This is the old function adds a preliminary login ("http://127.0.0.1:5000/login")
 # @app.route("/login", methods=['GET', 'POST'])
 # def login():
