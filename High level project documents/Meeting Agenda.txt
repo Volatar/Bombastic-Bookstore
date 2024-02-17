@@ -62,3 +62,11 @@ Assignments:
 	Login continued (SQL Alchemy)	Matthew
 	Login CSS						Stefan
 	Sort out SQLite problem			Daniel
+	
+2-13-24
+SQLite problem					Daniel
+Database script finished		Daniel
+Continuing login stuff			Matthew
+Login CSS						Stefan
+Search Bar and page				Daniel
+Book info page					Tanner
