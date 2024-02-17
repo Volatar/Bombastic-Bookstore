@@ -6,35 +6,36 @@ Matt Wilamowski
 
 <!DOCTYPE html>
 <html lang="en">
-
-{% extends "base.html" %}
-
-{% block content %}
-
-  <h1>Sign In</h1>
-  <body>
-    <a href="{{ url_for('home') }}">Home</a>
-  <hr>
-
-  </body>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sign In</h1>
+        <a href="{{ url_for('home') }}">Home</a>
+        <hr>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <label for="username">Username</label>
+            {{ form.username(size=32) }}
+            <div class="error">
+                {% for error in form.username.errors %}
+                    [{{ error }}]
+                {% endfor %}
+            </div>
+            <label for="password">Password</label>
+            {{ form.password(size=32) }}
+            <div class="error">
+                {% for error in form.password.errors %}
+                    [{{ error }}]
+                {% endfor %}
+            </div>
+            <label>{{ form.remember_me() }} Remember Me</label>
+            <button type="submit">{{ form.submit() }}</button>
+        </form>
+    </div>
+</body>
 </html>
