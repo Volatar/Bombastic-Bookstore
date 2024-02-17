@@ -2,6 +2,7 @@
 # Flask Website v1
 
 from flask import Flask, render_template, redirect, url_for, request
+import sqlite3
 
 app = Flask(__name__)
 
@@ -15,10 +16,19 @@ def get_home_content():
 # This starter version runs locally, and the web browser URL is "http://127.0.0.1:5000/"
 @app.route("/")
 def home():
-    # Render the home page content using the separate function
-    content = get_home_content()
-    # Change the file to see the changes in the file on the server
-    return render_template("home.html", content=content)
+    # Connect to database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # limiting query to just 25 for home page
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT 25")
+    books_data = cursor.fetchall()
+
+    # Close the database connection
+    conn.close()
+
+    # Pass the fetched data to the template for rendering
+    return render_template("home.html", books_data=books_data)
 
 
 # This function adds a preliminary login ("http://127.0.0.1:5000/login")
