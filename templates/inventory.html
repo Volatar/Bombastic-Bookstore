@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+</head>
+<body>
+    <h2>Bombastic Books Inventory</h2>
+    <!--
+        My thought on the UI is to have a little navbar that has buttons
+        Buttons like sells, inventory, and other data
+        Then when the button is pressed it will show the data while changing the h3
+        This should only be used by admins
+    -->
+    <nav>
+        <!--
+            Can't use button but with the power of CSS we can make it look like a button
+        -->
+        <a href="{{ url_for('show_inventory', data_type='sells') }}">Sells</a>
+        <a href="{{ url_for('show_inventory', data_type='inventory') }}">Inventory</a>
+        <a href="{{ url_for('show_inventory', data_type='other') }}">Other Data</a>
+    </nav>
+
+    <div id="data-container">
+        {% if data_type %}
+            <h3>{{ data_type.capitalize() }} Data</h3>
+            <p>{{ data }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

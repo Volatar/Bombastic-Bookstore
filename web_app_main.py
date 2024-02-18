@@ -38,6 +38,25 @@ def login():
 def profile():
     return render_template('profile.html')
 
+# This functions adds a placeholder display page, accessed by logging in
+@app.route("/display")
+def display():
+    return render_template('display.html')
+
+# This functions adds a placeholder display page, accessed by logging in
+@app.route("/inventory")
+def inventory():
+    return render_template('inventory.html')
+
+@app.route('/inventory/<data_type>')
+def show_inventory(data_type):
+    data = {
+        'sells': 'This is the sells data.',
+        'inventory': 'This is the inventory data.',
+        'other': 'This is some other data.'
+    }
+    return render_template('inventory.html', data_type=data_type, data=data.get(data_type, ''))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
