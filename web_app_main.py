@@ -3,12 +3,18 @@
 
 from flask import Flask, render_template, redirect, flash, url_for, request
 from forms import LoginForm
-# from config import Config (working on a separate config file for secret key & SQLAlchemy DB stuff)
+from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+# from models import User
 
 app = Flask(__name__)
+app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+# db.create_all()
 
-# this creates the secret key for the app
-app.config['SECRET_KEY'] = 'capstone'
+# FLASK_APP = 'web_app_main.py'
 
 # Separate function for home page content
 def get_home_content():
@@ -23,6 +29,7 @@ def home():
     content = get_home_content()
     # Change the file to see the changes in the file on the server
     return render_template("home.html", content=content)
+
 
 # This is the v2 Login function.
 # Currently entering anything in the user and password fields logs in a user.
@@ -41,13 +48,13 @@ def login():
 # This is the old function adds a preliminary login ("http://127.0.0.1:5000/login")
 # @app.route("/login", methods=['GET', 'POST'])
 # def login():
-    # error = None
-    # if request.method == 'POST':
-        # if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            # error = 'Invalid'
-        # else:
-            # return redirect(url_for('profile'))
-    # return render_template('login.html', error=error)
+# error = None
+# if request.method == 'POST':
+# if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+# error = 'Invalid'
+# else:
+# return redirect(url_for('profile'))
+# return render_template('login.html', error=error)
 
 
 # This functions adds a placeholder profile page, accessed by logging in
