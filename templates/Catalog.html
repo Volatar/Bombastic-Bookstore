@@ -29,13 +29,38 @@
         -->
         <a href="{{ url_for('show_inventory', data_type='sells') }}">Sells</a>
         <a href="{{ url_for('show_inventory', data_type='inventory') }}">Inventory</a>
-        <a href="{{ url_for('show_inventory', data_type='other') }}">Other Data</a>
+        <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
+        <a href="{{ url_for('show_inventory', data_type='storge') }}">storge</a>
     </nav>
 
     <div id="data-container">
         {% if data_type %}
-            <h3>{{ data_type.capitalize() }} Data</h3>
+            <h3>{{ data_type.capitalize() }}</h3>
             <p>{{ data }}</p>
+            {% if data_type == 'order' %}
+                <div>
+                    <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
+                    <button id="searchButton" book_title="">Search</button>
+                    <button>+</button>
+                    <button>-</button>
+                    {# This is a Jinja2 comment block
+                    <!-- When the Search bar is done we can implement this
+                        if ISBN != ''
+                            <div class="info">
+                                <p><strong>Title:</strong> {{ data.get('title', '') }}</p>
+                                <p><strong>Author:</strong> {{ data.get('author', '') }}</p>
+                                <p><strong>Categories:</strong> {{ data.get('categories', '') }}</p>
+                                <p><strong>Genres:</strong> {{ data.get('genres', '') }}</p>
+                                <p><strong>Publisher:</strong> {{ data.get('publisher', '') }}</p>
+                                <p><strong>Publish Date:</strong> {{ data.get('publish_date', '') }}</p>
+                                <p><strong>ISBN:</strong> {{ data.get('isbn', '') }}</p>
+                                <p><strong>Price:</strong> {{ data.get('price', '') }}</p>
+                            </div>
+                        endif
+                    -->
+                    #}
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 </body>

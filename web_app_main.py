@@ -46,14 +46,15 @@ def display():
 # This functions adds a placeholder display page, accessed by logging in
 @app.route("/Catalog")
 def inventory():
-    return render_template('Catalog.html', data_type='inventory')
+    return render_template('Catalog.html', data_type='Catalog Page')
 
 @app.route('/Catalog/<data_type>')
 def show_inventory(data_type):
     data = {
         'sells': 'This is the sells data.',
         'inventory': 'This is the inventory data.',
-        'other': 'This is some other data.'
+        'order': 'This is the Order page.',
+        'storge': 'This is some storge data.'
     }
     return render_template('Catalog.html', data_type=data_type, data=data.get(data_type, ''))
 
