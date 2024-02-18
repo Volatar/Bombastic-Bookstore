@@ -2,6 +2,8 @@
 # Flask Website v1
 
 from flask import Flask, render_template, redirect, url_for, request
+from bar_chart import generate_bar_chart
+
 
 app = Flask(__name__)
 
@@ -52,10 +54,12 @@ def inventory():
 def show_inventory(data_type):
     data = {
         'sells': 'This is the sells data.',
-        'inventory': 'This is the inventory data.',
         'order': 'This is the Order page.',
-        'storge': 'This is some storge data.'
+        'inventory': 'This is the inventory data.'
     }
+    if data_type == 'inventory':
+        return render_template('Catalog.html', data_type=data_type, image_url=generate_bar_chart())
+
     return render_template('Catalog.html', data_type=data_type, data=data.get(data_type, ''))
 
 

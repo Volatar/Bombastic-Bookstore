@@ -6,16 +6,16 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inventory</title>
     <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='Catalog.css') }}"
-  />
-</head>
-<body>
+      rel="stylesheet"
+      href="{{ url_for('static', filename='Catalog.css') }}"
+    />
+  </head>
+  <body>
     <h2>Bombastic Books Inventory</h2>
     <!--
         My thought on the UI is to have a little navbar that has buttons
@@ -24,27 +24,26 @@
         This should only be used by admins
     -->
     <nav>
-        <!--
+      <!--
             Can't use button but with the power of CSS we can make it look like a button
         -->
-        <a href="{{ url_for('show_inventory', data_type='sells') }}">Sells</a>
-        <a href="{{ url_for('show_inventory', data_type='inventory') }}">Inventory</a>
-        <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
-        <a href="{{ url_for('show_inventory', data_type='storge') }}">storge</a>
+      <a href="{{ url_for('show_inventory', data_type='sells') }}">Sells</a>
+      <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
+      <a href="{{ url_for('show_inventory', data_type='inventory') }}">inventory</a>
     </nav>
 
     <div id="data-container">
-        {% if data_type %}
-            <h3>{{ data_type.capitalize() }}</h3>
-            <p>{{ data }}</p>
-            {% if data_type == 'order' %}
-                <div>
-                    <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
-                    <button id="searchButton" book_title="">Search</button>
-                    <button>+</button>
-                    <button>-</button>
-                    {# This is a Jinja2 comment block
-                    <!-- When the Search bar is done we can implement this
+      {% if data_type %}
+      <h3>{{ data_type.capitalize() }}</h3>
+      <p>{{ data }}</p>
+      {% if data_type == 'order' %}
+      <div>
+        <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
+        <button id="searchButton" book_title="">Search</button>
+        <button>+</button>
+        <button>-</button>
+        {# This is a Jinja2 comment block
+        <!-- When the Search bar is done we can implement this
                         if ISBN != ''
                             <div class="info">
                                 <p><strong>Title:</strong> {{ data.get('title', '') }}</p>
@@ -58,10 +57,11 @@
                             </div>
                         endif
                     -->
-                    #}
-                </div>
-            {% endif %}
-        {% endif %}
+        #}
+      </div>
+      {% endif %} {% if data_type == 'inventory' %}
+      <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" />
+      {% endif %} {% endif %}
     </div>
-</body>
+  </body>
 </html>
