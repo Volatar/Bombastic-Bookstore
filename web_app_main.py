@@ -2,7 +2,7 @@
 # Flask Website v1
 
 from flask import Flask, render_template, redirect, url_for, request
-from bar_chart import generate_bar_chart
+from Inventory_chart import generate_bar_chart
 
 
 app = Flask(__name__)
