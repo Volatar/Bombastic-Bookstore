@@ -50,6 +50,9 @@ def display():
 def inventory():
     return render_template('Catalog.html', data_type='Catalog Page')
 
+# Dictionary to cache generated bar chart images
+chart_cache = {}
+
 @app.route('/Catalog/<data_type>')
 def show_inventory(data_type):
     data = {
@@ -58,10 +61,15 @@ def show_inventory(data_type):
         'inventory': 'This is the inventory data.'
     }
     if data_type == 'inventory':
-        return render_template('Catalog.html', data_type=data_type, image_url=generate_bar_chart())
+        # Check if the chart is cached
+        if 'inventory' in chart_cache:
+            image_url = chart_cache['inventory']
+        else:
+            image_url = generate_bar_chart()
+            chart_cache['inventory'] = image_url
+        return render_template('Catalog.html', data_type=data_type, image_url=image_url)
 
     return render_template('Catalog.html', data_type=data_type, data=data.get(data_type, ''))
-
 
 if __name__ == "__main__":
     app.run(debug=True)
