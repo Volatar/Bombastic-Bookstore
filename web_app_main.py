@@ -1,6 +1,7 @@
 # Bombastic Bookstore
 # Flask Website v1
 
+from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, redirect, flash, url_for, request
 from forms import LoginForm
 from config import Config
@@ -49,6 +50,36 @@ def login():
 def profile():
     return render_template('profile.html')
 
+# This functions adds a placeholder display page, accessed by logging in
+@app.route("/display")
+def display():
+    return render_template('display.html')
+
+# This functions adds a placeholder display page, accessed by logging in
+@app.route("/Catalog")
+def inventory():
+    return render_template('Catalog.html', data_type='Catalog Page')
+
+# Dictionary to cache generated bar chart images
+chart_cache = {}
+
+@app.route('/Catalog/<data_type>')
+def show_inventory(data_type):
+    data = {
+        'sells': 'This is the sells data.',
+        'order': 'This is the Order page.',
+        'inventory': 'This is the inventory data.'
+    }
+    if data_type == 'inventory':
+        # Check if the chart is cached
+        if 'inventory' in chart_cache:
+            image_url = chart_cache['inventory']
+        else:
+            image_url = generate_bar_chart()
+            chart_cache['inventory'] = image_url
+        return render_template('Catalog.html', data_type=data_type, image_url=image_url)
+
+    return render_template('Catalog.html', data_type=data_type, data=data.get(data_type, ''))
 
 if __name__ == "__main__":
     app.run(debug=True)
