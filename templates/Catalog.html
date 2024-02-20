@@ -12,7 +12,7 @@
     <title>Inventory</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='Catalog.css') }}"
+      href="{{ url_for('static', filename='catalog.css') }}"
     />
   </head>
   <body>
@@ -27,7 +27,7 @@
       <!--
             Can't use button but with the power of CSS we can make it look like a button
         -->
-      <a href="{{ url_for('show_inventory', data_type='sells') }}">Sells</a>
+      <a href="{{ url_for('show_inventory', data_type='sales') }}">Sales</a>
       <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
       <a href="{{ url_for('show_inventory', data_type='inventory') }}">inventory</a>
     </nav>
