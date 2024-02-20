@@ -1,6 +1,8 @@
 # Bombastic Bookstore
 # Flask Website v1
 
+
+import sqlite3
 from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, redirect, flash, url_for, request
 from forms import LoginForm
@@ -8,6 +10,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 # from models import User
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -25,10 +28,19 @@ def get_home_content():
 # This starter version runs locally, and the web browser URL is "http://127.0.0.1:5000/"
 @app.route("/")
 def home():
-    # Render the home page content using the separate function
-    content = get_home_content()
-    # Change the file to see the changes in the file on the server
-    return render_template("home.html", content=content)
+    # Connect to database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # limiting query to just 25 for home page
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT 9")
+    books_data = cursor.fetchall()
+
+    # Close the database connection
+    conn.close()
+
+    # Pass the fetched data to the template for rendering
+    return render_template("home.html", books_data=books_data)
 
 
 # This is the v2 Login function.
@@ -49,6 +61,23 @@ def login():
 @app.route("/profile")
 def profile():
     return render_template('profile.html')
+
+
+@app.route("/display/<int:page>")
+def display(page):
+    # only 25 per page
+    page_size = 27
+    offset = (page - 1) * page_size
+
+    # Connect to database and execute query
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT ? OFFSET ?", (page_size, offset))
+    books_data = cursor.fetchall()
+    conn.close()
+
+    return render_template("display.html", books_data=books_data, current_page=page)
+
 
 # This functions adds a placeholder display page, accessed by logging in
 @app.route("/display")
@@ -80,6 +109,7 @@ def show_inventory(data_type):
         return render_template('Catalog.html', data_type=data_type, image_url=image_url)
 
     return render_template('Catalog.html', data_type=data_type, data=data.get(data_type, ''))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
