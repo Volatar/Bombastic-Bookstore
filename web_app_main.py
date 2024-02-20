@@ -19,6 +19,10 @@ migrate = Migrate(app, db)
 
 FLASK_APP = 'web_app_main.py'
 
+# Dictionary to cache generated bar chart images
+chart_cache = {}
+
+
 # Separate function for home page content
 def get_home_content():
     return "Hello World! This is the starter version of our website <h1>HELLO<h1>"
@@ -44,7 +48,7 @@ def home():
 
 
 # This is the v2 Login function.
-# Currently entering anything in the user and password fields logs in a user.
+# Currently, entering anything in the user and password fields logs in a user.
 # Leaving either/both fields blank gives an error message.
 # Returning to the login page after having logged in shows the flash message.
 @app.route('/login', methods=['GET', 'POST'])
@@ -84,13 +88,12 @@ def display(page):
 def display():
     return render_template('display.html')
 
+
 # This functions adds a placeholder display page, accessed by logging in
 @app.route("/Catalog")
 def inventory():
     return render_template('Catalog.html', data_type='Catalog Page')
 
-# Dictionary to cache generated bar chart images
-chart_cache = {}
 
 @app.route('/Catalog/<data_type>')
 def show_inventory(data_type):
