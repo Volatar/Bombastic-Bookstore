@@ -7,17 +7,17 @@ def generate_bar_chart():
     limit = 40
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute(f"SELECT Quantity, ISBN FROM books LIMIT {limit}")  # Limiting to the specified number of books
+    c.execute(f"SELECT Quantity, Title FROM books LIMIT {limit}")  # Limiting to the specified number of books
     data = c.fetchall()
     quantities = [int(record[0]) for record in data]  # Ensure quantities are integers
-    isbns = [record[1] for record in data]
+    titles = [record[1] for record in data]
     conn.close()
 
-    plt.figure(figsize=(18, 15))  # Set the figure size to width by height
-    bars = plt.barh(isbns, [q if q >= 5 else (q * 0.96) for q in quantities], color='gray')
+    plt.figure(figsize=(13, 10))  # Set the figure size to width by height
+    bars = plt.barh(titles, [q if q >= 5 else (q * 0.96) for q in quantities], color='gray')
     plt.xlabel('Quantity')
-    plt.ylabel('ISBN')
-    plt.title('Quantity of First 10 Books by ISBN')
+    plt.ylabel('Title')
+    plt.title('Quantity of First 10 Books by Title')
     plt.grid(True)
     plt.xticks(range(0, 31, 5), [0, 5, 10, 15, 20, 25, 30])  # Set x-axis to go up to 30 with increments of 5
 
