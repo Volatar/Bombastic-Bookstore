@@ -21,7 +21,7 @@ def home():
     cursor = conn.cursor()
 
     # limiting query to just 25 for home page
-    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT 25")
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT 9")
     books_data = cursor.fetchall()
 
     # Close the database connection
@@ -47,6 +47,21 @@ def login():
 @app.route("/profile")
 def profile():
     return render_template('profile.html')
+
+@app.route("/display/<int:page>")
+def display(page):
+    # only 25 per page
+    page_size = 27
+    offset = (page - 1) * page_size
+
+    # Connect to database and execute query
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT ? OFFSET ?", (page_size, offset))
+    books_data = cursor.fetchall()
+    conn.close()
+
+    return render_template("display.html", books_data=books_data, current_page=page)
 
 
 if __name__ == "__main__":
