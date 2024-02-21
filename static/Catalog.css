@@ -30,6 +30,22 @@ nav a:hover {
     background-color: #0056b3;
 }
 
+
+.pagination {
+    display: flex; /* This will lay out the child elements (e.g., page numbers) in a row */
+    justify-content: center;
+}
+
+.pagination a {
+    display: inline-block; /* Display links horizontally */
+    border: 1px solid #ccc; /* Add border for visual separation */
+}
+
+.pagination a:hover {
+    background-color: #3801fe; /* Change background color on hover */
+}
+
+
 #data-container {
     align-items: center;
     justify-content: center;

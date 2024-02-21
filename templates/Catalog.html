@@ -29,19 +29,27 @@
         -->
       <a href="{{ url_for('show_inventory', data_type='sales') }}">Sales</a>
       <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
-      <a href="{{ url_for('show_inventory', data_type='inventory') }}">inventory</a>
+      <a href="{{ url_for('show_inventory', data_type='inventory') }}"
+        >inventory</a
+      >
     </nav>
 
+    <!-- Pagination links -->
+    {% if pagination %}
+      <div class="pagination">
+        {{ pagination.links }}
+      </div>
+    {% endif %}
     <div id="data-container">
       {% if data_type %}
-      <h3>{{ data_type.capitalize() }}</h3>
-      <p>{{ data }}</p>
-      {% if data_type == 'order' %}
-      <div>
-        <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
-        <button id="searchButton" book_title="">Search</button>
-        <button>+</button>
-        <button>-</button>
+          <h3>{{ data_type.capitalize() }}</h3>
+          <p>{{ data }}</p>
+          {% if data_type == 'order' %}
+          <div>
+              <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
+              <button id="searchButton" book_title="">Search</button>
+              <button>+</button>
+              <button>-</button>
         {# This is a Jinja2 comment block
         <!-- When the Search bar is done we can implement this
                         if ISBN != ''
@@ -59,9 +67,19 @@
                     -->
         #}
       </div>
-      {% endif %} {% if data_type == 'inventory' %}
+      {% endif %}
+      {% if data_type == 'inventory' %}
+      <!-- Display inventory data here -->
+      {% for item in inventory_data %}
+      <p>{{ item }}</p>
+      {% endfor %}
+      <!-- Display image URL -->
       <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
-      {% endif %} {% endif %}
-    </div>
-  </body>
+      {% endif %}
+  {% else %}
+      <!-- Display other data types here -->
+      <p>{{ data_type.capitalize() }}: {{ data }}</p>
+  {% endif %}
+</div>
+</body>
 </html>
