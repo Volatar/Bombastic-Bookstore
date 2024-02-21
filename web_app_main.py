@@ -84,12 +84,6 @@ def display(page):
 
 
 # This functions adds a placeholder display page, accessed by logging in
-@app.route("/display")
-def display():
-    return render_template('display.html')
-
-
-# This functions adds a placeholder display page, accessed by logging in
 @app.route("/catalog")
 def inventory():
     return render_template('catalog.html', data_type='catalog Page')
