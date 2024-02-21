@@ -88,9 +88,6 @@
       {% endif %}
       {% if data_type == 'inventory' %}
       <!-- Display inventory data here -->
-      {% for item in inventory_data %}
-      <p>{{ item }}</p>
-      {% endfor %}
       <!-- Display image URL -->
       <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
       {% endif %}

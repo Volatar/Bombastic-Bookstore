@@ -1,6 +1,5 @@
 import matplotlib
 matplotlib.use('Agg')  # Set the backend to Agg (non-interactive) mode
-
 import sqlite3
 import matplotlib.pyplot as plt
 import base64
