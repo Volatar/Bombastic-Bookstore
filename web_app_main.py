@@ -107,6 +107,10 @@ def get_all_inventory_data():
     conn.close()
     return total_inventory_items
 
+# Dictionary to cache generated bar chart images
+chart_cache = {}
+
+
 @app.route('/catalog/<data_type>')
 def show_inventory(data_type):
     data = {
@@ -116,16 +120,21 @@ def show_inventory(data_type):
     }
 
     if data_type == 'inventory':
-        # Check if the chart is cached
-        if 'inventory' in chart_cache:
-            image_url = chart_cache['inventory']
-        else:
-            image_url = generate_bar_chart()
-            chart_cache['inventory'] = image_url
-        
         # Pagination logic
         page, per_page, offset = get_page_args()
         total = get_all_inventory_data()  # Assuming you have a function to get total inventory count
+        
+        # Generate a unique cache key per page
+        cache_key = f'inventory_{page}'
+        
+        # Check if the chart is cached for this page
+        if cache_key in chart_cache:
+            image_url = chart_cache[cache_key]
+        else:
+            # Generate bar chart for the current page
+            image_url = generate_bar_chart(page=page, items_per_page=per_page)
+            chart_cache[cache_key] = image_url
+        
         pagination = Pagination(page=page, total=total, per_page=per_page, css_framework='bootstrap4', prev_label='', next_label='')
 
         # Fetch data for the current page
