@@ -126,7 +126,7 @@ def show_inventory(data_type):
         # Pagination logic
         page, per_page, offset = get_page_args()
         total = get_all_inventory_data()  # Assuming you have a function to get total inventory count
-        pagination = Pagination(page=page, total=total, per_page=per_page, css_framework='bootstrap4')
+        pagination = Pagination(page=page, total=total, per_page=per_page, css_framework='bootstrap4', prev_label='', next_label='')
 
         # Fetch data for the current page
         current_inventory_data = get_inventory_data(offset=offset, per_page=per_page)
