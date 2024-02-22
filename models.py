@@ -1,7 +1,15 @@
 from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
-from web_app_main import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from web_app_main import db, login
+from flask_login import UserMixin
+
+
+# This loads the user ID from the User db on log in
+@login.user_loader
+def load_user(user_id):
+    return db.session.query(User).get(int(user_id))
 
 
 # Function attempts to establish fields as class variables
@@ -13,13 +21,20 @@ from web_app_main import db
 # (again without brackets)
 # the script generation & upgrade must also be done when changes are made to the User db
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True,
                                                 unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(128), index=True,
                                              unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+
+    # These use the Werkzeug core dependency for password hashing/checking
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
