@@ -1,7 +1,6 @@
 # Bombastic Bookstore
 # Flask Website v1
 
-
 import sqlite3
 from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, redirect, flash, url_for, request
@@ -13,17 +12,12 @@ from flask_migrate import Migrate
 from math import ceil
 # from models import User
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 FLASK_APP = 'web_app_main.py'
-
-# Dictionary to cache generated bar chart images
-chart_cache = {}
-
 
 # Separate function for home page content
 def get_home_content():
@@ -71,7 +65,6 @@ def profile():
 
 @app.route("/display/<int:page>")
 def display(page):
-    # only 25 per page
     page_size = 27
     offset = (page - 1) * page_size
 
