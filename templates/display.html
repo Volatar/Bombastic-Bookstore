@@ -13,80 +13,46 @@
     <title>Bombastic Books</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='display.css') }}"
+      href="{{ url_for('static', filename='home.css') }}"
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
   </head>
   <body>
-    <h2>Bombastic Books</h2>
-    <p><a href="{{ url_for('login') }}">Login</a></p>
-    <div class="search-container">
-      <div class="search-by">
-        <h4>Search by</h4>
-        <button
-          class="search-option"
-          id="title"
-          data-placeholder="Search by Title"
-        >
-          Title
-        </button>
-        <br />
-        <button
-          class="search-option"
-          id="author"
-          data-placeholder="Search by Author"
-        >
-          Author
-        </button>
-        <br />
-        <button
-          class="search-option"
-          id="genre"
-          data-placeholder="Search by Genre"
-        >
-          Genre
-        </button>
-        <br />
-        <button
-          class="search-option"
-          id="price"
-          data-placeholder="Search by Price"
-        >
-          Price
-        </button>
-      </div>
-    </div>
 
-    <div class="shopping-cart">
-      Shopping cart
-      <button class="checkout-button">checkout</button>
-    </div>
+  <!-- Button to return home -->
+    <a href="/" class="home-button">Home</a>
 
-    <aside class="right-side">
-      <div class="search-input">
-        <input type="text" id="searchKeyword" placeholder="Search by Title" />
-        <button id="searchButton">Search</button>
-      </div>
+    </div>
       <!-- Stefan's comment:
-              To make this optimal, we are going to make this part OOP. This is just a layout explanation 
+              To make this optimal, we are going to make this part OOP. This is just a layout explanation
               for later on to make implementing it a lot easier.
       -->
-      <div class="book-details">
-        <div class="book-card">
-          <img
-            class="book-cover"
-            alt="Book Cover"
-            id="bookCover"
-            src="https://covers.openlibrary.org/b/isbn/9780062024046.jpg"
-          />
-          <aside class="book-info-layout">
-            <h4 class="book-info" id="bookTitle">Title</h4>
-            <h4 class="book-info" id="bookPrice">Price</h4>
-            <h4 class="book-info" id="bookAvailability">Availability</h4>
-          </aside>
-        </div>
+    <strong>Our Books</strong>
+    <div class="book-details">
+      {% for book in books_data %}
+      <div class="book-card">
+        <ul>
+            {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book[0] + '-L.jpg' %}
+            <img src="{{ cover_url }}" alt="Book Cover">
+            <strong>Title:</strong> {{ book[0] }}<br>
+            <strong>Author:</strong> {{ book[1] }}<br>
+            <strong>ISBN:</strong> {{ book[2] }}<br>
+            <strong>Price:</strong> {{ book[3] }}<br>
+            <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
+            <button class="add-button">Add to Cart</button>
+        </ul>
       </div>
-    </aside>
+      {% endfor %}
+    </div>
+    <div class="pagination">
+        {% if current_page > 1 %}
+            <a href="{{ url_for('display', page=current_page - 1) }}">Previous Page</a>
+        {% endif %}
+        <a href="{{ url_for('display', page=current_page + 1) }}">Next Page</a>>
+    <div class="shopping-cart">Shopping cart
+      <button class="checkout-button">checkout</button>
+
+    </div>
   </body>
 </html>
