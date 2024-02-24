@@ -8,3 +8,4 @@ flask-sqlalchemy~=2.0.27
 flask-wtf~=1.2.1
 python-dotenv~=1.0.1
 flask-migrate~=4.0.5
+flask_paginate~=2023.10.24
