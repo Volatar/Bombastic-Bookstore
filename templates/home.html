@@ -1,5 +1,5 @@
 <!--
-    Collaborators
+    Colabrators
     Stefan main structor of the website
 
 -->
@@ -57,34 +57,35 @@
         </button>
       </div>
     </div>
-
-    <div class="shopping-cart">
-      Shopping cart
-      <button class="checkout-button">checkout</button>
+    <div class="search-input">
+      <input type="text" id="searchKeyword" placeholder="Search by Title" />
+      <button id="searchButton">Search</button>
     </div>
-
-    <aside class="right-side">
-      <div class="search-input">
-        <input type="text" id="searchKeyword" placeholder="Search by Title" />
-        <button id="searchButton">Search</button>
-      </div>
       <!-- Stefan's comment:
-              To make this optimal, we are going to make this part OOP. This is just a layout explanation 
+              To make this optimal, we are going to make this part OOP. This is just a layout explanation
               for later on to make implementing it a lot easier.
       -->
-      <div class="book-details">
-        <div class="book-card">
-          <img
-            class="book-cover"
-            alt="Book Cover"
-            id="bookCover"
-            src="https://covers.openlibrary.org/b/isbn/9780062024046.jpg"
-          />
-          <h4 class="book-info" id="bookTitle">Title</h4>
-          <h4 class="book-info" id="bookPrice">Price</h4>
-          <h4 class="book-info" id="bookAvailability">Availability</h4>
-        </div>
+    <strong>Recommended For You</strong>
+    <div class="book-details">
+      {% for book in books_data %}
+      <div class="book-card">
+        <ul>
+            {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book[0] + '-L.jpg' %}
+            <img src="{{ cover_url }}" alt="Book Cover">
+            <strong>Title:</strong> {{ book[0] }}<br>
+            <strong>Author:</strong> {{ book[1] }}<br>
+            <strong>ISBN:</strong> {{ book[2] }}<br>
+            <strong>Price:</strong> {{ book[3] }}<br>
+            <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
+            <button class="add-button">Add to Cart</button>
+        </ul>
       </div>
-    </aside>
+      {% endfor %}
+      <a href="display/1" class="see-all">View All</a>
+    </div>
+    <div class="shopping-cart">Shopping cart
+      <button class="checkout-button">checkout</button>
+
+    </div>
   </body>
 </html>
