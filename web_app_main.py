@@ -1,7 +1,7 @@
 # Bombastic Bookstore
 # Flask Website v1
 
-
+import secrets
 import sqlite3, requests
 from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, session, redirect, flash, url_for, request
@@ -11,10 +11,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 # from models import User
 
-
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Initialize Flask's session with a secret key
-app.config.from_object(Config)
+
+# Set the database URI for SQLite
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
+
+# Generate a secure random key for session security
+app.secret_key = secrets.token_hex(16)  # 16 bytes (128 bits) is a common key length
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -132,25 +136,48 @@ def book_details(title):
 
 # Checkout
 
-# Dummy data for books (replace this with your actual data)
-books_data = [
-    {"title": "Book 1", "author": "Author 1", "isbn": "123456789", "price": "$10"},
-    {"title": "Book 2", "author": "Author 2", "isbn": "987654321", "price": "$15"},
-    # Add more books as needed
-]
-
-
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
-    book_index = int(request.form['book_index'])
+    # Print out the form data for debugging
+    print("Form data:", request.form)
+    
+    # Fetch books_data from the database or wherever it's stored
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM books")
+    books_data = cursor.fetchall()
+    conn.close()
+
+    # Retrieve book title index from the button click
+    title_index = int(request.form['index'])
+    
+    # Retrieve book information from the database based on the title index
+    book_info = books_data[title_index]
+    
+    # Debug statement
+    print("Book info:", book_info)
+    
+    # Add the book information to the session cart
     if 'cart' not in session:
         session['cart'] = []
-    session['cart'].append(books_data[book_index])
-    return redirect(url_for('display_books'))
+    session['cart'].append(book_info)
+    
+    # Debug statement
+    print("Cart:", session['cart'])
+    
+    # Redirect to the checkout page after adding the book to the cart
+    return redirect(url_for('checkout'))
+
 
 @app.route('/checkout')
 def checkout():
+    # Retrieve the cart from the session
     cart = session.get('cart', [])
+    
+    # Debug statement
+    print("Cart in checkout:", cart)
+    
+    # Render the checkout page with the cart data
     return render_template('checkout.html', cart=cart)
 
 
