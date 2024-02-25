@@ -1,9 +1,3 @@
-<!--
-    Colabrators
-    Stefan main structor of the website
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +11,7 @@
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
+    <script type="text/javascript" src="/static/checkout-box.js"></script>
   </head>
   <body>
 
@@ -40,8 +35,9 @@
             <strong>ISBN:</strong> {{ book[2] }}<br>
             <strong>Price:</strong> {{ book[3] }}<br>
             <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
-            <button class="add-button">Add to Cart</button>
-        </ul>
+            <!--Button one-->
+            <button class="add-to-cart-button" data-index="{{ index }}">Add to Cart</button>
+          </ul>
       </div>
       {% endfor %}
     </div>
@@ -49,10 +45,12 @@
         {% if current_page > 1 %}
             <a href="{{ url_for('display', page=current_page - 1) }}">Previous Page</a>
         {% endif %}
-        <a href="{{ url_for('display', page=current_page + 1) }}">Next Page</a>>
-    <div class="shopping-cart">Shopping cart
-      <button class="checkout-button">checkout</button>
-
+        <a href="{{ url_for('display', page=current_page + 1) }}">Next Page</a>
     </div>
+    <div class="shopping-cart">Shopping cart
+
+      <!-- Button two -->
+      <a href="/checkout" class="checkout-button">Checkout</a>
+  </div>
   </body>
 </html>

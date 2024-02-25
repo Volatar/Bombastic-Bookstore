@@ -4,7 +4,7 @@
 
 import sqlite3, requests
 from Inventory_chart import generate_bar_chart
-from flask import Flask, render_template, redirect, flash, url_for, request
+from flask import Flask, render_template, session, redirect, flash, url_for, request
 from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -13,6 +13,7 @@ from flask_migrate import Migrate
 
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Initialize Flask's session with a secret key
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -129,6 +130,28 @@ def book_details(title):
 
     return render_template("book_details.html", book_data=book_data, description=description)
 
+# Checkout
+
+# Dummy data for books (replace this with your actual data)
+books_data = [
+    {"title": "Book 1", "author": "Author 1", "isbn": "123456789", "price": "$10"},
+    {"title": "Book 2", "author": "Author 2", "isbn": "987654321", "price": "$15"},
+    # Add more books as needed
+]
+
+
+@app.route('/add_to_cart', methods=['POST'])
+def add_to_cart():
+    book_index = int(request.form['book_index'])
+    if 'cart' not in session:
+        session['cart'] = []
+    session['cart'].append(books_data[book_index])
+    return redirect(url_for('display_books'))
+
+@app.route('/checkout')
+def checkout():
+    cart = session.get('cart', [])
+    return render_template('checkout.html', cart=cart)
 
 
 if __name__ == "__main__":
