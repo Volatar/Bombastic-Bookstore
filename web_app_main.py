@@ -1,16 +1,16 @@
 # Bombastic Bookstore
 # Flask Website v1
 
-
 import sqlite3
 from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, redirect, flash, url_for, request
+from flask_paginate import Pagination, get_page_args
 from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from math import ceil
 # from models import User
-
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -18,10 +18,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 FLASK_APP = 'web_app_main.py'
-
-# Dictionary to cache generated bar chart images
-chart_cache = {}
-
 
 # Separate function for home page content
 def get_home_content():
@@ -69,7 +65,6 @@ def profile():
 
 @app.route("/display/<int:page>")
 def display(page):
-    # only 25 per page
     page_size = 27
     offset = (page - 1) * page_size
 
@@ -88,6 +83,26 @@ def display(page):
 def inventory():
     return render_template('catalog.html', data_type='catalog Page')
 
+def get_inventory_data(offset=0, per_page=10):
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT ? OFFSET ?", (per_page, offset))
+    inventory_data = cursor.fetchall()
+    conn.close()
+    return inventory_data
+
+
+def get_all_inventory_data():
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM books")
+    total_inventory_items = cursor.fetchone()[0]
+    conn.close()
+    return total_inventory_items
+
+# Dictionary to cache generated bar chart images
+chart_cache = {}
+
 
 @app.route('/catalog/<data_type>')
 def show_inventory(data_type):
@@ -96,17 +111,34 @@ def show_inventory(data_type):
         'order': 'This is the Order page.',
         'inventory': 'This is the inventory data.'
     }
+
     if data_type == 'inventory':
-        # Check if the chart is cached
-        if 'inventory' in chart_cache:
-            image_url = chart_cache['inventory']
+        # Pagination logic
+        page, per_page, offset = get_page_args()
+        total = get_all_inventory_data()  # Assuming you have a function to get total inventory count
+        
+        # Generate a unique cache key per page
+        cache_key = f'inventory_{page}'
+        
+        # Check if the chart is cached for this page
+        if cache_key in chart_cache:
+            image_url = chart_cache[cache_key]
         else:
-            image_url = generate_bar_chart()
-            chart_cache['inventory'] = image_url
-        return render_template('catalog.html', data_type=data_type, image_url=image_url)
+            # Generate bar chart for the current page
+            image_url = generate_bar_chart(page=page, items_per_page=per_page)
+            chart_cache[cache_key] = image_url
+        
+        pagination = Pagination(page=page, total=total, per_page=per_page, css_framework='bootstrap4', prev_label='', next_label='')
+
+        # Fetch data for the current page
+        current_inventory_data = get_inventory_data(offset=offset, per_page=per_page)
+        
+        # Calculate total pages
+        total_pages = ceil(total / per_page)
+        
+        return render_template('catalog.html', data_type=data_type, image_url=image_url, inventory_data=current_inventory_data, pagination=pagination, total_pages=total_pages)
 
     return render_template('catalog.html', data_type=data_type, data=data.get(data_type, ''))
-
 
 if __name__ == "__main__":
     app.run(debug=True)

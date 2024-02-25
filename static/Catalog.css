@@ -1,50 +1,81 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
 }
 
 h2 {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
 }
 
 nav {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 150%;
 }
 
 nav a {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-right: 10px;
+  display: inline-block;
+  padding: 1%;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  margin-right: 10px;
 }
 
 nav a:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
+}
+
+.circle {
+  border-radius: 90%;
+  -webkit-border-radius: 90%;
+  -moz-border-radius: 90%;
+  -ms-border-radius: 90%;
+  -o-border-radius: 90%;
+}
+
+.pagination {
+  display: flex; /* This will lay out the child elements (e.g., page numbers) in a row */
+  justify-content: center;
+  text-decoration: none; /* Removes underline from links */
+  color: black;
+}
+
+.pagination a {
+  display: inline-block;
+}
+
+.pagination a:hover {
+  background-color: #3801fe;
+}
+
+.pagination ul {
+  list-style-type: none; /* Removes bullets */
+}
+
+.ellipsis{
+  padding: 1%;
+  margin-right: 1%;
 }
 
 #data-container {
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 #data-container h3 {
-    color: #333;
+  color: #333;
 }
 
 #data-container p {
-    color: #666;
+  color: #666;
 }
-
