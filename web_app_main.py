@@ -5,6 +5,7 @@ import secrets
 import sqlite3, requests
 from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, session, redirect, flash, url_for, request
+from flask_session import Session
 from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +13,9 @@ from flask_migrate import Migrate
 # from models import User
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+
+app.config['SESSION_TYPE'] = 'filesystem'
 
 # Set the database URI for SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
@@ -26,6 +30,9 @@ FLASK_APP = 'web_app_main.py'
 
 # Dictionary to cache generated bar chart images
 chart_cache = {}
+
+# create session object
+Session(app)
 
 
 # This function gives us the current "home" page
