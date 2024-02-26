@@ -135,7 +135,6 @@ def book_details(title):
     return render_template("book_details.html", book_data=book_data, description=description)
 
 # Checkout
-
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     # Print out the form data for debugging
@@ -160,6 +159,8 @@ def add_to_cart():
     # Add the book information to the session cart
     if 'cart' not in session:
         session['cart'] = []
+    
+    # Append book_info to the end of the list (stack)
     session['cart'].append(book_info)
     
     # Debug statement
@@ -174,11 +175,14 @@ def checkout():
     # Retrieve the cart from the session
     cart = session.get('cart', [])
     
+    # Create a copy of the cart for display purposes and reverse it
+    reversed_cart = cart[::-1]
+    
     # Debug statement
     print("Cart in checkout:", cart)
-    
-    # Render the checkout page with the cart data
-    return render_template('checkout.html', cart=cart)
+
+    # Render the checkout page with the reversed cart data
+    return render_template('checkout.html', cart=reversed_cart)
 
 
 if __name__ == "__main__":
