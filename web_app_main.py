@@ -137,52 +137,52 @@ def book_details(title):
 # Checkout
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
-    # Print out the form data for debugging
-    print("Form data:", request.form)
-    
-    # Fetch books_data from the database or wherever it's stored
-    conn = sqlite3.connect('books.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM books")
-    books_data = cursor.fetchall()
-    conn.close()
+    # Fetch the book title from the form data
+    book_title = request.form.get('title')
 
-    # Retrieve book title index from the button click
-    title_index = int(request.form['index'])
-    
-    # Retrieve book information from the database based on the title index
-    book_info = books_data[title_index]
-    
     # Debug statement
-    print("Book info:", book_info)
-    
-    # Add the book information to the session cart
+    print("Book selected:", book_title)
+
+    # Add the book title to the session cart
     if 'cart' not in session:
         session['cart'] = []
-    
-    # Append book_info to the end of the list (stack)
-    session['cart'].append(book_info)
-    
+
+    # Append the book title to the cart
+    session['cart'].append(book_title)
+
     # Debug statement
-    print("Cart:", session['cart'])
-    
-    # Redirect to the checkout page after adding the book to the cart
-    return redirect(url_for('checkout'))
+    print("Book added to cart:", book_title)
+
+    # Render the checkout page after adding the book to the cart
+    return checkout()
 
 
 @app.route('/checkout')
 def checkout():
     # Retrieve the cart from the session
-    cart = session.get('cart', [])
-    
-    # Create a copy of the cart for display purposes and reverse it
-    reversed_cart = cart[::-1]
-    
-    # Debug statement
-    print("Cart in checkout:", cart)
+    cart_titles = session.get('cart', [])
 
-    # Render the checkout page with the reversed cart data
-    return render_template('checkout.html', cart=reversed_cart)
+    # Fetch book details for each title in the cart
+    cart_details = []
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    for title in cart_titles:
+        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
+        book_info = cursor.fetchone()
+        if book_info:
+            cart_details.append(book_info)
+    conn.close()
+
+    # Debug statement
+    print("Cart in checkout:")
+    for item in cart_details:
+        print(item[0])  # Print only the title
+
+    # Debug statement
+    print("Cart in checkout:", cart_details)
+
+    # Render the checkout page with the cart data
+    return render_template('checkout.html', cart=cart_details)
 
 
 if __name__ == "__main__":
