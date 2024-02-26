@@ -41,3 +41,7 @@ Input the following command: `pip install -r requirements.txt`
 ![](https://i.imgur.com/j9KTgad.png)
 
 You are now ready to run the application.
+
+# How to run the web application
+
+To run the web app, run `web_app_main.py` and connect to the localhost ip it provides in it's output with your web browser.

@@ -77,3 +77,11 @@ Search bar and page				Daniel
 Book info page					Tanner
 Suggested books page			Tanner
 Inventory page					Stefan
+
+2-24-24
+Login work						Matthew
+Search bar and page				Daniel
+Book info page					Tanner
+	API discussion
+Suggested books page			Tanner
+Inventory page					Stefan
