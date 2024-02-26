@@ -1,6 +1,7 @@
 <!--
     Colabrators
     Stefan main structor of the website
+    Matt Wilamowski login/out links
 
 -->
 
@@ -20,7 +21,13 @@
   </head>
   <body>
     <h2>Bombastic Books</h2>
-    <p><a href="{{ url_for('login') }}">Login</a></p>
+    <!-- login and logout links - logout should only appear if the user is logged in -->
+    <p>
+      {% if current_user.is_anonymous %}
+      <a href="{{ url_for('login') }}">Login</a>
+      {% else %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </p>
     <div class="search-container">
       <div class="search-by">
         <h4>Search by</h4>

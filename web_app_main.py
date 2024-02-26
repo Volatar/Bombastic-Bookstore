@@ -2,13 +2,11 @@
 # Flask Website v1
 
 from flask import Flask, render_template, redirect, flash, url_for, request
-from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, current_user, login_user
-from models import User
-    # this import is causing a circular import issue
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,6 +15,12 @@ migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 
 FLASK_APP = 'web_app_main.py'
+
+from forms import LoginForm
+from models import User
+# These two have been moved lower as an attempted workaround for the circular import issue common in Flask
+# the workaround currently does not work
+# importing Users from models is the root of the problem
 
 
 # Separate function for home page content
@@ -62,3 +66,4 @@ def profile():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
