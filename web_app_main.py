@@ -200,6 +200,17 @@ def add_to_cart():
     # Render the checkout page after adding the book to the cart
     return checkout()
 
+@app.route('/remove_from_cart', methods=['POST'])
+def remove_from_cart():
+    # Fetch the book title to be removed from the form data
+    book_title = request.form.get('title')
+
+    # Remove the book title from the session cart if it exists
+    if 'cart' in session:
+        session['cart'] = [item for item in session['cart'] if item != book_title]
+
+    # Redirect to the checkout page after removing the book from the cart
+    return redirect(url_for('checkout'))
 
 @app.route('/checkout')
 def checkout():

@@ -9,19 +9,23 @@
     <h2>Cart:</h2>
     <ul>
         {% for book in cart %}
-            <ul>
-                <strong>Title:</strong> {{ book[0] }}<br>
-                <strong>Author:</strong> {{ book[1] }}<br>
-                <strong>Genre:</strong> {{ book[2] }}<br>
-                <strong>Publisher:</strong> {{ book[3] }}<br>
-                <strong>Published Date:</strong> {{ book[4] }}<br>
-                <strong>ISBN:</strong> {{ book[5] }}<br>
-                <strong>Price:</strong> {{ book[6] }}<br>
-                <strong>Rating:</strong> {{ book[7] }}<br>
-            </ul>
+            <li>
+                <form action="/remove_from_cart" method="post">
+                    <input type="hidden" name="title" value="{{ book[0] }}">
+                    <button type="submit">Remove</button>
+                </form>
+                <ul>
+                    <strong>Title:</strong> {{ book[0] }}<br>
+                    <strong>Author:</strong> {{ book[1] }}<br>
+                    <strong>Genre:</strong> {{ book[2] }}<br>
+                    <strong>Publisher:</strong> {{ book[3] }}<br>
+                    <strong>Published Date:</strong> {{ book[4] }}<br>
+                    <strong>ISBN:</strong> {{ book[5] }}<br>
+                    <strong>Price:</strong> {{ book[6] }}<br>
+                    <strong>Rating:</strong> {{ book[7] }}<br>
+                </ul>
+            </li>
         {% endfor %}
     </ul>
-
-    <!-- Add checkout logic here -->
 </body>
 </html>
