@@ -17,6 +17,7 @@
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
+    <script type="text/javascript" src="/static/checkout-box.js"></script>
   </head>
   <body>
     <h2>Bombastic Books</h2>
@@ -77,7 +78,12 @@
             <strong>ISBN:</strong> {{ book[2] }}<br>
             <strong>Price:</strong> {{ book[3] }}<br>
             <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
-            <button class="add-button">Add to Cart</button>
+            <!-- Add to Cart form -->
+            <form action="/add_to_cart" method="POST">
+              <input type="hidden" name="index" value="{{ loop.index - 1 }}">
+              <input type="hidden" name="title" value="{{ book[0] }}">
+              <button type="submit" class="add-to-cart-button">Add to Cart</button>
+          </form>
         </ul>
       </div>
       {% endfor %}
