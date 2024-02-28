@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout</title>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Cart:</h2>
     <ul>
-        {% for book in cart %}
-            <ul>
-                <strong>Title:</strong> {{ book[0] }}<br>
-                <strong>Author:</strong> {{ book[1] }}<br>
-                <strong>Genre:</strong> {{ book[2] }}<br>
-                <strong>Publisher:</strong> {{ book[3] }}<br>
-                <strong>Published Date:</strong> {{ book[4] }}<br>
-                <strong>ISBN:</strong> {{ book[5] }}<br>
-                <strong>Price:</strong> {{ book[6] }}<br>
-                <strong>Rating:</strong> {{ book[7] }}<br>
-            </ul>
-        {% endfor %}
+        {% if cart %}
+        <form action="/empty_cart" method="post">
+            <button type="submit">Remove All</button>
+        </form>
+        {% endif %}
+      {% for book, count in cart %}
+      <li>
+        <form action="/remove_from_cart" method="post" style="display: inline">
+          <input type="hidden" name="title" value="{{ book[0] }}" />
+          <button type="submit">Remove book</button>
+        </form>
+        <form action="/remove_one_book" method="post" style="display: inline">
+          <input type="hidden" name="title" value="{{ book[0] }}" />
+          <button type="submit">Remove One</button>
+        </form>
+        <form action="/add_one_book" method="post" style="display: inline">
+          <input type="hidden" name="title" value="{{ book[0] }}" />
+          <button type="submit">Add One</button>
+        </form>
+        <ul>
+          <strong>Title:</strong>
+          {{ book[0] }}<br />
+          <strong>Author:</strong>
+          {{ book[1] }}<br />
+          <strong>Genre:</strong>
+          {{ book[2] }}<br />
+          <strong>Publisher:</strong>
+          {{ book[3] }}<br />
+          <strong>Published Date:</strong>
+          {{ book[4] }}<br />
+          <strong>ISBN:</strong>
+          {{ book[5] }}<br />
+          <strong>Price:</strong>
+          {{ book[6] }}<br />
+          <strong>Quantity:</strong>
+          {{ book[7] }}<br />
+          <strong>Quantity of books in your Cart:</strong>
+          {{ count }}<br />
+        </ul>
+      </li>
+      {% endfor %}
     </ul>
-
-    <!-- Add checkout logic here -->
-</body>
+  </body>
 </html>
