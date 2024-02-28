@@ -197,8 +197,18 @@ def add_to_cart():
     # Debug statement
     print("Book added to cart:", book_title)
 
-    # Render the checkout page after adding the book to the cart
-    return checkout()
+    # Redirect to the checkout page after adding the book to the cart
+    return redirect(url_for('checkout'))
+
+@app.route('/empty_cart', methods=['POST'])
+def empty_cart():
+    # Clear the cart in the session
+    if 'cart' in session:
+        session['cart'] = []
+
+    # Redirect to the checkout page after emptying the cart
+    return redirect(url_for('checkout'))
+
 
 @app.route('/remove_from_cart', methods=['POST'])
 def remove_from_cart():
@@ -212,33 +222,56 @@ def remove_from_cart():
     # Redirect to the checkout page after removing the book from the cart
     return redirect(url_for('checkout'))
 
+
+@app.route('/remove_one_book', methods=['POST'])
+def remove_one_book():
+    # Fetch the book title to be removed from the form data
+    book_title = request.form.get('title')
+
+    # Remove one instance of the book title from the session cart if it exists
+    if 'cart' in session and book_title in session['cart']:
+        session['cart'].remove(book_title)
+
+    # Redirect to the checkout page after removing one book from the cart
+    return redirect(url_for('checkout'))
+
+
+@app.route('/add_one_book', methods=['POST'])
+def add_one_book():
+    # Fetch the book title to be added from the form data
+    book_title = request.form.get('title')
+
+    # Add one instance of the book title to the session cart
+    if 'cart' in session:
+        session['cart'].append(book_title)
+
+    # Redirect to the checkout page after adding one book to the cart
+    return redirect(url_for('checkout'))
+
+
 @app.route('/checkout')
 def checkout():
     # Retrieve the cart from the session
     cart_titles = session.get('cart', [])
 
-    # Fetch book details for each title in the cart
+    # Count occurrences of each book title in the cart
+    cart_count = {}
+    for title in cart_titles:
+        cart_count[title] = cart_count.get(title, 0) + 1
+
+    # Fetch book details for each unique title in the cart
     cart_details = []
     conn = sqlite3.connect('books.db')
     cursor = conn.cursor()
-    for title in cart_titles:
+    for title, count in cart_count.items():
         cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
         book_info = cursor.fetchone()
         if book_info:
-            cart_details.append(book_info)
+            cart_details.append((book_info, count))
     conn.close()
-
-    # Debug statement
-    print("Cart in checkout:")
-    for item in cart_details:
-        print(item[0])  # Print only the title
-
-    # Debug statement
-    print("Cart in checkout:", cart_details)
 
     # Render the checkout page with the cart data
     return render_template('checkout.html', cart=cart_details)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
