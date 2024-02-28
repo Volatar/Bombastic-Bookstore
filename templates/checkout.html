@@ -8,9 +8,11 @@
   <body>
     <h2>Cart:</h2>
     <ul>
-      <form action="/empty_cart" method="post">
-        <button type="submit">Remove All</button>
-      </form>
+        {% if cart %}
+        <form action="/empty_cart" method="post">
+            <button type="submit">Remove All</button>
+        </form>
+        {% endif %}
       {% for book, count in cart %}
       <li>
         <form action="/remove_from_cart" method="post" style="display: inline">
