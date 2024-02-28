@@ -178,7 +178,7 @@ def book_details(title):
     return render_template("book_details.html", book_data=book_data, description=description)
 
 
-# Checkout
+# Cart
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     # Fetch the book title from the form data
@@ -197,8 +197,8 @@ def add_to_cart():
     # Debug statement
     print("Book added to cart:", book_title)
 
-    # Redirect to the checkout page after adding the book to the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after adding the book to the cart
+    return redirect(url_for('cart'))
 
 @app.route('/empty_cart', methods=['POST'])
 def empty_cart():
@@ -206,8 +206,8 @@ def empty_cart():
     if 'cart' in session:
         session['cart'] = []
 
-    # Redirect to the checkout page after emptying the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after emptying the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/remove_from_cart', methods=['POST'])
@@ -219,8 +219,8 @@ def remove_from_cart():
     if 'cart' in session:
         session['cart'] = [item for item in session['cart'] if item != book_title]
 
-    # Redirect to the checkout page after removing the book from the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after removing the book from the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/remove_one_book', methods=['POST'])
@@ -232,8 +232,8 @@ def remove_one_book():
     if 'cart' in session and book_title in session['cart']:
         session['cart'].remove(book_title)
 
-    # Redirect to the checkout page after removing one book from the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after removing one book from the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/add_one_book', methods=['POST'])
@@ -245,12 +245,12 @@ def add_one_book():
     if 'cart' in session:
         session['cart'].append(book_title)
 
-    # Redirect to the checkout page after adding one book to the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after adding one book to the cart
+    return redirect(url_for('cart'))
 
 
-@app.route('/checkout')
-def checkout():
+@app.route('/cart')
+def cart():
     # Retrieve the cart from the session
     cart_titles = session.get('cart', [])
 
@@ -270,8 +270,8 @@ def checkout():
             cart_details.append((book_info, count))
     conn.close()
 
-    # Render the checkout page with the cart data
-    return render_template('checkout.html', cart=cart_details)
+    # Render the cart page with the cart data
+    return render_template('cart.html', cart=cart_details)
 
 if __name__ == "__main__":
     app.run(debug=True)
