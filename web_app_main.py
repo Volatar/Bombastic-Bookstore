@@ -4,7 +4,7 @@
 import secrets
 import sqlite3, requests
 from Inventory_chart import generate_bar_chart
-from flask import Flask, render_template, session, redirect, flash, url_for, request
+from flask import Flask, render_template, session, redirect, flash, url_for, request, jsonify
 from flask_session import Session
 from flask_paginate import Pagination, get_page_args
 import re
@@ -13,6 +13,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from math import ceil
+from payment import CreditCard
 # from models import User
 
 app = Flask(__name__)
@@ -303,5 +304,31 @@ def checkout():
 
     # Render the checkout page with the cart data and total cost
     return render_template('checkout.html', cart=cart_details, totalOfAllBooks=total_of_all_books)
+
+# Payment 
+@app.route('/process_payment', methods=['POST'])
+def process_payment():
+    card_number = request.form['card_number']
+    expiry_date = request.form['expiry_date']
+    cvv = request.form['cvv']
+    card_holder_name = request.form['card_holder_name']
+
+    # Convert card_number to integer for validation
+    try:
+        card_number = int(card_number)
+    except ValueError:
+        # Invalid card number format
+        return jsonify({"passOrFail": "Fail"})
+
+    # Check if the credit card number is valid using CreditCard class
+    if CreditCard.isValid(card_number):
+        # Card is valid, proceed with payment processing
+        passOrFail = 'Pass'
+    else:
+        # Card is invalid
+        passOrFail = 'Fail'
+
+    return jsonify({"passOrFail": passOrFail})
+
 if __name__ == "__main__":
     app.run(debug=True)

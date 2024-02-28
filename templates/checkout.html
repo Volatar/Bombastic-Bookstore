@@ -1,30 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checkout</title>
-</head>
-<body>
-  <h2>Cart:</h2>
-  <ul>
-    <!--Can delate this later-->
-    {% for item in cart %}
-    <li>
-      <ul>
-        <strong>Title:</strong> {{ item[0][0] }}<br />
-        <strong>Author:</strong> {{ item[0][1] }}<br />
-        <strong>Genre:</strong> {{ item[0][2] }}<br />
-        <strong>Publisher:</strong> {{ item[0][3] }}<br />
-        <strong>Published Date:</strong> {{ item[0][4] }}<br />
-        <strong>ISBN:</strong> {{ item[0][5] }}<br />
-        <strong>Price:</strong> {{ item[0][6] }}<br />
-        <strong>Quantity:</strong> {{ item[0][7] }}<br />
-        <strong>Quantity of books in your Cart:</strong> {{ item[1] }}<br />
-      </ul>
-    </li>
-    {% endfor %}
-    <h4>The total is {{totalOfAllBooks}}</h4>
-  </ul>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+  </head>
+  <body>
+    <h2>checkout</h2>
+    <!--For testing 
+        Valid: 4111111111111111
+        Valid: 4012888888881881
+        Invalid: 4222222222222
+    -->
+    <form
+      class="payment"
+      id="payment-form"
+      action="/process_payment"
+      method="post"
+    >
+      <label for="card_number">Card Number:</label>
+      <input type="text" id="card_number" name="card_number" required /><br />
+
+      <label for="expiry_date">Expiry Date:</label>
+      <input
+        type="text"
+        id="expiry_date"
+        name="expiry_date"
+        placeholder="MM/YYYY"
+        required
+      /><br />
+
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" name="cvv" maxlength="3" required /><br />
+
+      <label for="card_holder_name">Card Holder Name:</label>
+      <input
+        type="text"
+        id="card_holder_name"
+        name="card_holder_name"
+        required
+      /><br />
+
+      <button type="button" onclick="submitForm()">Verfiy Payment</button>
+      <p id="passOrFail" style="color: red"></p>
+    </form>
+    <ul>
+      {% for item in cart %}
+      <li>
+        <ul>
+          <strong>Title:</strong>
+          {{ item[0][0] }}<br />
+          <strong>Price:</strong>
+          {{ item[0][6] }}<br />
+          <strong>Quantity:</strong>
+          {{ item[0][7] }}<br />
+          <strong>Quantity of books in your Cart:</strong>
+          {{ item[1] }}<br />
+        </ul>
+      </li>
+      {% endfor %}
+      <h4>The total is {{totalOfAllBooks}}</h4>
+    </ul>
+
+    <script>
+      function submitForm() {
+        // Get form data
+        var formData = new FormData(document.getElementById("payment-form"));
+
+        // Send form data asynchronously
+        fetch("/process_payment", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Update pass or fail message
+            var passOrFailElement = document.getElementById("passOrFail");
+            passOrFailElement.textContent = data.passOrFail;
+            passOrFailElement.style.color =
+              data.passOrFail === "Pass" ? "green" : "red";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
 </html>
