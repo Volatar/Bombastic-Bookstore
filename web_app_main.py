@@ -7,7 +7,7 @@ from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, session, redirect, flash, url_for, request
 from flask_session import Session
 from flask_paginate import Pagination, get_page_args
-
+import re
 from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -273,5 +273,35 @@ def cart():
     # Render the cart page with the cart data
     return render_template('cart.html', cart=cart_details)
 
+# Checkout
+@app.route('/checkout')
+def checkout():
+    # Retrieve the cart from the session
+    cart_titles = session.get('cart', [])
+
+    # Count occurrences of each book title in the cart
+    cart_count = {}
+    for title in cart_titles:
+        cart_count[title] = cart_count.get(title, 0) + 1
+
+    # Fetch book details for each unique title in the cart
+    cart_details = []
+    total_of_all_books = 0  # Initialize total cost of all books
+
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    for title, count in cart_count.items():
+        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
+        book_info = cursor.fetchone()
+        if book_info:
+            # Extract numerical part of the price string
+            price_str = re.sub(r'[^\d.]', '', book_info[6])
+            price = float(price_str)  # Convert price to float
+            cart_details.append((book_info, count))
+            total_of_all_books += price * count  # Add cost of each book to total
+    conn.close()
+
+    # Render the checkout page with the cart data and total cost
+    return render_template('checkout.html', cart=cart_details, totalOfAllBooks=total_of_all_books)
 if __name__ == "__main__":
     app.run(debug=True)

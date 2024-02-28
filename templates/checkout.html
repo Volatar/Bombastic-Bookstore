@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+</head>
+<body>
+  <h2>Cart:</h2>
+  <ul>
+    <!--Can delate this later-->
+    {% for item in cart %}
+    <li>
+      <ul>
+        <strong>Title:</strong> {{ item[0][0] }}<br />
+        <strong>Author:</strong> {{ item[0][1] }}<br />
+        <strong>Genre:</strong> {{ item[0][2] }}<br />
+        <strong>Publisher:</strong> {{ item[0][3] }}<br />
+        <strong>Published Date:</strong> {{ item[0][4] }}<br />
+        <strong>ISBN:</strong> {{ item[0][5] }}<br />
+        <strong>Price:</strong> {{ item[0][6] }}<br />
+        <strong>Quantity:</strong> {{ item[0][7] }}<br />
+        <strong>Quantity of books in your Cart:</strong> {{ item[1] }}<br />
+      </ul>
+    </li>
+    {% endfor %}
+    <h4>The total is {{totalOfAllBooks}}</h4>
+  </ul>
+</body>
+</html>
