@@ -201,6 +201,7 @@ def add_to_cart():
     # Redirect to the checkout page after adding the book to the cart
     return redirect(url_for('checkout'))
 
+
 @app.route('/empty_cart', methods=['POST'])
 def empty_cart():
     # Clear the cart in the session
@@ -273,6 +274,7 @@ def checkout():
 
     # Render the checkout page with the cart data
     return render_template('checkout.html', cart=cart_details)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
