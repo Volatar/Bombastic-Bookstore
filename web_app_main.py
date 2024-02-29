@@ -330,6 +330,12 @@ def process_payment():
 
     return jsonify({"passOrFail": passOrFail})
 
+# Recipt
+
+@app.route('/receipt')
+def receipt():
+    return render_template('receipt.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
