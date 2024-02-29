@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book Details</title>
-    <!-- Add any CSS stylesheets or other dependencies here -->
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='home.css') }}"
+    />
+    <script type="text/javascript" src="/static/search-option.js"></script>
+    <script type="text/javascript" src="/static/book-details.js"></script>
+
+
 <body>
+
+  <a href="/" class="home-button">Home</a>
+
     <h1>Book Details</h1>
-    <div class="book-details">
+    <div class="book-description">
         <!-- Still pulling book cover from open lib API -->
         {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book_data[0] + '-L.jpg' %}
         <img src="{{ cover_url }}" alt="Book Cover">
@@ -19,11 +28,16 @@
         <strong>Genre:</strong> {{ book_data[2] }}<br>
         <strong>ISBN:</strong> {{ book_data[5] }}<br>
         <strong>Price:</strong> {{ book_data[6] }}<br>
+
+        <!-- Description from google api -->
+        <h1>Book Description</h1>
+        <p>{{ description }}</p>
         <!-- Any other details we want to display -->
     </div>
 
-    <!-- Description from google api -->
-    <h1>Book Description</h1>
-    <p>{{ description }}</p>
+    <div class="shopping-cart">Shopping cart
+      <button class="checkout-button">Add to Cart</button>
+    </div>
+
 </body>
 </html>
