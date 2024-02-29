@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="/static/checkout.js"></script>
     <title>Checkout</title>
   </head>
   <body>
@@ -44,6 +45,19 @@
       <button type="button" onclick="submitForm()">Verfiy Payment</button>
       <p id="passOrFail" style="color: red"></p>
     </form>
+    <form class="address" id="address-form">
+      <label for="street">Street:</label>
+      <input type="text" id="street" name="street" required /><br />
+    
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required /><br />
+    
+      <label for="state">State:</label>
+      <input type="text" id="state" name="state" required /><br />
+    
+      <label for="postal_code">Postal Code:</label>
+      <input type="text" id="postal_code" name="postal_code" required /><br />
+    </form>
     <ul>
       {% for item in cart %}
       <li>
@@ -59,31 +73,8 @@
         </ul>
       </li>
       {% endfor %}
-      <h4>The total is {{totalOfAllBooks}}</h4>
+      <h4>The total is {{totalOfAllBooks}}.</h4>
+      <button>Order Now</button>
     </ul>
-
-    <script>
-      function submitForm() {
-        // Get form data
-        var formData = new FormData(document.getElementById("payment-form"));
-
-        // Send form data asynchronously
-        fetch("/process_payment", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // Update pass or fail message
-            var passOrFailElement = document.getElementById("passOrFail");
-            passOrFailElement.textContent = data.passOrFail;
-            passOrFailElement.style.color =
-              data.passOrFail === "Pass" ? "green" : "red";
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      }
-    </script>
   </body>
 </html>

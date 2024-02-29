@@ -305,7 +305,7 @@ def checkout():
     # Render the checkout page with the cart data and total cost
     return render_template('checkout.html', cart=cart_details, totalOfAllBooks=total_of_all_books)
 
-# Payment 
+# Payment
 @app.route('/process_payment', methods=['POST'])
 def process_payment():
     card_number = request.form['card_number']
@@ -329,6 +329,7 @@ def process_payment():
         passOrFail = 'Fail'
 
     return jsonify({"passOrFail": passOrFail})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
