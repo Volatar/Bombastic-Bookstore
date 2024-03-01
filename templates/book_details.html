@@ -21,7 +21,7 @@
     <div class="book-description">
         <!-- Still pulling book cover from open lib API -->
         {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book_data[0] + '-L.jpg' %}
-        <img src="{{ cover_url }}" alt="Book Cover">
+        <img src="{{ cover_url }}" alt="Book Cover"><br>
         <strong>Title:</strong> {{ book_data[0] }}<br>
         <strong>Author:</strong> {{ book_data[1] }}<br>
         <strong>Publisher:</strong> {{ book_data[3] }}<br>
