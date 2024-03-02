@@ -91,3 +91,9 @@ Login work						Matthew
 Search bar and page				Daniel
 Book info page					Tanner
 cart							Stefan
+
+3-2-24
+What happened to Matthew
+Search bar and page				Daniel
+Visualizations					Tanner
+checkout							Stefan
