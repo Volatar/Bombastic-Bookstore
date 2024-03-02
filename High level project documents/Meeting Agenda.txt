@@ -96,4 +96,4 @@ cart							Stefan
 What happened to Matthew
 Search bar and page				Daniel
 Visualizations					Tanner
-checkout							Stefan
+checkout						Stefan
