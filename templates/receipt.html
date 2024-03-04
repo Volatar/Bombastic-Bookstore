@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipt</title>
+    <title>Receipt</title>
 </head>
 <body>
-    <h4>This is the recipt page</h4>
+    <h2>Receipt</h2>
+    <h4>Total Price: ${{ total_of_all_books }}</h4>
+    <h4>Shipping Address: {{ street }}, {{ city }}, {{ state }}, {{ postal_code }}</h4>    <h4>Card Holder Name: {{ card_holder_name }}</h4>
+    <h4>Books:</h4>
+    {% if books_selected %}
+    <ul>
+        {% for item in cart %}
+            <li>
+                <ul>
+                    <strong>Title:</strong> {{ item[0][0] }}<br>
+                    <strong>Price:</strong> ${{ item[0][6] }}<br>
+                    <strong>Quantity:</strong> {{ item[0][7] }}<br>
+                    <strong>Quantity in Cart:</strong> {{ item[1] }}<br>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No books selected</p>
+    {% endif %}
 </body>
 </html>

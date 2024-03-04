@@ -8,45 +8,57 @@
   </head>
   <body>
     <h2>checkout</h2>
-    <form class="address" id="address-form">
-      <label for="street">Street:</label>
-      <input type="text" id="street" name="street" required /><br />
-    
-      <label for="city">City:</label>
-      <input type="text" id="city" name="city" required /><br />
-    
-      <label for="state">State:</label>
-      <input type="text" id="state" name="state" required /><br />
-    
-      <label for="postal_code">Postal Code:</label>
-      <input type="text" id="postal_code" name="postal_code" required /><br />
-    </form>
+  <form class="payment" id="payment-form" action="/receipt" method="post">
     <!--For testing
         Valid: 4111111111111111
         Valid: 4012888888881881
         Invalid: 4222222222222
     -->
-    <form class="payment" id="payment-form" action="/process_payment" method="post">
-      <label for="card_number">Card Number:</label>
-      <input type="text" id="card_number" name="card_number" required/><br/>
+    <label for="card_number">Card Number:</label>
+    <input type="text" id="card_number" name="card_number" required /><br />
+
+    <label for="expiry_date">Expiry Date:</label>
+    <input
+        type="text"
+        id="expiry_date"
+        name="expiry_date"
+        placeholder="MM/YYYY"
+        required
+    /><br />
+    <label for="cvv">CVV:</label>
+    <input type="text" id="cvv" name="cvv" maxlength="3" required /><br />
+
+    <label for="card_holder_name">Card Holder Name:</label>
+    <input
+        type="text"
+        id="card_holder_name"
+        name="card_holder_name"
+        required
+    /><br />
+        <!-- Add hidden input fields for other variables -->
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" required /><br />
   
-      <label for="expiry_date">Expiry Date:</label>
-      <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YYYY" required/><br/>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required /><br />
   
-      <label for="cvv">CVV:</label>
-      <input type="text" id="cvv" name="cvv" maxlength="3" required/><br/>
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required /><br />
   
-      <label for="card_holder_name">Card Holder Name:</label>
-      <input type="text" id="card_holder_name" name="card_holder_name" required/><br/>
-  
-      <button type="button" onclick="submitForm()">Verify Payment</button>
-      <p id="passOrFail" style="color: red"></p>
-    </form>
-    <form action="/receipt">
-      <button id="orderNowButton" style="display: none;">Order Now</button>
-    </form>
+        <label for="postal_code">Postal Code:</label>
+        <input type="text" id="postal_code" name="postal_code" required /><br />
+
+        <button type="button" onclick="submitForm()">Verify Payment</button>
+
+        <p id="passOrFail" style="color: red"></p>
+
+        <form class="receipt" id="receipt-form" action="/receipt" method="post">
+          <button id="orderNowButton" style="display: none">Order Now</button>
+        </form>
+      </form>
+
     <ul>
-      <h4>The total is {{totalOfAllBooks}}.</h4>
+      <h4>The total is {{ totalOfAllBooks }}.</h4>
       {% for item in cart %}
       <li>
         <ul>
