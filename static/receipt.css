@@ -1,0 +1,70 @@
+/* receipt.css */
+
+/* Overall page styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+}
+
+/* Summary section styles */
+.summary {
+    margin-bottom: 30px;
+}
+
+.summary h2 {
+    color: #333;
+}
+
+.address,
+.card-holder {
+    margin-bottom: 20px;
+}
+
+.address h3,
+.card-holder h3 {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Books section styles */
+.books {
+    margin-bottom: 30px;
+}
+
+.books h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.book-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.book-item {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+}
+
+.book-details p {
+    margin: 5px 0;
+}
+
+.no-books {
+    color: red;
+}
