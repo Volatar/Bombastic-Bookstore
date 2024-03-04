@@ -8,17 +8,19 @@
 <body>
     <h2>Receipt</h2>
     <h4>Total Price: ${{ total_of_all_books }}</h4>
-    <h4>Shipping Address: {{ street }}, {{ city }}, {{ state }}, {{ postal_code }}</h4>    <h4>Card Holder Name: {{ card_holder_name }}</h4>
+    <h4>Shipping Address: {{ street }}, {{ city }}, {{ state }}, {{ postal_code }}</h4>
+    <h4>Card Holder Name: {{ card_holder_name }}</h4>
     <h4>Books:</h4>
-    {% if books_selected %}
+    {% if cart_details %}
     <ul>
-        {% for item in cart %}
+        {% for item in cart_details %}
             <li>
                 <ul>
-                    <strong>Title:</strong> {{ item[0][0] }}<br>
-                    <strong>Price:</strong> ${{ item[0][6] }}<br>
-                    <strong>Quantity:</strong> {{ item[0][7] }}<br>
-                    <strong>Quantity in Cart:</strong> {{ item[1] }}<br>
+                    <strong>Title:</strong> {{ item[0][1] }}<br>
+                    <strong>ISBN:</strong> {{ item[0][5] }}<br>
+                    <strong>Price:</strong> {{ item[0][6] }}<br>
+                    <strong>Quantity:</strong> {{ item[1] }}<br>
+                    <strong>Total Price:</strong> ${{ item[2] }}<br>
                 </ul>
             </li>
         {% endfor %}

@@ -279,13 +279,6 @@ def cart():
 def checkout():
     cart_titles = session.get('cart', [])
     cart_count = {}
-    ''' I want to get this from the form
-        street 
-        city 
-        state 
-        postal_code
-        card_holder_name
-    '''
     for title in cart_titles:
         cart_count[title] = cart_count.get(title, 0) + 1
 
@@ -338,9 +331,31 @@ def process_payment():
 # Receipt Route
 @app.route('/receipt', methods=['POST'])
 def receipt():
+    cart_titles = session.get('cart', [])
+    cart_count = {}
+    for title in cart_titles:
+        cart_count[title] = cart_count.get(title, 0) + 1
+
+    cart_details = []
+    total_of_all_books = 0
+
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    for title, count in cart_count.items():
+        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
+        book_info = cursor.fetchone()
+        if book_info:
+            price_str = re.sub(r'[^\d.]', '', book_info[6])
+            price = float(price_str) if price_str else 0
+            cart_details.append((book_info, count, price * count))
+            total_of_all_books += price * count
+    conn.close()
+
+    # Store cart details in session
+    session['cart_details'] = cart_details
+    
     # Extract data from the form
     book_titles_with_quantity = request.form.get('book_titles_with_quantity')
-    total_of_all_books = request.form.get('total_of_all_books')
     card_holder_name = request.form.get('card_holder_name')  # Corrected variable name
     street = request.form.get('street')
     city = request.form.get('city')
@@ -350,7 +365,8 @@ def receipt():
     # Pass the data to the receipt template
     return render_template('receipt.html', book_titles_with_quantity=book_titles_with_quantity,
                            total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
-                           street=street, city=city, state=state, postal_code=postal_code)
+                           street=street, city=city, state=state, postal_code=postal_code,
+                           cart_details=cart_details)
 
 
 if __name__ == "__main__":
