@@ -307,7 +307,7 @@ def checkout():
     # Store cart details in session
     session['cart_details'] = cart_details
 
-    return render_template('checkout.html', cart=cart_details, totalOfAllBooks=total_of_all_books,)
+    return render_template('checkout.html', cart=cart_details, total_of_all_books=total_of_all_books,)
 
 
 # Payment
@@ -351,6 +351,7 @@ def receipt():
     return render_template('receipt.html', book_titles_with_quantity=book_titles_with_quantity,
                            total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
                            street=street, city=city, state=state, postal_code=postal_code)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

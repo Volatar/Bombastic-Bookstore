@@ -35,6 +35,10 @@
         name="card_holder_name"
         required
     /><br />
+
+        <!-- Hidden input field for total_of_all_books -->
+        <input type="hidden" id="total_of_all_books" name="total_of_all_books" value="{{ total_of_all_books }}" />
+        
         <!-- Add hidden input fields for other variables -->
         <label for="street">Street:</label>
         <input type="text" id="street" name="street" required /><br />
@@ -58,7 +62,7 @@
       </form>
 
     <ul>
-      <h4>The total is {{ totalOfAllBooks }}.</h4>
+      <h4>The total is {{ total_of_all_books }}.</h4>
       {% for item in cart %}
       <li>
         <ul>
