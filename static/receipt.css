@@ -53,7 +53,7 @@ header {
 
 .book-list {
     list-style-type: none;
-    padding: 0;
+    margin-bottom: 20px;
 }
 
 .book-item {
@@ -61,8 +61,14 @@ header {
     padding: 15px 0;
 }
 
-.book-details p {
-    margin: 5px 0;
+.book-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    flex: 1;
+    padding: 0 10px;
 }
 
 .no-books {

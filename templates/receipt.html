@@ -31,11 +31,17 @@
                 {% for item in cart_details %}
                     <li class="book-item">
                         <div class="book-details">
-                            <p><strong>Title:</strong> {{ item[0][1] }}</p>
-                            <p><strong>ISBN:</strong> {{ item[0][5] }}</p>
-                            <p><strong>Price:</strong> {{ item[0][6] }}</p>
-                            <p><strong>Quantity:</strong> {{ item[1] }}</p>
-                            <p><strong>Total Price:</strong> {{ item[2] }}</p>
+                            <div class="column">
+                                <p><strong>Title:</strong> {{ item[0][1] }}</p>
+                                <p><strong>ISBN:</strong> {{ item[0][5] }}</p>
+                            </div>
+                            <div class="column">
+                                <p><strong>Price:</strong> {{ item[0][6] }}</p>
+                                <p><strong>Quantity:</strong> {{ item[1] }}</p>
+                            </div>
+                            <div class="column">
+                                <p><strong>Total Price:</strong> {{ item[2] }}</p>
+                            </div>
                         </div>
                     </li>
                 {% endfor %}
