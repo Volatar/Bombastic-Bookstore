@@ -5,15 +5,16 @@ import secrets
 import sqlite3
 import requests
 from Inventory_chart import generate_bar_chart
-from flask import Flask, render_template, session, redirect, flash, url_for, request
+from flask import Flask, render_template, session, redirect, flash, url_for, request, jsonify
 from flask_session import Session
 from flask_paginate import Pagination, get_page_args
-
+import re
 from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from math import ceil
+from payment import CreditCard
 # from models import User
 
 app = Flask(__name__)
@@ -179,7 +180,7 @@ def book_details(title):
     return render_template("book_details.html", book_data=book_data, description=description)
 
 
-# Checkout
+# Cart
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     # Fetch the book title from the form data
@@ -198,8 +199,8 @@ def add_to_cart():
     # Debug statement
     print("Book added to cart:", book_title)
 
-    # Redirect to the checkout page after adding the book to the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after adding the book to the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/empty_cart', methods=['POST'])
@@ -208,8 +209,8 @@ def empty_cart():
     if 'cart' in session:
         session['cart'] = []
 
-    # Redirect to the checkout page after emptying the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after emptying the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/remove_from_cart', methods=['POST'])
@@ -221,8 +222,8 @@ def remove_from_cart():
     if 'cart' in session:
         session['cart'] = [item for item in session['cart'] if item != book_title]
 
-    # Redirect to the checkout page after removing the book from the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after removing the book from the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/remove_one_book', methods=['POST'])
@@ -234,8 +235,8 @@ def remove_one_book():
     if 'cart' in session and book_title in session['cart']:
         session['cart'].remove(book_title)
 
-    # Redirect to the checkout page after removing one book from the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after removing one book from the cart
+    return redirect(url_for('cart'))
 
 
 @app.route('/add_one_book', methods=['POST'])
@@ -247,12 +248,12 @@ def add_one_book():
     if 'cart' in session:
         session['cart'].append(book_title)
 
-    # Redirect to the checkout page after adding one book to the cart
-    return redirect(url_for('checkout'))
+    # Redirect to the cart page after adding one book to the cart
+    return redirect(url_for('cart'))
 
 
-@app.route('/checkout')
-def checkout():
+@app.route('/cart')
+def cart():
     # Retrieve the cart from the session
     cart_titles = session.get('cart', [])
 
@@ -272,8 +273,110 @@ def checkout():
             cart_details.append((book_info, count))
     conn.close()
 
-    # Render the checkout page with the cart data
-    return render_template('checkout.html', cart=cart_details)
+    # Render the cart page with the cart data
+    return render_template('cart.html', cart=cart_details)
+
+# Checkout
+@app.route('/checkout')
+def checkout():
+    cart_titles = session.get('cart', [])
+    cart_count = {}
+    for title in cart_titles:
+        cart_count[title] = cart_count.get(title, 0) + 1
+
+    cart_details = []
+    total_of_all_books = 0
+
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    for title, count in cart_count.items():
+        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
+        book_info = cursor.fetchone()
+        if book_info:
+            price_str = re.sub(r'[^\d.]', '', book_info[6])
+            price = float(price_str)
+            cart_details.append((book_info, count, price * count))
+            total_of_all_books += price * count
+    conn.close()
+
+    # Round up the total to the nearest cent
+    total_of_all_books = round(total_of_all_books, 2)
+
+    # Store cart details in session
+    session['cart_details'] = cart_details
+
+    return render_template('checkout.html', cart=cart_details, total_of_all_books=total_of_all_books)
+
+
+# Payment
+@app.route('/process_payment', methods=['POST'])
+def process_payment():
+    card_number = request.form['card_number']
+    expiry_date = request.form['expiry_date']
+    cvv = request.form['cvv']
+    card_holder_name = request.form['card_holder_name']
+
+    # Convert card_number to integer for validation
+    try:
+        card_number = int(card_number)
+    except ValueError:
+        # Invalid card number format
+        return jsonify({"passOrFail": "Fail"})
+
+    # Check if the credit card number is valid using CreditCard class
+    if CreditCard.isValid(card_number):
+        # Card is valid, proceed with payment processing
+        passOrFail = 'Pass'
+    else:
+        # Card is invalid
+        passOrFail = 'Fail'
+
+    return jsonify({"passOrFail": passOrFail})
+
+# Receipt Route
+@app.route('/receipt', methods=['POST'])
+def receipt():
+    cart_titles = session.get('cart', [])
+    cart_count = {}
+    for title in cart_titles:
+        cart_count[title] = cart_count.get(title, 0) + 1
+
+    cart_details = []
+    total_of_all_books = 0
+
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+    for title, count in cart_count.items():
+        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
+        book_info = cursor.fetchone()
+        if book_info:
+            price_str = re.sub(r'[^\d.]', '', book_info[6])
+            price = float(price_str) if price_str else 0
+            cart_details.append((book_info, count, price * count))
+            total_of_all_books += price * count
+    conn.close()
+
+    # Round up the total to the nearest cent
+    total_of_all_books = round(total_of_all_books, 2)
+
+    # Store cart details in session
+    session['cart_details'] = cart_details
+    
+    # Extract data from the form
+    book_titles_with_quantity = request.form.get('book_titles_with_quantity')
+    card_holder_name = request.form.get('card_holder_name')  # Corrected variable name
+    street = request.form.get('street')
+    city = request.form.get('city')
+    state = request.form.get('state')
+    postal_code = request.form.get('postal_code')
+    
+    # Pass the data to the receipt template
+    return render_template('receipt.html', book_titles_with_quantity=book_titles_with_quantity,
+                           total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
+                           street=street, city=city, state=state, postal_code=postal_code,
+                           cart_details=cart_details)
+
+
 
 
 if __name__ == "__main__":

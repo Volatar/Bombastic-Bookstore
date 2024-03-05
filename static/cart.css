@@ -1,0 +1,108 @@
+/* cart.css 
+    Colabrators
+    Stefan main structor of the website
+*/
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+}
+
+/* cart.css */
+
+/* Button group styles */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Form styles */
+.remove-all-form,
+.checkout-form,
+.remove-form,
+.add-form {
+  margin: 0;
+}
+
+/* Cart item styles */
+.cart-list {
+  list-style: none;
+  padding: 0;
+}
+
+.cart-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.book-details {
+  list-style: none;
+  padding: 0;
+}
+
+.book-details li {
+  margin-bottom: 5px;
+}
+
+/* Button styles */
+.remove-all-btn,
+.remove-btn,
+.remove-one-btn,
+.add-one-btn,
+.checkout-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.book-details {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.remove-all-btn:hover,
+.remove-btn:hover,
+.remove-one-btn:hover,
+.add-one-btn:hover,
+.checkout-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Form styles */
+.remove-all-form,
+.remove-form,
+.add-form,
+.checkout-form {
+  margin-top: 20px;
+}
+
+.remove-all-form,
+.checkout-form {
+  text-align: center;
+}
