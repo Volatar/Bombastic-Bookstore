@@ -1,10 +1,18 @@
+<!--
+    Colabrators
+    Stefan main structor of the website
+
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="text/javascript" src="/static/checkout.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='checkout.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='checkout.css') }}"
+    />
     <title>Checkout</title>
   </head>
   <body>
@@ -24,7 +32,13 @@
         </div>
         <div class="form-group">
           <label for="expiry_date">Expiry Date:</label>
-          <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YYYY" required />
+          <input
+            type="text"
+            id="expiry_date"
+            name="expiry_date"
+            placeholder="MM/YYYY"
+            required
+          />
         </div>
         <div class="form-group">
           <label for="cvv">CVV:</label>
@@ -32,12 +46,22 @@
         </div>
         <div class="form-group">
           <label for="card_holder_name">Card Holder Name:</label>
-          <input type="text" id="card_holder_name" name="card_holder_name" required />
+          <input
+            type="text"
+            id="card_holder_name"
+            name="card_holder_name"
+            required
+          />
         </div>
-  
+
         <!-- Hidden input field for total_of_all_books -->
-        <input type="hidden" id="total_of_all_books" name="total_of_all_books" value="{{ total_of_all_books }}" />
-        
+        <input
+          type="hidden"
+          id="total_of_all_books"
+          name="total_of_all_books"
+          value="{{ total_of_all_books }}"
+        />
+
         <!-- Add hidden input fields for other variables -->
         <div class="form-group">
           <label for="street">Street:</label>
@@ -55,30 +79,30 @@
           <label for="postal_code">Postal Code:</label>
           <input type="text" id="postal_code" name="postal_code" required />
         </div>
-  
+
         <button type="button" onclick="submitForm()">Verify Payment</button>
-  
+
         <p id="passOrFail" class="error-msg" style="color: red"></p>
-  
+
         <form class="receipt" id="receipt-form" action="/receipt" method="post">
           <button id="orderNowButton" style="display: none">Order Now</button>
         </form>
       </form>
-  
+
       <ul class="cart-summary">
-        <h4 class="total-label">The total is ${{ total_of_all_books }}.</h4>
+        <h4 class="total-label">The total is ${{ total_of_all_books }}</h4>
         {% for item in cart %}
         <li class="cart-item">
-            <ul class="item-details">
-                <div class="column">
-                  <li><strong>Title:</strong> {{ item[0][0] }}</li>
-                  <li><strong>Price:</strong> {{ item[0][6] }}</li>
-                </div>
-                <div class="column">
-                  <li><strong>Quantity:</strong> {{ item[0][7] }}</li>
-                  <li><strong>Quantity in Cart:</strong> {{ item[1] }}</li>
-                </div>
-            </ul>
+          <ul class="item-details">
+            <div class="column">
+              <li><strong>Title:</strong> {{ item[0][0] }}</li>
+              <li><strong>Price:</strong> {{ item[0][6] }}</li>
+            </div>
+            <div class="column">
+              <li><strong>Quantity:</strong> {{ item[0][7] }}</li>
+              <li><strong>Quantity in Cart:</strong> {{ item[1] }}</li>
+            </div>
+          </ul>
         </li>
         {% endfor %}
       </ul>

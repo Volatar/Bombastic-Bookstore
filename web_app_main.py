@@ -297,10 +297,13 @@ def checkout():
             total_of_all_books += price * count
     conn.close()
 
+    # Round up the total to the nearest cent
+    total_of_all_books = round(total_of_all_books, 2)
+
     # Store cart details in session
     session['cart_details'] = cart_details
 
-    return render_template('checkout.html', cart=cart_details, total_of_all_books=total_of_all_books,)
+    return render_template('checkout.html', cart=cart_details, total_of_all_books=total_of_all_books)
 
 
 # Payment
@@ -351,6 +354,9 @@ def receipt():
             total_of_all_books += price * count
     conn.close()
 
+    # Round up the total to the nearest cent
+    total_of_all_books = round(total_of_all_books, 2)
+
     # Store cart details in session
     session['cart_details'] = cart_details
     
@@ -367,6 +373,7 @@ def receipt():
                            total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
                            street=street, city=city, state=state, postal_code=postal_code,
                            cart_details=cart_details)
+
 
 
 if __name__ == "__main__":

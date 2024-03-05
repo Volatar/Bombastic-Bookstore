@@ -1,76 +1,78 @@
-/* receipt.css */
+/* receipt.css
+    Colabrators
+    Stefan main structor of the website
+*/
 
-/* Overall page styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 header {
-    text-align: center;
+  text-align: center;
 }
 
 /* Summary section styles */
 .summary {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .summary h2 {
-    color: #333;
+  color: #333;
 }
 
 .address,
 .card-holder {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .address h3,
 .card-holder h3 {
-    color: #666;
-    margin-bottom: 5px;
+  color: #666;
+  margin-bottom: 5px;
 }
 
 /* Books section styles */
 .books {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .books h2 {
-    color: #333;
-    margin-bottom: 15px;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .book-list {
-    list-style-type: none;
-    margin-bottom: 20px;
+  list-style-type: none;
+  margin-bottom: 20px;
 }
 
 .book-item {
-    border-bottom: 1px solid #ccc;
-    padding: 15px 0;
+  border-bottom: 1px solid #ccc;
+  padding: 15px 0;
 }
 
 .book-details {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .column {
-    flex: 1;
-    padding: 0 10px;
+  flex: 1;
+  padding: 0 10px;
 }
 
 .no-books {
-    color: red;
+  color: red;
 }

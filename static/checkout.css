@@ -1,6 +1,8 @@
-/* checkout.css */
+/* checkout.css
+    Colabrators
+    Stefan main structor of the website
+*/
 
-/* Overall page styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -56,10 +58,10 @@ button {
 }
 
 .cart-item {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 /* Column layout */

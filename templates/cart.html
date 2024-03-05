@@ -1,61 +1,69 @@
+<!--
+    Colabrators
+    Stefan main structor of the website
+
+-->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
-  <title>Cart</title>
-</head>
-<body>
-  <div class="container">
-    <h2>Cart:</h2>
-    <div class="button-group">
-      {% if cart %}
-      <form action="/empty_cart" method="post" class="remove-all-form">
-        <button type="submit" class="remove-all-btn">Remove All</button>
-      </form>
-      <form action="/checkout" class="checkout-form">
-        <button type="submit" class="checkout-btn">Go to Checkout</button>
-      </form>
-      {% endif %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='cart.css') }}"
+    />
+    <title>Cart</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Cart:</h2>
+      <div class="button-group">
+        {% if cart %}
+        <form action="/empty_cart" method="post" class="remove-all-form">
+          <button type="submit" class="remove-all-btn">Remove All</button>
+        </form>
+        <form action="/checkout" class="checkout-form">
+          <button type="submit" class="checkout-btn">Go to Checkout</button>
+        </form>
+        {% endif %}
+      </div>
+      <ul class="cart-list">
+        {% for book, count in cart %}
+        <li class="cart-item">
+          <ul class="book-details">
+            <div class="column">
+              <li><strong>Title:</strong> {{ book[0] }}</li>
+              <li><strong>Author:</strong> {{ book[1] }}</li>
+              <li><strong>Genre:</strong> {{ book[2] }}</li>
+            </div>
+            <div class="column">
+              <li><strong>Publisher:</strong> {{ book[3] }}</li>
+              <li><strong>Published Date:</strong> {{ book[4] }}</li>
+              <li><strong>ISBN:</strong> {{ book[5] }}</li>
+            </div>
+            <div class="column">
+              <li><strong>Price:</strong> {{ book[6] }}</li>
+              <li><strong>Quantity:</strong> {{ book[7] }}</li>
+              <li><strong>Quantity in Cart:</strong> {{ count }}</li>
+            </div>
+          </ul>
+          <div class="button-group">
+            <form action="/remove_from_cart" method="post" class="remove-form">
+              <input type="hidden" name="title" value="{{ book[0] }}" />
+              <button type="submit" class="remove-btn">Remove book</button>
+            </form>
+            <form action="/remove_one_book" method="post" class="remove-form">
+              <input type="hidden" name="title" value="{{ book[0] }}" />
+              <button type="submit" class="remove-one-btn">Remove One</button>
+            </form>
+            <form action="/add_one_book" method="post" class="add-form">
+              <input type="hidden" name="title" value="{{ book[0] }}" />
+              <button type="submit" class="add-one-btn">Add One</button>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
-    <ul class="cart-list">
-      {% for book, count in cart %}
-      <li class="cart-item">
-        <ul class="book-details">
-          <div class="column">
-            <li><strong>Title:</strong> {{ book[0] }}</li>
-            <li><strong>Author:</strong> {{ book[1] }}</li>
-            <li><strong>Genre:</strong> {{ book[2] }}</li>
-          </div>
-          <div class="column">
-            <li><strong>Publisher:</strong> {{ book[3] }}</li>
-            <li><strong>Published Date:</strong> {{ book[4] }}</li>
-            <li><strong>ISBN:</strong> {{ book[5] }}</li>
-          </div>
-          <div class="column">
-            <li><strong>Price:</strong> {{ book[6] }}</li>
-            <li><strong>Quantity:</strong> {{ book[7] }}</li>
-            <li><strong>Quantity in Cart:</strong> {{ count }}</li>
-          </div>
-        </ul>
-        <div class="button-group">
-          <form action="/remove_from_cart" method="post" class="remove-form">
-            <input type="hidden" name="title" value="{{ book[0] }}" />
-            <button type="submit" class="remove-btn">Remove book</button>
-          </form>
-          <form action="/remove_one_book" method="post" class="remove-form">
-            <input type="hidden" name="title" value="{{ book[0] }}" />
-            <button type="submit" class="remove-one-btn">Remove One</button>
-          </form>
-          <form action="/add_one_book" method="post" class="add-form">
-            <input type="hidden" name="title" value="{{ book[0] }}" />
-            <button type="submit" class="add-one-btn">Add One</button>
-          </form>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</body>
+  </body>
 </html>
