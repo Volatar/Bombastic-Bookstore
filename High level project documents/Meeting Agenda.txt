@@ -103,4 +103,4 @@ Matthew Report					Matthew
 Search bar and page				Daniel
 Sorting on inventory page		Daniel
 Database design					Tanner
-?								Stefan
+Unify CSS						Stefan
