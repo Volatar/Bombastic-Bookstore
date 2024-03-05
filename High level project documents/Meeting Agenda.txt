@@ -97,3 +97,10 @@ What happened to Matthew
 Search bar and page				Daniel
 Visualizations					Tanner
 checkout						Stefan
+
+3-5-24
+Matthew Report					Matthew
+Search bar and page				Daniel
+Sorting on inventory page		Daniel
+Database design					Tanner
+?								Stefan
