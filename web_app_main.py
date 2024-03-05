@@ -2,7 +2,8 @@
 # Flask Website v1
 
 import secrets
-import sqlite3, requests
+import sqlite3
+import requests
 from Inventory_chart import generate_bar_chart
 from flask import Flask, render_template, session, redirect, flash, url_for, request, jsonify
 from flask_session import Session
@@ -19,6 +20,7 @@ from payment import CreditCard
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+# Set our session object to save to the local filesystem. This is not suitable for production but works for now.
 app.config['SESSION_TYPE'] = 'filesystem'
 
 # Set the database URI for SQLite
@@ -78,9 +80,10 @@ def profile():
     return render_template('profile.html')
 
 
+# Book suggestions page, currently just shows all books in the db in order
 @app.route("/display/<int:page>")
 def display(page):
-    page_size = 27
+    page_size = 27  # number of books on one page
     offset = (page - 1) * page_size
 
     # Connect to database and execute query
@@ -93,10 +96,11 @@ def display(page):
     return render_template("display.html", books_data=books_data, current_page=page)
 
 
-# This functions adds a placeholder display page, accessed by logging in
+# This functions adds a placeholder display page, accessed by logging in. Currently, does not actually require a login.
 @app.route("/catalog")
 def inventory():
     return render_template('catalog.html', data_type='catalog Page')
+
 
 def get_inventory_data(offset=0, per_page=10):
     conn = sqlite3.connect('books.db')
@@ -114,9 +118,6 @@ def get_all_inventory_data():
     total_inventory_items = cursor.fetchone()[0]
     conn.close()
     return total_inventory_items
-
-# Dictionary to cache generated bar chart images
-chart_cache = {}
 
 
 @app.route('/catalog/<data_type>')
@@ -200,6 +201,7 @@ def add_to_cart():
 
     # Redirect to the cart page after adding the book to the cart
     return redirect(url_for('cart'))
+
 
 @app.route('/empty_cart', methods=['POST'])
 def empty_cart():
@@ -373,6 +375,7 @@ def receipt():
                            total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
                            street=street, city=city, state=state, postal_code=postal_code,
                            cart_details=cart_details)
+
 
 
 

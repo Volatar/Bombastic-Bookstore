@@ -85,3 +85,22 @@ Book info page					Tanner
 	API discussion
 Suggested books page			Tanner
 Inventory page					Stefan
+
+2-27-24
+Login work						Matthew
+Search bar and page				Daniel
+Book info page					Tanner
+cart							Stefan
+
+3-2-24
+What happened to Matthew
+Search bar and page				Daniel
+Visualizations					Tanner
+checkout						Stefan
+
+3-5-24
+Matthew Report					Matthew
+Search bar and page				Daniel
+Sorting on inventory page		Daniel
+Database design					Tanner
+Unify CSS						Stefan
