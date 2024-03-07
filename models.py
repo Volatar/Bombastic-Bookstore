@@ -4,14 +4,14 @@ import sqlalchemy.orm as so
 from werkzeug.security import generate_password_hash, check_password_hash
 from web_app_main import db
 from flask_login import UserMixin
-from web_app_main import login
+# from web_app_main import login
 
 
 # This loads the user ID from the User db on log in
 # It also seems to be related to the circular import issue
-@login.user_loader
-def load_user(user_id):
-    return db.session.query(User).get(int(user_id))
+# @login.user_loader
+# def load_user(user_id):
+    # return db.session.query(User).get(int(user_id))
 
 
 # This is what populates the User db when the migration script is generated

@@ -5,19 +5,19 @@ from flask import Flask, render_template, redirect, flash, url_for, request
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_login import LoginManager, current_user, login_user
+# from flask_login import LoginManager, current_user, login_user
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-login_manager = LoginManager(app)
+# login_manager = LoginManager(app)
 
 FLASK_APP = 'web_app_main.py'
 
 from forms import LoginForm
-from models import User
+# from models import User
 # These two have been moved lower as an attempted workaround for the circular import issue common in Flask
 # the workaround currently does not work
 # importing Users from models is the root of the problem
@@ -37,25 +37,35 @@ def home():
     # Change the file to see the changes in the file on the server
     return render_template("home.html", content=content)
 
+# Rolled back login to v1, this at least works
+@app.route('/login', methods=['Get', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' and request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('profile'))
+    return render_template('login.html', error=error)
 
 # This is the v2.1 Login function.
 # this checks the user's login credentials against the user db.
 # Leaving either/both fields blank gives an error message.
 # the flash message is a work in progress.
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('profile'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = db.session.scalar(
-            SQLAlchemy.select(User).where(User.username == form.username.data))
-        if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
-            return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('profile'))
-    return render_template('login.html', title='Sign In', form=form)
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+    # if current_user.is_authenticated:
+        # return redirect(url_for('profile'))
+    # form = LoginForm()
+    # if form.validate_on_submit():
+        # user = db.session.scalar(
+            # SQLAlchemy.select(User).where(User.username == form.username.data))
+        # if user is None or not user.check_password(form.password.data):
+            # flash('Invalid username or password')
+            # return redirect(url_for('login'))
+        # login_user(user, remember=form.remember_me.data)
+        # return redirect(url_for('profile'))
+    # return render_template('login.html', title='Sign In', form=form)
 
 
 # This functions adds a placeholder profile page, accessed by logging in
