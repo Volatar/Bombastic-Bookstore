@@ -104,3 +104,11 @@ Search bar and page				Daniel
 Sorting on inventory page		Daniel
 Database design					Tanner
 Unify CSS						Stefan
+
+3-9-24
+User profiles					Matthew
+Search bar and page				Daniel & Tanner
+Sorting on inventory page		Daniel
+Database design					Tanner
+Book details changes			Stefan
+Sprint 3 retrospective			All
