@@ -111,3 +111,4 @@ Search bar and page				Daniel & Tanner
 Sorting on inventory page		Daniel
 Database design					Tanner
 Book details changes			Stefan
+Sprint 3 retrospective			All
