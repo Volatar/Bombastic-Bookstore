@@ -17,51 +17,25 @@
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
-    <script type="text/javascript" src="/static/cart-box.js"></script>
+    <script type="text/javascript" src="/static/checkout-box.js"></script>
   </head>
   <body>
     <h2>Bombastic Books</h2>
     <p><a href="{{ url_for('login') }}">Login</a></p>
-    <div class="search-container">
-      <div class="search-by">
-        <h4>Search by</h4>
-        <button
-          class="search-option"
-          id="title"
-          data-placeholder="Search by Title"
-        >
-          Title
-        </button>
-        <br />
-        <button
-          class="search-option"
-          id="author"
-          data-placeholder="Search by Author"
-        >
-          Author
-        </button>
-        <br />
-        <button
-          class="search-option"
-          id="genre"
-          data-placeholder="Search by Genre"
-        >
-          Genre
-        </button>
-        <br />
-        <button
-          class="search-option"
-          id="price"
-          data-placeholder="Search by Price"
-        >
-          Price
-        </button>
-      </div>
-    </div>
+
     <div class="search-input">
-      <input type="text" id="searchKeyword" placeholder="Search by Title" />
-      <button id="searchButton">Search</button>
+      <form action="{{ url_for('search') }}" method="GET">
+      <input type="text" name="query" placeholder="Search">
+      <select name="search_type">
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="genre">Genre</option>
+    </select>
+    <button type="submit">Search</button>
+    </form>
+
     </div>
+
       <!-- Stefan's comment:
               To make this optimal, we are going to make this part OOP. This is just a layout explanation
               for later on to make implementing it a lot easier.
@@ -90,7 +64,7 @@
       <a href="display/1" class="see-all">View All</a>
     </div>
     <div class="shopping-cart">Shopping cart
-      <button class="cart-button">cart</button>
+      <button class="checkout-button">checkout</button>
 
     </div>
   </body>
