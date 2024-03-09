@@ -11,8 +11,7 @@
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
-
-
+    <script type="text/javascript" src="/static/cart-box.js"></script>
 <body>
 
   <a href="/" class="home-button">Home</a>
@@ -28,16 +27,15 @@
         <strong>Genre:</strong> {{ book_data[2] }}<br>
         <strong>ISBN:</strong> {{ book_data[5] }}<br>
         <strong>Price:</strong> {{ book_data[6] }}<br>
-
+        <strong>In stock: {{ book_data[7] }}</strong>
         <!-- Description from google api -->
         <h1>Book Description</h1>
         <p>{{ description }}</p>
+        <form action="/add_to_cart" method="POST">
+          <input type="hidden" name="title" value="{{ book_data[0] }}">
+          <button type="submit" class="add-to-cart-button">Add to Cart</button>
+        </form>
         <!-- Any other details we want to display -->
     </div>
-
-    <div class="shopping-cart">Shopping cart
-      <button class="checkout-button">Add to Cart</button>
-    </div>
-
 </body>
 </html>
