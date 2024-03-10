@@ -74,6 +74,7 @@ app.jinja_env.globals['url_exists'] = url_exists
 
 '''
 
+
 # This function gives us the current "home" page
 # This starter version runs locally, and the web browser URL is "http://127.0.0.1:5000/"
 @app.route("/")
@@ -309,6 +310,7 @@ def cart():
     # Render the cart page with the cart data
     return render_template('cart.html', cart=cart_details)
 
+
 # Checkout
 @app.route('/checkout')
 def checkout():
@@ -365,6 +367,7 @@ def process_payment():
         passOrFail = 'Fail'
 
     return jsonify({"passOrFail": passOrFail})
+
 
 # Receipt Route
 @app.route('/receipt', methods=['POST'])
@@ -447,7 +450,6 @@ def search():
 
     # may need to change to redirect to inventory page
     return render_template('SearchResults.html', results=results, search_query=query)
-
 
 
 if __name__ == "__main__":
