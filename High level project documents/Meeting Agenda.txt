@@ -114,6 +114,8 @@ Book details changes			Stefan
 Sprint 3 retrospective			All
 
 3-19-24
-Search bar and page				Daniel and Tanner
+Search page						Tanner
+Search bar						Daniel
+Inventory filters				Daniel
 Login rebuild					Matthew
 Cover fix						Stefan
