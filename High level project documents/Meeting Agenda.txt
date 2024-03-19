@@ -112,3 +112,8 @@ Sorting on inventory page		Daniel
 Database design					Tanner
 Book details changes			Stefan
 Sprint 3 retrospective			All
+
+3-19-24
+Search bar and page				Daniel and Tanner
+Login rebuild					Matthew
+Cover fix						Stefan
