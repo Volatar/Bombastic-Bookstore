@@ -5,16 +5,15 @@ import secrets
 import sqlite3
 import requests
 from Inventory_chart import generate_bar_chart
-from flask import Flask, render_template, session, redirect, flash, url_for, request, jsonify
+from flask import Flask, render_template, session, redirect, flash, url_for, request
 from flask_session import Session
 from flask_paginate import Pagination, get_page_args
-import re
+
 from forms import LoginForm
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from math import ceil
-from payment import CreditCard
 # from models import User
 
 app = Flask(__name__)
@@ -41,40 +40,6 @@ chart_cache = {}
 Session(app)
 
 
-'''
-This checks for all of the image if no image is presented then it will
-load the no image
-
-How the HTML will look when implementing
-{% set cover_url = 'https://covers.openlibrary.org/b/title/' + book[0] + '-L.jpg' %}
-{% if cover_url is defined %}
-    {% if url_exists(cover_url) %}
-        <img src="{{ cover_url }}" alt="Book Cover" style="min-width: 100px; min-height: 150px;">
-    {% else %}
-        <img src="../static/images/coverNotFound.png" alt="Book Cover" style="min-width: 100px; min-height: 150px;">
-    {% endif %}
-{% else %}
-    <img src="../static/images/coverNotFound.png" alt="Book Cover" style="min-width: 100px; min-height: 150px;">
-{% endif %}
-
-from requests.exceptions import ConnectionError
-
-def url_exists(url):
-    try:
-        response = requests.get(url, stream=True)  # Shorter timeout set to 1 second
-        if response.status_code == 200:
-            content_type = response.headers.get('content-type')
-            if content_type is not None and content_type.startswith('image/'):
-                return True
-        return False
-    except ConnectionError:
-        return False
-# Add the url_exists function to the Jinja2 environment
-app.jinja_env.globals['url_exists'] = url_exists
-
-'''
-
-
 # This function gives us the current "home" page
 # This starter version runs locally, and the web browser URL is "http://127.0.0.1:5000/"
 @app.route("/")
@@ -84,7 +49,7 @@ def home():
     cursor = conn.cursor()
 
     # limiting query to just 25 for home page
-    cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT 9")
     books_data = cursor.fetchall()
 
     # Close the database connection
@@ -123,7 +88,7 @@ def display(page):
     # Connect to database and execute query
     conn = sqlite3.connect('books.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT ? OFFSET ?", (page_size, offset))
+    cursor.execute("SELECT title, author, isbn, price FROM books LIMIT ? OFFSET ?", (page_size, offset))
     books_data = cursor.fetchall()
     conn.close()
 
@@ -214,7 +179,7 @@ def book_details(title):
     return render_template("book_details.html", book_data=book_data, description=description)
 
 
-# Cart
+# Checkout
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
     # Fetch the book title from the form data
@@ -233,8 +198,8 @@ def add_to_cart():
     # Debug statement
     print("Book added to cart:", book_title)
 
-    # Redirect to the cart page after adding the book to the cart
-    return redirect(url_for('cart'))
+    # Redirect to the checkout page after adding the book to the cart
+    return redirect(url_for('checkout'))
 
 
 @app.route('/empty_cart', methods=['POST'])
@@ -243,8 +208,8 @@ def empty_cart():
     if 'cart' in session:
         session['cart'] = []
 
-    # Redirect to the cart page after emptying the cart
-    return redirect(url_for('cart'))
+    # Redirect to the checkout page after emptying the cart
+    return redirect(url_for('checkout'))
 
 
 @app.route('/remove_from_cart', methods=['POST'])
@@ -256,8 +221,8 @@ def remove_from_cart():
     if 'cart' in session:
         session['cart'] = [item for item in session['cart'] if item != book_title]
 
-    # Redirect to the cart page after removing the book from the cart
-    return redirect(url_for('cart'))
+    # Redirect to the checkout page after removing the book from the cart
+    return redirect(url_for('checkout'))
 
 
 @app.route('/remove_one_book', methods=['POST'])
@@ -269,8 +234,8 @@ def remove_one_book():
     if 'cart' in session and book_title in session['cart']:
         session['cart'].remove(book_title)
 
-    # Redirect to the cart page after removing one book from the cart
-    return redirect(url_for('cart'))
+    # Redirect to the checkout page after removing one book from the cart
+    return redirect(url_for('checkout'))
 
 
 @app.route('/add_one_book', methods=['POST'])
@@ -282,12 +247,12 @@ def add_one_book():
     if 'cart' in session:
         session['cart'].append(book_title)
 
-    # Redirect to the cart page after adding one book to the cart
-    return redirect(url_for('cart'))
+    # Redirect to the checkout page after adding one book to the cart
+    return redirect(url_for('checkout'))
 
 
-@app.route('/cart')
-def cart():
+@app.route('/checkout')
+def checkout():
     # Retrieve the cart from the session
     cart_titles = session.get('cart', [])
 
@@ -307,116 +272,12 @@ def cart():
             cart_details.append((book_info, count))
     conn.close()
 
-    # Render the cart page with the cart data
-    return render_template('cart.html', cart=cart_details)
+    # Render the checkout page with the cart data
+    return render_template('checkout.html', cart=cart_details)
 
-
-# Checkout
-@app.route('/checkout')
-def checkout():
-    cart_titles = session.get('cart', [])
-    cart_count = {}
-    for title in cart_titles:
-        cart_count[title] = cart_count.get(title, 0) + 1
-
-    cart_details = []
-    total_of_all_books = 0
-
-    conn = sqlite3.connect('books.db')
-    cursor = conn.cursor()
-    for title, count in cart_count.items():
-        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
-        book_info = cursor.fetchone()
-        if book_info:
-            price_str = re.sub(r'[^\d.]', '', book_info[6])
-            price = float(price_str)
-            cart_details.append((book_info, count, price * count))
-            total_of_all_books += price * count
-    conn.close()
-
-    # Round up the total to the nearest cent
-    total_of_all_books = round(total_of_all_books, 2)
-
-    # Store cart details in session
-    session['cart_details'] = cart_details
-
-    return render_template('checkout.html', cart=cart_details, total_of_all_books=total_of_all_books)
-
-
-# Payment
-@app.route('/process_payment', methods=['POST'])
-def process_payment():
-    card_number = request.form['card_number']
-    expiry_date = request.form['expiry_date']
-    cvv = request.form['cvv']
-    card_holder_name = request.form['card_holder_name']
-
-    # Convert card_number to integer for validation
-    try:
-        card_number = int(card_number)
-    except ValueError:
-        # Invalid card number format
-        return jsonify({"passOrFail": "Fail"})
-
-    # Check if the credit card number is valid using CreditCard class
-    if CreditCard.isValid(card_number):
-        # Card is valid, proceed with payment processing
-        passOrFail = 'Pass'
-    else:
-        # Card is invalid
-        passOrFail = 'Fail'
-
-    return jsonify({"passOrFail": passOrFail})
-
-
-# Receipt Route
-@app.route('/receipt', methods=['POST'])
-def receipt():
-    cart_titles = session.get('cart', [])
-    cart_count = {}
-    for title in cart_titles:
-        cart_count[title] = cart_count.get(title, 0) + 1
-
-    cart_details = []
-    total_of_all_books = 0
-
-    conn = sqlite3.connect('books.db')
-    cursor = conn.cursor()
-    for title, count in cart_count.items():
-        cursor.execute("SELECT * FROM books WHERE title = ?", (title,))
-        book_info = cursor.fetchone()
-        if book_info:
-            price_str = re.sub(r'[^\d.]', '', book_info[6])
-            price = float(price_str) if price_str else 0
-            cart_details.append((book_info, count, price * count))
-            total_of_all_books += price * count
-    conn.close()
-
-    # Round up the total to the nearest cent
-    total_of_all_books = round(total_of_all_books, 2)
-
-    # Store cart details in session
-    session['cart_details'] = cart_details
-    
-    # Extract data from the form
-    book_titles_with_quantity = request.form.get('book_titles_with_quantity')
-    card_holder_name = request.form.get('card_holder_name')  # Corrected variable name
-    street = request.form.get('street')
-    city = request.form.get('city')
-    state = request.form.get('state')
-    postal_code = request.form.get('postal_code')
-    
-    # Pass the data to the receipt template
-    return render_template('receipt.html', book_titles_with_quantity=book_titles_with_quantity,
-                           total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
-                           street=street, city=city, state=state, postal_code=postal_code,
-                           cart_details=cart_details)
-
-
-# Search Functions
+#Search Functions######################################
 # Configuration
 app.config['search'] = 'search'
-
 
 # SQLite Database Connection
 def get_db_connection():
@@ -425,32 +286,38 @@ def get_db_connection():
     return conn
 
 
-# Search Request
+#Search Request
 @app.route('/search')
 def search():
     query = request.args.get('query')
     search_type = request.args.get('search_type')
 
+    page = int(request.args.get('page', 1))
+    items_per_page = 8
+
     if not query or not search_type:
-        return render_template('SearchPage.html')
+        return render_template('SearchResults.html', search_query=query, search_type=search_type)
+
+    offset = (page - 1) * items_per_page
 
     conn = get_db_connection()
     cursor = conn.cursor()
     # Can add more variables to the search bar here
     if search_type == 'title':
-        cursor.execute("SELECT * FROM books WHERE Title LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT * FROM books WHERE Title LIKE ? LIMIT ? OFFSET ?",
+                       ('%' + query + '%', items_per_page, offset))
     elif search_type == 'author':
-        cursor.execute("SELECT Title FROM books WHERE Author LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT Title FROM books WHERE Author LIKE ? LIMIT ? OFFSET ?",
+                       ('%' + query + '%', items_per_page, offset))
     elif search_type == 'genre':
-        cursor.execute("SELECT Title FROM books WHERE Genre LIKE ?", ('%' + query + '%',))
-
+        cursor.execute("SELECT Title FROM books WHERE Genre LIKE ? LIMIT ? OFFSET ?",
+                       ('%' + query + '%', items_per_page, offset))
     results = cursor.fetchall()
 
     conn.close()
 
     # may need to change to redirect to inventory page
-    return render_template('SearchResults.html', results=results, search_query=query)
-
+    return render_template('SearchResults.html', results=results, search_query=query, search_type=search_type, current_page=page)
 
 if __name__ == "__main__":
     app.run(debug=True)
