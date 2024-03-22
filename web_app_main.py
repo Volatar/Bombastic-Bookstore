@@ -135,6 +135,9 @@ def display(page):
 
     return render_template("display.html", books_data=books_data, current_page=page, BooksWithNoCover=books_with_no_cover)
 
+@app.route("/admin")
+def display_admin():
+    return render_template("admin.html")
 
 # This functions adds a placeholder display page, accessed by logging in. Currently, does not actually require a login.
 @app.route("/catalog")
