@@ -119,3 +119,10 @@ Search bar						Daniel
 Inventory filters				Daniel
 Login rebuild					Matthew
 Cover fix						Stefan
+
+3-23-24
+Search page						Tanner
+Visualizations?					Tanner
+Inventory filters				Daniel
+Login refactor					Matthew
+Admin page						Stefan
