@@ -398,6 +398,7 @@ def receipt():
             cart_details.append((book_info, count, price * count))
             total_of_all_books += price * count
     conn.close()
+    empty_cart()
 
     # Round up the total to the nearest cent
     total_of_all_books = round(total_of_all_books, 2)
