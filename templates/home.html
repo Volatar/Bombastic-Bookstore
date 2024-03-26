@@ -22,19 +22,16 @@
   <body>
     <h2>Bombastic Books</h2>
     <p><a href="{{ url_for('login') }}">Login</a></p>
-
-    <div class="search-input">
-      <form action="{{ url_for('search') }}" method="GET">
+    <h1>Book Search</h1>
+    <form action="{{ url_for('search') }}" method="GET">
       <input type="text" name="query" placeholder="Search">
-      <select name="search_type">
-        <option value="title">Title</option>
-        <option value="author">Author</option>
-        <option value="genre">Genre</option>
-    </select>
-    <button type="submit">Search</button>
+        <select name="search_type">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="genre">Genre</option>
+        </select>
+      <button type="submit">Search</button>
     </form>
-
-    </div>
       <!-- Stefan's comment:
               To make this optimal, we are going to make this part OOP. This is just a layout explanation
               for later on to make implementing it a lot easier.
