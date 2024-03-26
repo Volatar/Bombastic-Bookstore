@@ -425,31 +425,78 @@ def get_db_connection():
     return conn
 
 
-# Search Request
+#Search Request
 @app.route('/search')
 def search():
     query = request.args.get('query')
     search_type = request.args.get('search_type')
 
     if not query or not search_type:
-        return render_template('SearchPage.html')
+        return render_template('home.html')
 
     conn = get_db_connection()
     cursor = conn.cursor()
     # Can add more variables to the search bar here
     if search_type == 'title':
-        cursor.execute("SELECT * FROM books WHERE Title LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT DISTINCT * FROM books WHERE Title LIKE ?", ('%' + query + '%',))
     elif search_type == 'author':
-        cursor.execute("SELECT Title FROM books WHERE Author LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT DISTINCT Title FROM books WHERE Author LIKE ?", ('%' + query + '%',))
     elif search_type == 'genre':
-        cursor.execute("SELECT Title FROM books WHERE Genre LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT DISTINCT Title FROM books WHERE Genre LIKE ?", ('%' + query + '%',))
 
     results = cursor.fetchall()
-
     conn.close()
-
     # may need to change to redirect to inventory page
     return render_template('SearchResults.html', results=results, search_query=query)
+# Home Page Route
+@app.route('/')
+def index():
+    return render_template('home.html')
+
+# Function to fetch filtered inventory from the database
+def fetch_filtered_inventory(filters):
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    query = "SELECT DISTINCT * FROM books WHERE 1=1"
+    params = []
+
+    # Construct the SQL query based on the provided filters
+    if 'title' in filters:
+        query += " AND title LIKE ?"
+        params.append('%' + filters['title'] + '%')
+
+    if 'category' in filters:
+        query += " AND category = ?"
+        params.append(filters['category'])
+
+    if 'genre' in filters:
+        query += " AND genre = ?"
+        params.append(filters['genre'])
+
+    if 'author' in filters:
+        query += " AND author LIKE ?"
+        params.append('%' + filters['author'] + '%')
+
+    if 'publisher' in filters:
+        query += " AND publisher LIKE ?"
+        params.append('%' + filters['publisher'] + '%')
+
+    if 'price' in filters:
+        query += " AND price <= ?"
+        params.append(filters['price'])
+
+    cursor.execute(query, params)
+    result = cursor.fetchall()
+
+    conn.close()
+    return result
+
+@app.route('/filter_inventory', methods=['POST'])
+def filter_inventory():
+    data = request.json
+    filtered_inventory = fetch_filtered_inventory(data)
+    return jsonify(filtered_inventory)
 
 
 if __name__ == "__main__":
