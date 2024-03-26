@@ -46,8 +46,16 @@
       </nav>
     {% endif %}
 
-
-
+    <form action="{{ url_for('filter_inventory') }}" method="GET">
+    <form id="filterForm">
+      <input type="text" name="filter" placeholder="Enter Filter">
+        <select name="search_filter">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="genre">Genre</option>
+        </select>
+      <button type="submit">Search</button>
+    </form>
 
     <div id="data-container">
       {% if data_type %}
