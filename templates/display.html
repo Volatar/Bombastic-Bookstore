@@ -17,7 +17,18 @@
 
   <!-- Button to return home -->
     <a href="/" class="home-button">Home</a>
-
+  
+    <h1>Book Search</h1>
+    <form action="{{ url_for('search') }}" method="GET">
+      <input type="text" name="query" placeholder="Search">
+        <select name="search_type">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="genre">Genre</option>
+        </select>
+      <button type="submit">Search</button>
+    </form>  
+    
     </div>
       <!-- Stefan's comment:
               To make this optimal, we are going to make this part OOP. This is just a layout explanation
