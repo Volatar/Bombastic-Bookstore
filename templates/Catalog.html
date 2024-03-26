@@ -47,7 +47,7 @@
     {% endif %}
 
     <!-- Filter bar with drop-down selection -->
-    <form action="{{ url_for('filter_inventory') }}" method="GET">
+    <form action="{{ url_for('filter_inventory') }}" method="POST">
     <form id="filterForm">
       <input type="text" name="filter" placeholder="Enter Filter">
         <select name="search_filter">
@@ -58,7 +58,7 @@
       <button type="submit">Search</button>
       </form>
     </form>
-
+  <!-- Order display -->
     <div id="data-container">
       {% if data_type %}
           <h3>{{ data_type.capitalize() }}</h3>

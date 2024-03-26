@@ -21,22 +21,15 @@
             jsonData[key] = value;
         });
 
-        // Send AJAX request to Flask backend
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/filter_inventory");
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                // Update HTML with filtered inventory data
-                var filteredInventory = JSON.parse(xhr.responseText);
-                // Code to update HTML with filtered inventory data goes here
-            } else {
-                console.error("Error:", xhr.statusText);
-            }
-        };
-        xhr.onerror = function() {
-            console.error("Network Error");
-        };
-        xhr.send(JSON.stringify(jsonData));
-    });
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/filter_inventory");
+            xhr.setRequestHeader("Content-Type", "application/json"); // Set the Content-Type header
+            xhr.onload = function() {
+    if (xhr.status === 200) {
+        // Handle successful response
+    } else {
+        // Handle error
+    }
+};
+xhr.send(JSON.stringify(jsonData));
 </script>
