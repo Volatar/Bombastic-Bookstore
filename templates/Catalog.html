@@ -46,18 +46,6 @@
       </nav>
     {% endif %}
 
-    <!-- Filter bar with drop-down selection -->
-    <form action="{{ url_for('filter_inventory') }}" method="POST">
-    <form id="filterForm">
-      <input type="text" name="filter" placeholder="Enter Filter">
-        <select name="search_filter">
-          <option value="title">Title</option>
-          <option value="author">Author</option>
-          <option value="genre">Genre</option>
-        </select>
-      <button type="submit">Search</button>
-      </form>
-    </form>
   <!-- Order display -->
     <div id="data-container">
       {% if data_type %}
@@ -89,6 +77,17 @@
       {% endif %}
       {% if data_type == 'inventory' %}
       <!-- Display inventory data here -->
+        <form action="{{ url_for('filter_inventory') }}" method="GET">
+          <form id="filterForm">
+            <input type="text" name="filter" placeholder="Enter Filter">
+              <select name="search_filter">
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="genre">Genre</option>
+              </select>
+            <button type="submit">Search</button>
+          </form>
+        </form>
       <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
       {% endif %}
   {% else %}
