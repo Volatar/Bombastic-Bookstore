@@ -1,0 +1,94 @@
+<!--
+    Colabrators
+    Stefan main structor of the website
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+{% extends "base.html" %}
+
+{% block content %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='catalog.css') }}"
+    />
+  </head>
+  <body>
+    <h2>Bombastic Books Inventory</h2>
+    <nav>
+      <a href="{{ url_for('show_inventory', data_type='sales') }}">Sales</a>
+      <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
+      <a href="{{ url_for('show_inventory', data_type='inventory') }}"
+        >Inventory</a
+      >
+    </nav>
+
+    <!-- Pagination links -->
+    {% if pagination %}
+      <nav class="pagination">
+        {% if pagination.has_prev %}
+          <a class="page-link" href="{{ url_for('show_inventory', data_type=data_type, page=pagination.page - 1) }}">Previous</a>
+        {% endif %}
+        
+        {% for page_num in pagination.pages %}
+          {% if page_num %}
+            <a class="page-link" href="{{ url_for('show_inventory', data_type=data_type, page=page_num) }}">{{ page_num }}</a>
+          {% else %}
+            <span class="ellipsis">...</span>
+          {% endif %}
+        {% endfor %}
+        
+        {% if pagination.has_next %}
+          <a class="page-link" href="{{ url_for('show_inventory', data_type=data_type, page=pagination.page + 1) }}">Next</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+
+
+
+
+    <div id="data-container">
+      {% if data_type %}
+          <h3>{{ data_type.capitalize() }}</h3>
+          <p>{{ data }}</p>
+          {% if data_type == 'order' %}
+          <div>
+              <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
+              <button id="searchButton" book_title="">Search</button>
+              <button>+</button>
+              <button>-</button>
+        {# This is a Jinja2 comment block
+        <!-- When the Search bar is done we can implement this
+                        if ISBN != ''
+                            <div class="info">
+                                <p><strong>Title:</strong> {{ data.get('title', '') }}</p>
+                                <p><strong>Author:</strong> {{ data.get('author', '') }}</p>
+                                <p><strong>Categories:</strong> {{ data.get('categories', '') }}</p>
+                                <p><strong>Genres:</strong> {{ data.get('genres', '') }}</p>
+                                <p><strong>Publisher:</strong> {{ data.get('publisher', '') }}</p>
+                                <p><strong>Publish Date:</strong> {{ data.get('publish_date', '') }}</p>
+                                <p><strong>ISBN:</strong> {{ data.get('isbn', '') }}</p>
+                                <p><strong>Price:</strong> {{ data.get('price', '') }}</p>
+                            </div>
+                        endif
+                    -->
+        #}
+      </div>
+      {% endif %}
+      {% if data_type == 'inventory' %}
+      <!-- Display inventory data here -->
+      <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
+      {% endif %}
+  {% else %}
+      <!-- Display other data types here -->
+      <p>{{ data_type.capitalize() }}: {{ data }}</p>
+  {% endif %}
+</div>
+</body>
+{% endblock %}
+</html>

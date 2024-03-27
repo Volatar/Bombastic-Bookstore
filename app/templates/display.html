@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bombastic Books</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='home.css') }}"
+    />
+    <script type="text/javascript" src="/static/search-option.js"></script>
+    <script type="text/javascript" src="/static/book-details.js"></script>
+    <script type="text/javascript" src="/static/checkout-box.js"></script>
+  </head>
+  <body>
+
+  <!-- Button to return home -->
+    <a href="/" class="home-button">Home</a>
+
+    </div>
+      <!-- Stefan's comment:
+              To make this optimal, we are going to make this part OOP. This is just a layout explanation
+              for later on to make implementing it a lot easier.
+      -->
+    <strong>Our Books</strong>
+    <div class="book-details">
+      {% set index = 0 %}
+      {% for book in books_data %}
+      <div class="book-card">
+          <ul>
+              {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book[0] + '-L.jpg' %}
+              <img src="{{ cover_url }}" alt="Book Cover">
+              <strong>Title:</strong> {{ book[0] }}<br>
+              <strong>Author:</strong> {{ book[1] }}<br>
+              <strong>ISBN:</strong> {{ book[2] }}<br>
+              <strong>Price:</strong> {{ book[3] }}<br>
+              <strong>In stock: {{ book[4] }}</strong><br>
+              <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
+              <!-- Add to Cart form -->
+              <form action="/add_to_cart" method="POST">
+                <input type="hidden" name="index" value="{{ loop.index - 1 }}">
+                <input type="hidden" name="title" value="{{ book[0] }}">
+                <button type="submit" class="add-to-cart-button">Add to Cart</button>
+            </form>
+            
+          </ul>
+      </div>
+      {% set index = index + 1 %}
+      {% endfor %}
+      
+    </div>
+    <div class="pagination">
+        {% if current_page > 1 %}
+            <a href="{{ url_for('display', page=current_page - 1) }}">Previous Page</a>
+        {% endif %}
+        <a href="{{ url_for('display', page=current_page + 1) }}">Next Page</a>
+    </div>
+    <div class="shopping-cart">Shopping cart
+
+      <!-- Button two -->
+      <a href="/cart" class="cart-button">cart</a>
+  </div>
+  </body>
+</html>
