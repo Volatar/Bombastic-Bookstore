@@ -1,0 +1,135 @@
+Agenda 
+
+1-20-24
+Talk about everyones background in software development
+Plan for next meeting
+
+1-23-24
+Go over notes on project plan
+Decide on web framework we will use
+Decide on visualization library
+
+1-27-24
+Fuzzy Search library					Daniel
+Visualization library choice			Matthew
+Flask vs Django							Tanner
+Book database							Stefan
+Project Plan							Taylor
+Assign stuff for this half week
+
+1-30-24
+Basic Flask app							Matthew
+1000 books web scrape					Tanner
+Assignments:
+	Home Page (not index)				Stefan
+	Database design						Daniel
+	Pull from openLibrary API			Tanner
+	Login page							Matthew
+	
+2-3-24
+Front page										Stefan
+Database design									Daniel
+pull 1000 books data from api					Tanner
+Login page										Matthew
+
+Assignments:
+	Add login link to home page					Matthew?	
+		switch to profile link when logged in
+		Research flask login system
+	Create Database script						Daniel
+	Enhance API search with database fields		Tanner
+		Need to pull data such as ISBN
+		
+2-10-24
+API update				Tanner
+Database				Daniel
+Login					Matthew
+Front Page				Stefan
+Sprint Retrospective	All
+
+Assignments:
+	Database script continued 		Daniel
+	Continuing login stuff			Matthew
+
+2-13-24
+Database script continued 		Daniel
+Continuing login stuff			Matthew
+What's Tanner been doing?		Tanner
+What's Stefan been doing?		Stefan
+
+Assignments:
+	Database script					Tanner
+	Login continued (SQL Alchemy)	Matthew
+	Login CSS						Stefan
+	Sort out SQLite problem			Daniel
+	
+2-17-24
+SQLite problem					Daniel
+Database script finished		Daniel
+Continuing login stuff			Matthew
+Login CSS						Stefan
+Search Bar and page				Daniel
+Book info page					Tanner
+
+2-20-24
+Login work						Matthew
+Search bar and page				Daniel
+Book info page					Tanner
+Suggested books page			Tanner
+Inventory page					Stefan
+
+2-24-24
+Login work						Matthew
+Search bar and page				Daniel
+Book info page					Tanner
+	API discussion
+Suggested books page			Tanner
+Inventory page					Stefan
+
+2-27-24
+Login work						Matthew
+Search bar and page				Daniel
+Book info page					Tanner
+cart							Stefan
+
+3-2-24
+What happened to Matthew
+Search bar and page				Daniel
+Visualizations					Tanner
+checkout						Stefan
+
+3-5-24
+Matthew Report					Matthew
+Search bar and page				Daniel
+Sorting on inventory page		Daniel
+Database design					Tanner
+Unify CSS						Stefan
+
+3-9-24
+User profiles					Matthew
+Search bar and page				Daniel & Tanner
+Sorting on inventory page		Daniel
+Database design					Tanner
+Book details changes			Stefan
+Sprint 3 retrospective			All
+
+3-19-24
+Search page						Tanner
+Search bar						Daniel
+Inventory filters				Daniel
+Login rebuild					Matthew
+Cover fix						Stefan
+
+3-23-24
+Search page						Tanner
+Visualizations?					Tanner
+Inventory filters				Daniel
+Login refactor					Matthew
+Admin page						Stefan
+
+3-26-24
+Visualizations					Tanner
+Inventory filters				Daniel
+Sales and orders pages			Daniel
+Login refactor					Matthew
+Empty cart on checkout			Stefan
