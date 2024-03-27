@@ -134,3 +134,11 @@ div:last-child {
   font-size: 14px;
   color: #555;
 }
+
+.results-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between; /* Distribute items evenly along the row */
+    list-style: none;
+    padding: 0;
+}

@@ -104,3 +104,32 @@ Search bar and page				Daniel
 Sorting on inventory page		Daniel
 Database design					Tanner
 Unify CSS						Stefan
+
+3-9-24
+User profiles					Matthew
+Search bar and page				Daniel & Tanner
+Sorting on inventory page		Daniel
+Database design					Tanner
+Book details changes			Stefan
+Sprint 3 retrospective			All
+
+3-19-24
+Search page						Tanner
+Search bar						Daniel
+Inventory filters				Daniel
+Login rebuild					Matthew
+Cover fix						Stefan
+
+3-23-24
+Search page						Tanner
+Visualizations?					Tanner
+Inventory filters				Daniel
+Login refactor					Matthew
+Admin page						Stefan
+
+3-26-24
+Visualizations					Tanner
+Inventory filters				Daniel
+Sales and orders pages			Daniel
+Login refactor					Matthew
+Empty cart on checkout			Stefan
