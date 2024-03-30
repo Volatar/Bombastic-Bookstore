@@ -155,10 +155,20 @@ def get_all_inventory_data():
 
 
 @app.route('/catalog/<data_type>')
+def display_catalog(data_type):
+    if data_type == 'sales':
+        return display_sales(data_type)
+    elif data_type == 'inventory':
+        return show_inventory(data_type)
+    elif data_type == 'orders':
+        return display_orders(data_type)
+    else:
+        return "Invalid data type"
+
 def show_inventory(data_type):
     data = {
         'sales': 'This is the sales data.',
-        'order': 'This is the Order page.',
+        'orders': 'This is the Order page.',
         'inventory': 'This is the inventory data.'
     }
 
@@ -191,6 +201,44 @@ def show_inventory(data_type):
     return render_template('catalog.html', data_type=data_type, data=data.get(data_type, ''))
 
 
+#New Code from here
+def display_sales(data_type):
+    # Connect to the database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # Select data based on data_type
+    if data_type == 'sales':
+        cursor.execute("SELECT purchase_id, customer_id, purchase_date, isbn, amount, street, city, state, zip, last_4_credit_card FROM purchases")
+
+    # Fetch all the rows
+    rows = cursor.fetchall()
+
+    # Close the database connection
+    conn.close()
+
+    # Render the HTML template with the data
+    return render_template('catalog.html', data_type=data_type, rows=rows)
+
+def display_orders(data_type):
+    # Connect to the database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # Select data based on data_type
+    if data_type == 'orders':
+        cursor.execute("SELECT purchase_id, customer_id, purchase_date, isbn, amount, street, city, state, zip, last_4_credit_card FROM orders")
+
+    # Fetch all the rows
+    rows = cursor.fetchall()
+
+    # Close the database connection
+    conn.close()
+
+    # Render the HTML template with the data
+    return render_template('catalog.html', data_type=data_type, rows=rows)
+
+# to here
 @app.route("/book_details/<title>")
 def book_details(title):
     # Fetch book details from your database
