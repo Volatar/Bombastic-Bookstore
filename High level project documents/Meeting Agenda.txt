@@ -133,3 +133,11 @@ Inventory filters				Daniel
 Sales and orders pages			Daniel
 Login refactor					Matthew
 Empty cart on checkout			Stefan
+
+3-30-24
+Visualizations					Tanner
+What's Daniel been up to?		Daniel
+	Missing stuff from agile board?
+User profiles					Matthew
+Testing plan					Stefan
+Sprint Retrospective]
