@@ -44,4 +44,5 @@ You are now ready to run the application.
 
 # How to run the web application
 
-To run the web app, run `web_app_main.py` and connect to the localhost ip it provides in it's output with your web browser.
+To run the web app, type `flask run` into the PyCharm Terminal when it is at the root project folder and connect to the localhost ip it provides in it's output with your web browser.
+To stop the program, press ctrl-C in the same terminal.
