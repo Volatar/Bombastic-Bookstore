@@ -19,25 +19,21 @@ import re
 chart_cache = {}
 
 
-@app.route("/")
+@app.route('/')
 def home():
     # Connect to database
     conn = sqlite3.connect('books.db')
     cursor = conn.cursor()
 
-    # Fetching books data from the database
+    # limiting query to just 25 for home page
     cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
     books_data = cursor.fetchall()
 
     # Close the database connection
     conn.close()
 
-    # Read BooksWithNoCover.txt file with 'utf-8' encoding
-    with open('./BooksWithNoCover.txt', 'r', encoding='utf-8') as file:
-        books_with_no_cover = [line.strip() for line in file]
-
-    # Pass the fetched data and BooksWithNoCover list to the template for rendering
-    return render_template("home.html", books_data=books_data, BooksWithNoCover=books_with_no_cover)
+    # Pass the fetched data to the template for rendering
+    return render_template("home.html", books_data=books_data)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -98,12 +94,12 @@ def display(page):
     cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT ? OFFSET ?", (page_size, offset))
     books_data = cursor.fetchall()
     conn.close()
-    # Read BooksWithNoCover.txt file with 'utf-8' encoding
-    with open('./BooksWithNoCover.txt', 'r', encoding='utf-8') as file:
-        books_with_no_cover = [line.strip() for line in file]
 
-    return render_template("display.html", books_data=books_data, current_page=page, BooksWithNoCover=books_with_no_cover)
+    return render_template("display.html", books_data=books_data, current_page=page)
 
+@app.route("/admin")
+def display_admin():
+    return render_template("admin.html")
 
 # This functions adds a placeholder display page, accessed by logging in.
 # login req added
@@ -369,6 +365,7 @@ def receipt():
             cart_details.append((book_info, count, price * count))
             total_of_all_books += price * count
     conn.close()
+    empty_cart()
 
     # Round up the total to the nearest cent
     total_of_all_books = round(total_of_all_books, 2)
