@@ -3,7 +3,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>User: {{ user.username }}</h1>
-    <hr>
+    <table>
+        <tr>
+            <td><img src="{{ user.avatar(64) }}"></td>
+            <td><h1>User: {{ user.username }}</h1></td>
+        </tr>
+    </table>
 {% endblock %}
 </html>

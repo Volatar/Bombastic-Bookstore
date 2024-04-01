@@ -83,6 +83,15 @@ def user(username):
     user = db.first_or_404(sa.select(User).where(User.username == username))
     return render_template('user.html', user=user)
 
+@app.route('/admin')
+@login_required
+def admin():
+    id = current_user.id
+    if id == 1:
+        return render_template('admin.html')
+    else:
+        flash('Admin access required. Sorry, loser!')
+        return redirect(url_for('home'))
 
 @app.route("/display/<int:page>")
 def display(page):
@@ -285,6 +294,7 @@ def cart():
 
 
 @app.route('/checkout')
+@login_required
 def checkout():
     cart_titles = session.get('cart', [])
     cart_count = {}

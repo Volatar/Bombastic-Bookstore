@@ -18,6 +18,18 @@
             <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
             <a href="{{ url_for('logout') }}">Logout</a>
             {% endif %}
+            {% if current_user.id == 1 %}
+            <a href="{{ url_for('admin') }}">Admin</a>
+            {% endif %}
+            <form action="{{ url_for('search') }}" method="GET">
+            <input type="text" name="query" placeholder="Search" size = "64">
+            <select name="search_type">
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="genre">Genre</option>
+            </select>
+            <button type="submit">Search</button>
+            </form>
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}
