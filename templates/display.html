@@ -40,13 +40,14 @@
       {% for book in books_data %}
       <div class="book-card">
           <ul>
-              {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book[0] + '-L.jpg' %}
-              <img src="{{ cover_url }}" alt="Book Cover">
+            {% set cover_url %} {% if book[0] in BooksWithNoCover %}
+            /static/images/coverNotFound.png {% else %}
+            https://covers.openlibrary.org/b/title/{{ book[0] }}-L.jpg {% endif %}
+            {% endset %}              <img src="{{ cover_url }}" alt="Book Cover">
               <strong>Title:</strong> {{ book[0] }}<br>
               <strong>Author:</strong> {{ book[1] }}<br>
               <strong>ISBN:</strong> {{ book[2] }}<br>
               <strong>Price:</strong> {{ book[3] }}<br>
-              <strong>In stock: {{ book[4] }}</strong><br>
               <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
               <!-- Add to Cart form -->
               <form action="/add_to_cart" method="POST">
@@ -70,7 +71,7 @@
     <div class="shopping-cart">Shopping cart
 
       <!-- Button two -->
-      <a href="/cart" class="cart-button">cart</a>
+      <a href="/checkout" class="checkout-button">Checkout</a>
   </div>
   </body>
 </html>

@@ -15,6 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from math import ceil
 from payment import CreditCard
+
 # from models import User
 
 app = Flask(__name__)
@@ -39,7 +40,6 @@ chart_cache = {}
 
 # create session object
 Session(app)
-
 
 '''
 This checks for all of the image if no image is presented then it will
@@ -83,15 +83,20 @@ def home():
     conn = sqlite3.connect('books.db')
     cursor = conn.cursor()
 
-    # limiting query to just 25 for home page
+    # Fetching books data from the database
     cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
+
     books_data = cursor.fetchall()
 
     # Close the database connection
     conn.close()
 
-    # Pass the fetched data to the template for rendering
-    return render_template("home.html", books_data=books_data)
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    with open('BooksWithNoCover.txt', 'r', encoding='utf-8') as file:
+        books_with_no_cover = [line.strip() for line in file]
+
+    # Pass the fetched data and BooksWithNoCover list to the template for rendering
+    return render_template("home.html", books_data=books_data, BooksWithNoCover=books_with_no_cover)
 
 
 # This is the v2 Login function.
@@ -126,9 +131,15 @@ def display(page):
     cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT ? OFFSET ?", (page_size, offset))
     books_data = cursor.fetchall()
     conn.close()
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    with open('BooksWithNoCover.txt', 'r', encoding='utf-8') as file:
+        books_with_no_cover = [line.strip() for line in file]
 
-    return render_template("display.html", books_data=books_data, current_page=page)
+    return render_template("display.html", books_data=books_data, current_page=page, BooksWithNoCover=books_with_no_cover)
 
+@app.route("/admin")
+def display_admin():
+    return render_template("admin.html")
 
 # This functions adds a placeholder display page, accessed by logging in. Currently, does not actually require a login.
 @app.route("/catalog")
@@ -176,10 +187,10 @@ def show_inventory(data_type):
         # Pagination logic
         page, per_page, offset = get_page_args()
         total = get_all_inventory_data()  # Assuming you have a function to get total inventory count
-        
+
         # Generate a unique cache key per page
         cache_key = f'inventory_{page}'
-        
+
         # Check if the chart is cached for this page
         if cache_key in chart_cache:
             image_url = chart_cache[cache_key]
@@ -187,16 +198,18 @@ def show_inventory(data_type):
             # Generate bar chart for the current page
             image_url = generate_bar_chart(page=page, items_per_page=per_page)
             chart_cache[cache_key] = image_url
-        
-        pagination = Pagination(page=page, total=total, per_page=per_page, css_framework='bootstrap4', prev_label='', next_label='')
+
+        pagination = Pagination(page=page, total=total, per_page=per_page, css_framework='bootstrap4', prev_label='',
+                                next_label='')
 
         # Fetch data for the current page
         current_inventory_data = get_inventory_data(offset=offset, per_page=per_page)
-        
+
         # Calculate total pages
         total_pages = ceil(total / per_page)
-        
-        return render_template('catalog.html', data_type=data_type, image_url=image_url, inventory_data=current_inventory_data, pagination=pagination, total_pages=total_pages)
+
+        return render_template('catalog.html', data_type=data_type, image_url=image_url,
+                               inventory_data=current_inventory_data, pagination=pagination, total_pages=total_pages)
 
     return render_template('catalog.html', data_type=data_type, data=data.get(data_type, ''))
 
@@ -439,13 +452,14 @@ def receipt():
             cart_details.append((book_info, count, price * count))
             total_of_all_books += price * count
     conn.close()
+    empty_cart()
 
     # Round up the total to the nearest cent
     total_of_all_books = round(total_of_all_books, 2)
 
     # Store cart details in session
     session['cart_details'] = cart_details
-    
+
     # Extract data from the form
     book_titles_with_quantity = request.form.get('book_titles_with_quantity')
     card_holder_name = request.form.get('card_holder_name')  # Corrected variable name
@@ -453,7 +467,7 @@ def receipt():
     city = request.form.get('city')
     state = request.form.get('state')
     postal_code = request.form.get('postal_code')
-    
+
     # Pass the data to the receipt template
     return render_template('receipt.html', book_titles_with_quantity=book_titles_with_quantity,
                            total_of_all_books=total_of_all_books, card_holder_name=card_holder_name,
@@ -479,23 +493,36 @@ def search():
     query = request.args.get('query')
     search_type = request.args.get('search_type')
 
+    page = int(request.args.get('page', 1))
+    items_per_page = 8
+
     if not query or not search_type:
+
         return render_template('home.html')
+
+        return render_template('SearchResults.html', search_query=query, search_type=search_type)
+
+    offset = (page - 1) * items_per_page
+
 
     conn = get_db_connection()
     cursor = conn.cursor()
     # Can add more variables to the search bar here
     if search_type == 'title':
+
         cursor.execute("SELECT DISTINCT * FROM books WHERE Title LIKE ?", ('%' + query + '%',))
     elif search_type == 'author':
         cursor.execute("SELECT DISTINCT Title FROM books WHERE Author LIKE ?", ('%' + query + '%',))
     elif search_type == 'genre':
         cursor.execute("SELECT DISTINCT Title FROM books WHERE Genre LIKE ?", ('%' + query + '%',))
 
+
     results = cursor.fetchall()
     conn.close()
     # may need to change to redirect to inventory page
+
     return render_template('SearchResults.html', results=results, search_query=query)
+  
 # Home Page Route
 @app.route('/')
 def index():
@@ -545,6 +572,7 @@ def filter_inventory():
     data = request.json
     filtered_inventory = fetch_filtered_inventory(data)
     return jsonify(filtered_inventory)
+
 
 
 if __name__ == "__main__":
