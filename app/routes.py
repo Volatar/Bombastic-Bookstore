@@ -10,6 +10,7 @@ from app.models import User
 from app.forms import LoginForm, RegistrationForm
 from flask_paginate import Pagination, get_page_args
 from app.Inventory_chart import generate_bar_chart
+from app.visual import monthly_sales_trend, sales_by_state, top_selling_authors, plot_books_quantity_pie, top_selling_books
 from math import ceil
 from app.payment import CreditCard
 import sqlite3
@@ -393,26 +394,44 @@ def get_db_connection():
 
 # Search Request
 @app.route('/search')
+@app.route('/search')
 def search():
     query = request.args.get('query')
     search_type = request.args.get('search_type')
 
+    page = int(request.args.get('page', 1))
+    items_per_page = 8
+
     if not query or not search_type:
-        return render_template('SearchPage.html')
+        return render_template('SearchResults.html', search_query=query, search_type=search_type)
+
+    offset = (page - 1) * items_per_page
 
     conn = get_db_connection()
     cursor = conn.cursor()
     # Can add more variables to the search bar here
     if search_type == 'title':
-        cursor.execute("SELECT * FROM books WHERE Title LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT * FROM books WHERE Title LIKE ? LIMIT ? OFFSET ?",
+                       ('%' + query + '%', items_per_page, offset))
     elif search_type == 'author':
-        cursor.execute("SELECT Title FROM books WHERE Author LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT Title FROM books WHERE Author LIKE ? LIMIT ? OFFSET ?",
+                       ('%' + query + '%', items_per_page, offset))
     elif search_type == 'genre':
-        cursor.execute("SELECT Title FROM books WHERE Genre LIKE ?", ('%' + query + '%',))
-
+        cursor.execute("SELECT Title FROM books WHERE Genre LIKE ? LIMIT ? OFFSET ?",
+                       ('%' + query + '%', items_per_page, offset))
     results = cursor.fetchall()
 
     conn.close()
 
     # may need to change to redirect to inventory page
-    return render_template('SearchResults.html', results=results, search_query=query)
+    return render_template('SearchResults.html', results=results, search_query=query, search_type=search_type, current_page=page)
+
+@app.route('/visual')
+def visuals():
+    monthly_sales_plot = monthly_sales_trend()
+    sales_by_state_plot = sales_by_state()
+    top_authors_plot = top_selling_authors()
+    percentages_pie_plot = plot_books_quantity_pie()
+    top_books_plot = top_selling_books()
+    return render_template('visual.html', monthly_sales_plot=monthly_sales_plot, sales_by_state_plot=sales_by_state_plot, top_authors_plot=top_authors_plot,
+                           percentages_pie_plot = percentages_pie_plot, top_books_plot = top_books_plot)
