@@ -1,0 +1,31 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar .left {
+    display: flex;
+    align-items: center;
+}
+.navbar .right {
+    display: flex;
+    align-items: center;
+}
+.navbar a {
+    text-decoration: none;
+    color: #333; /* Text color */
+    margin-right: 10px; /* Adjust margin as needed */
+    transition: color 0.3s; /* Smooth color transition */
+}
+.navbar a img {
+    vertical-align: middle; /* Align image vertically */
+    margin-right: 5px; /* Adjust margin as needed */
+    transition: filter 0.3s; /* Smooth filter transition */
+}
+.navbar a:hover {
+    color: #007bff; /* Change color on hover */
+}
+.navbar a:hover img {
+    filter: invert(70%);
+    -webkit-filter: invert(70%);
+}
