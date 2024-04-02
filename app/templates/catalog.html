@@ -146,16 +146,11 @@
       {% endif %}
       {% if data_type == 'inventory' %}
       <!-- Display inventory data here -->
-        <form action="{{ url_for('filter_inventory') }}" method="GET">
-          <form id="filterForm">
-            <input type="text" name="filter" placeholder="Enter Filter">
-              <select name="search_filter">
-                <option value="title">Title</option>
-                <option value="author">Author</option>
-                <option value="genre">Genre</option>
-              </select>
+        <form action="{{ url_for('filter_inventory') }}" method="POST">
+            <input type="text" name="title" placeholder="Title">
+            <input type="text" name="author" placeholder="Author">
+            <input type="text" name="genre" placeholder="Genre">
             <button type="submit">Search</button>
-          </form>
         </form>
       <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
       {% endif %}

@@ -137,12 +137,6 @@ def display_catalog(data_type):
 
 
 def show_inventory(data_type):
-    data = {
-        'sales': 'This is the sales data.',
-        'orders': 'This is the Order page.',
-        'inventory': 'This is the inventory data.'
-    }
-
     if data_type == 'inventory':
         # Pagination logic
         page, per_page, offset = get_page_args()
@@ -170,8 +164,6 @@ def show_inventory(data_type):
 
         return render_template('catalog.html', data_type=data_type, image_url=image_url,
                                inventory_data=current_inventory_data, pagination=pagination, total_pages=total_pages)
-
-    return render_template('catalog.html', data_type=data_type, data=data.get(data_type, ''))
 
 #New Code from here
 def display_sales(data_type):
@@ -521,9 +513,9 @@ def fetch_filtered_inventory(filters):
 
 @app.route('/filter_inventory', methods=['POST'])
 def filter_inventory():
-    data = request.json
-    filtered_inventory = fetch_filtered_inventory(data)
-    return jsonify(filtered_inventory)
+    filters = request.form
+    filtered_inventory = fetch_filtered_inventory(filters)
+    return render_template('catalog.html', data_type='inventory', inventory_data=filtered_inventory)
 
 
 if __name__ == "__main__":
