@@ -1,4 +1,4 @@
-<!--
+!--
     Colabrators
     Stefan main structor of the website
 
@@ -6,9 +6,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-{% extends "base.html" %}
-
-{% block content %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,50 +17,48 @@
   </head>
   <body>
     <h2>Bombastic Books Inventory</h2>
-    <nav>
-      <a href="{{ url_for('show_inventory', data_type='sales') }}">Sales</a>
-      <a href="{{ url_for('show_inventory', data_type='order') }}">Order</a>
-      <a href="{{ url_for('show_inventory', data_type='inventory') }}"
-        >Inventory</a
-      >
-    </nav>
+  <nav>
+    <a href="{{ url_for('display_catalog', data_type='sales') }}">Sales</a>
+    <a href="{{ url_for('display_catalog', data_type='orders') }}">Orders</a>
+    <a href="{{ url_for('display_catalog', data_type='inventory') }}">Inventory</a>
+  </nav>
 
     <!-- Pagination links -->
     {% if pagination %}
       <nav class="pagination">
         {% if pagination.has_prev %}
-          <a class="page-link" href="{{ url_for('show_inventory', data_type=data_type, page=pagination.page - 1) }}">Previous</a>
+          <a class="page-link" href="{{ url_for('inventory', data_type=data_type, page=pagination.page - 1) }}">Previous</a>
         {% endif %}
         
         {% for page_num in pagination.pages %}
           {% if page_num %}
-            <a class="page-link" href="{{ url_for('show_inventory', data_type=data_type, page=page_num) }}">{{ page_num }}</a>
+            <a class="page-link" href="{{ url_for('inventory', data_type=data_type, page=page_num) }}">{{ page_num }}</a>
           {% else %}
             <span class="ellipsis">...</span>
           {% endif %}
         {% endfor %}
         
         {% if pagination.has_next %}
-          <a class="page-link" href="{{ url_for('show_inventory', data_type=data_type, page=pagination.page + 1) }}">Next</a>
+          <a class="page-link" href="{{ url_for('inventory', data_type=data_type, page=pagination.page + 1) }}">Next</a>
         {% endif %}
       </nav>
     {% endif %}
 
+  <!-- Order display -->
 
-
-
+  <!-- #Add search bar to orders needed -->
     <div id="data-container">
       {% if data_type %}
           <h3>{{ data_type.capitalize() }}</h3>
           <p>{{ data }}</p>
-          {% if data_type == 'order' %}
+          {% if data_type == 'orders' %}
           <div>
               <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
               <button id="searchButton" book_title="">Search</button>
               <button>+</button>
               <button>-</button>
         {# This is a Jinja2 comment block
-        <!-- When the Search bar is done we can implement this
+        When the Search bar is done we can implement this
                         if ISBN != ''
                             <div class="info">
                                 <p><strong>Title:</strong> {{ data.get('title', '') }}</p>
@@ -76,12 +71,93 @@
                                 <p><strong>Price:</strong> {{ data.get('price', '') }}</p>
                             </div>
                         endif
-                    -->
         #}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Purchase ID</th>
+                        <th>Customer ID</th>
+                        <th>Purchase Date</th>
+                        <th>ISBN</th>
+                        <th>Amount</th>
+                        <th>Street</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>ZIP</th>
+                        <th>Last 4 Credit Card</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>{{ row[4] }}</td>
+                        <td>{{ row[5] }}</td>
+                        <td>{{ row[6] }}</td>
+                        <td>{{ row[7] }}</td>
+                        <td>{{ row[8] }}</td>
+                        <td>{{ row[9] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
       </div>
+      {% endif %}
+
+
+    <!-- Sales Display -->
+    <!-- #Add search bar to orders needed -->
+      {% if data_type == 'sales' %}
+    <h1>Sales Catalog</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Purchase ID</th>
+                <th>Customer ID</th>
+                <th>Purchase Date</th>
+                <th>ISBN</th>
+                <th>Amount</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>State</th>
+                <th>ZIP</th>
+                <th>Last 4 Credit Card</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+                <td>{{ row[7] }}</td>
+                <td>{{ row[8] }}</td>
+                <td>{{ row[9] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
       {% endif %}
       {% if data_type == 'inventory' %}
       <!-- Display inventory data here -->
+        <form action="{{ url_for('filter_inventory') }}" method="GET">
+          <form id="filterForm">
+            <input type="text" name="filter" placeholder="Enter Filter">
+              <select name="search_filter">
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="genre">Genre</option>
+              </select>
+            <button type="submit">Search</button>
+          </form>
+        </form>
       <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
       {% endif %}
   {% else %}
@@ -90,5 +166,4 @@
   {% endif %}
 </div>
 </body>
-{% endblock %}
 </html>

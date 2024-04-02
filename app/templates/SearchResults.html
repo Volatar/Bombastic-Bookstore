@@ -12,8 +12,28 @@
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
 </head>
+    <h1>Book Search</h1>
+    <form action="{{ url_for('search') }}" method="GET">
+      <input type="text" name="query" placeholder="Search">
+        <select name="search_type">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="genre">Genre</option>
+        </select>
+      <button type="submit">Search</button>
+    </form>
+    <br>
 <body>
 <a href="/" class="home-button">Home</a>
+
+<button onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
     <div class="container">
         <h1>Search Results</h1>
         <p>Search Request: {{ search_query }}</p>
@@ -32,11 +52,25 @@
 
                     <!-- Description from google api -->
                     <h1>Book Description</h1>
-                    <p><a href="/book_details/{{ result[0] }}" class="view-details-button">View Details Here</a></p>
+                    <p>{{ result['description'] }}</p>
                     <!-- Any other details we want to display -->
+                    <form action="/add_to_cart" method="POST">
+                        <input type="hidden" name="index" value="{{ loop.index - 1 }}">
+                        <input type="hidden" name="title" value="{{ result['Title'] }}">
+                        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                    </form>
+
                 </div>
             {% endfor %}
         </ul>
     </div>
+
+    <div class="pagination">
+    {% if current_page > 1 %}
+        <a href="{{ url_for('search', query=search_query, search_type=search_type, page=current_page - 1) }}">Previous Page</a>
+    {% endif %}
+    <a href="{{ url_for('search', query=search_query, search_type=search_type, page=current_page + 1) }}">Next Page</a>
+    </div>
+
 </body>
 </html>
