@@ -140,13 +140,18 @@ div:last-child {
 }
 
 ul {
-  margin-right: 10%;
+  margin-right: 40%;
 }
 
 /* CSS styles for larger screens */
-@media screen and (min-width: 1081px) {
-  h2 {
-    font-size: 36px; /* Increase font size for h2 */
+@media screen and (min-width: 3000px) {
+  h2, .see-all {
+    font-size: 2rem; /* Increase font size for h2 */
+  }
+
+  ul {
+    font-size: 2rem;
+    margin-right: 20%;
   }
 
   .search-input {
@@ -156,33 +161,10 @@ ul {
   .book-details {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px; /* Increase gap between book details */
-  }
-
-  .book-card {
-    padding: 20px; /* Increase padding for each book card */
-  }
-
-  .book-card img {
-    min-width: 150px; /* Increase minimum width for book cover images */
-    min-height: 200px; /* Increase minimum height for book cover images */
-  }
-
-  .book-card strong {
-    font-size: 20px; /* Increase font size for book details */
-  }
-
-  .view-details-button,
-  .add-to-cart-button {
-    font-size: 18px; /* Increase font size for buttons */
-    padding: 10px 20px; /* Increase padding for buttons */
-  }
-
-  .see-all {
-    font-size: 20px; /* Increase font size for "View All" link */
   }
 }
 
+/* CSS styles for smaller screens */
 @media screen and (max-width: 1080px) {
   .book-details {
     display: block; /* Change to block layout for stacking */
@@ -192,6 +174,6 @@ ul {
     margin-bottom: 20px; /* Add space between stacked book cards */
   }
   ul {
-    margin-right: 0%;
+    margin-right: 20%;
   }
 }
