@@ -194,6 +194,11 @@ def book_details(title):
     book_data = cursor.fetchone()
     conn.close()
 
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    file_path = url_for('static', filename='data/BooksWithNoCover.txt')
+    with open('app' + file_path, 'r', encoding='utf-8') as file:  # Add 'app' before the file path
+        books_with_no_cover = [line.strip() for line in file]
+
     # Using google API due to no description from open lib
     description = ""
     google_books_api_url = f"https://www.googleapis.com/books/v1/volumes?q={title}"  # item contains volume info
@@ -205,7 +210,7 @@ def book_details(title):
             if 'description' in book_info:
                 description = book_info['description']
 
-    return render_template("book_details.html", book_data=book_data, description=description)
+    return render_template("book_details.html", book_data=book_data, description=description, BooksWithNoCover=books_with_no_cover)
 
 
 # Cart
