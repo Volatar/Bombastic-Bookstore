@@ -18,24 +18,23 @@
 
     <h1>Book Details</h1>
     <div class="book-description">
-        <!-- Still pulling book cover from open lib API -->
-        {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book_data[0] + '-L.jpg' %}
-        <img src="{{ cover_url }}" alt="Book Cover"><br>
-        <strong>Title:</strong> {{ book_data[0] }}<br>
-        <strong>Author:</strong> {{ book_data[1] }}<br>
-        <strong>Publisher:</strong> {{ book_data[3] }}<br>
-        <strong>Genre:</strong> {{ book_data[2] }}<br>
-        <strong>ISBN:</strong> {{ book_data[5] }}<br>
-        <strong>Price:</strong> {{ book_data[6] }}<br>
-        <strong>In stock: {{ book_data[7] }}</strong>
-        <!-- Description from google api -->
-        <h1>Book Description</h1>
-        <p>{{ description }}</p>
-        <form action="/add_to_cart" method="POST">
-          <input type="hidden" name="title" value="{{ book_data[0] }}">
+      <!-- Replace Jinja2 placeholders with static content -->
+      <!-- Example static content, replace with actual static URL for book cover -->
+      <img src="/static/images/coverNotFound.png" alt="Book Cover"><br>
+      <strong>Title:</strong> Example Title<br>
+      <strong>Author:</strong> Example Author<br>
+      <strong>Publisher:</strong> Example Publisher<br>
+      <strong>Genre:</strong> Example Genre<br>
+      <strong>ISBN:</strong> Example ISBN<br>
+      <strong>Price:</strong> Example Price<br>
+      <strong>In stock:</strong> Example Stock<br>
+      <!-- Example static content for book description -->
+      <h1>Book Description</h1>
+      <p>Example Book Description</p>
+      <form action="/add_to_cart" method="POST">
+          <input type="hidden" name="title" value="Example Title">
           <button type="submit" class="add-to-cart-button">Add to Cart</button>
-        </form>
-        <!-- Any other details we want to display -->
-    </div>
+      </form>
+  </div>
 </body>
 </html>
