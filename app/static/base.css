@@ -29,3 +29,13 @@
     filter: invert(70%);
     -webkit-filter: invert(70%);
 }
+
+/* Media query for 4K display */
+@media screen and (min-width: 1081px) {
+    .navbar a {
+        font-size: 20px; /* Increase font size of text for 4K display */
+    }
+    .navbar a img {
+        width: 40px; /* Increase width of images for 4K display */
+    }
+}
