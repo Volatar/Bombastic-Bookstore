@@ -39,9 +39,9 @@ nav a:hover {
 }
 
 .pagination {
-  display: flex; /* This will lay out the child elements (e.g., page numbers) in a row */
+  display: flex;
   justify-content: center;
-  text-decoration: none; /* Removes underline from links */
+  text-decoration: none;
   color: black;
 }
 
@@ -54,7 +54,7 @@ nav a:hover {
 }
 
 .pagination ul {
-  list-style-type: none; /* Removes bullets */
+  list-style-type: none;
 }
 
 .ellipsis{

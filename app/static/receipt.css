@@ -1,8 +1,3 @@
-/* receipt.css
-    Colabrators
-    Stefan main structor of the website
-*/
-
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -23,7 +18,6 @@ header {
   text-align: center;
 }
 
-/* Summary section styles */
 .summary {
   margin-bottom: 30px;
 }
@@ -43,7 +37,6 @@ header {
   margin-bottom: 5px;
 }
 
-/* Books section styles */
 .books {
   margin-bottom: 30px;
 }
@@ -77,9 +70,7 @@ header {
   color: red;
 }
 
-/* CSS for screens larger than 1080 pixels */
 @media screen and (min-width: 3000px) {
-  /* Reset body styles */
   body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -87,9 +78,8 @@ header {
     padding: 0;
   }
 
-  /* Adjust container width */
   .container {
-    max-width: 1200px; /* Increase max-width for larger screens */
+    max-width: 1200px;
     margin: 20px auto;
     background-color: #fff;
     padding: 20px;
@@ -97,7 +87,6 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
-  /* Set text size to 4rem */
   p, h3, h2 {
     font-size: 1.5rem;
   }
@@ -105,6 +94,4 @@ header {
   header{
     font-size: 2rem;
   }
-
-  /* You can add more styles here as needed */
 }

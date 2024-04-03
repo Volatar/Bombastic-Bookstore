@@ -103,7 +103,6 @@ h2 {
 
 /* CSS for screens larger than 1080 pixels */
 @media screen and (min-width: 3000px) {
-  /* Reset body styles */
   body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -111,9 +110,8 @@ h2 {
     padding: 0;
   }
 
-  /* Adjust container width */
   .container {
-    max-width: 1200px; /* Increase max-width for larger screens */
+    max-width: 1200px;
     margin: 20px auto;
     background-color: #fff;
     padding: 20px;
@@ -121,17 +119,14 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
-  /* Adjust button group styles */
   .button-group {
-    margin-bottom: 30px; /* Increase margin bottom for larger screens */
+    margin-bottom: 30px;
   }
 
-  /* Adjust padding for columns */
   .column {
-    padding: 0 20px; /* Increase padding for columns */
+    padding: 0 20px;
   }
 
-  /* Set text size to 4rem */
   h2 {
     font-size: 2rem;
   }
@@ -139,6 +134,4 @@ h2 {
   li {
     font-size: 1.5rem;
   }
-
-  /* You can add more styles here as needed */
 }
