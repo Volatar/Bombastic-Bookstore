@@ -1,74 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
   {% extends "base.html" %} {% block content %}
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Bombastic Books</title>
-      <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='home.css') }}"
-      />
-      <script type="text/javascript" src="/static/search-option.js"></script>
-      <script type="text/javascript" src="/static/book-details.js"></script>
-      <script type="text/javascript" src="/static/checkout-box.js"></script>
-    </head>
-    <body>
-      <h2>Bombastic Books</h2>
-      <div class="search-input">
-        <form action="{{ url_for('search') }}" method="GET">
-          <input type="text" name="query" placeholder="Search" />
-          <select name="search_type">
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="genre">Genre</option>
-          </select>
-          <button type="submit">Search</button>
-        </form>
-      </div>
-      <div class="book-details">
-        {% for book in books_data %}
-        <div class="book-card">
-          <ul>
-            {% set cover_url %} {% if book[0] in BooksWithNoCover %}
-            /static/images/coverNotFound.png {% else %}
-            https://covers.openlibrary.org/b/title/{{ book[0] }}-L.jpg {% endif
-            %} {% endset %}
-            <img
-              src="{{ cover_url }}"
-              alt="Book Cover"
-              style="min-width: 100px; min-height: 150px"
-            />
-            <strong>Title:</strong>
-            {{ book[0] }}<br />
-            <strong>Author:</strong>
-            {{ book[1] }}<br />
-            <strong>ISBN:</strong>
-            {{ book[2] }}<br />
-            <strong>Price:</strong>
-            {{ book[3] }}<br />
-            <strong>In Stock:</strong>
-            {{ book[4] }}<br />
-            <a href="/book_details/{{ book[0] }}" class="view-details-button"
-              >View Details</a
-            >
-            <!-- Add to Cart form -->
-            <form action="/add_to_cart" method="POST">
-              <input type="hidden" name="index" value="{{ loop.index - 1 }}" />
-              <input type="hidden" name="title" value="{{ book[0] }}" />
-              <button type="submit" class="add-to-cart-button">
-                Add to Cart
-              </button>
-            </form>
-          </ul>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bombastic Books</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='home.css') }}"
+    />
+    <script type="text/javascript" src="/static/search-option.js"></script>
+    <script type="text/javascript" src="/static/book-details.js"></script>
+    <script type="text/javascript" src="/static/checkout-box.js"></script>
+  </head>
+  <body>
+    <h2>Bombastic Books</h2>
+    <div class="search-input">
+      <form action="{{ url_for('search') }}" method="GET">
+        <input type="text" name="query" placeholder="Search" />
+        <select name="search_type">
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="genre">Genre</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="book-details">
+      {% for book in books_data %}
+      <div class="book-card">
+        {% set cover_url %} {% if book[0] in BooksWithNoCover %}
+        /static/images/coverNotFound.png {% else %}
+        https://covers.openlibrary.org/b/title/{{ book[0] }}-L.jpg {% endif %}
+        {% endset %}
+        <img
+          src="{{ cover_url }}"
+          alt="Book Cover"
+          style="min-width: 100px; min-height: 150px"
+        />
+        <div class="book-description">
+          <strong>Title:</strong> {{ book[0] }}<br />
+          <strong>Author:</strong> {{ book[1] }}<br />
+          <strong>ISBN:</strong> {{ book[2] }}<br />
+          <strong>Price:</strong> {{ book[3] }}<br />
+          <strong>In Stock:</strong> {{ book[4] }}<br />
+          <a href="/book_details/{{ book[0] }}" class="view-details-button"
+            >View Details</a
+          >
+          <!-- Add to Cart form -->
+          <form action="/add_to_cart" method="POST">
+            <input type="hidden" name="index" value="{{ loop.index - 1 }}" />
+            <input type="hidden" name="title" value="{{ book[0] }}" />
+            <button type="submit" class="add-to-cart-button">
+              Add to Cart
+            </button>
+          </form>
         </div>
-        {% endfor %}
-        <a href="display/1" class="see-all">View All</a>
       </div>
-    </body>
-    {% endblock %}
-  </html>
+      {% endfor %}
+      <a href="display/1" class="see-all">View All</a>
+    </div>
+  </body>
+  {% endblock %}
 </html>
