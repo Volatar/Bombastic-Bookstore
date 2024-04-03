@@ -15,15 +15,7 @@
     <script type="text/javascript" src="/static/checkout-box.js"></script>
   </head>
   <body>
-
-  <!-- Button to return home -->
-    <a href="/" class="home-button">Home</a>
-
-    </div>
-      <!-- Stefan's comment:
-              To make this optimal, we are going to make this part OOP. This is just a layout explanation
-              for later on to make implementing it a lot easier.
-      -->
+  </div>
     <strong>Our Books</strong>
     <div class="book-details">
       {% set index = 0 %}
@@ -33,7 +25,8 @@
           {% set cover_url %} {% if book[0] in BooksWithNoCover %}
           /static/images/coverNotFound.png {% else %}
           https://covers.openlibrary.org/b/title/{{ book[0] }}-L.jpg {% endif %}
-          {% endset %}              <img src="{{ cover_url }}" alt="Book Cover">
+          {% endset %}
+            <img src="{{ cover_url }}" alt="Book Cover">
             <strong>Title:</strong> {{ book[0] }}<br>
             <strong>Author:</strong> {{ book[1] }}<br>
             <strong>ISBN:</strong> {{ book[2] }}<br>
