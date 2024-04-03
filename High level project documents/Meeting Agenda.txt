@@ -143,9 +143,7 @@ Testing plan					Stefan
 Sprint Retrospective
 
 4-2-24
-Visualizations					Tanner
-What's Daniel been up to?		Daniel
-	Missing stuff from agile board?
-User profiles					Matthew
-Testing plan					Stefan
-Sprint Retrospective
+Branch Merges							Tanner & Stefan
+What's Daniel been up to?				Daniel
+User profiles							Matthew
+Pick who will impliment testing plan
