@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+{% extends "base.html" %}
+
+{% block content %}
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,7 +19,8 @@
   <body>
 
   <!-- Button to return home -->
-    <a href="/" class="home-button">Home</a>
+    <!-- <a href="/" class="home-button">Home</a> -->
+    <!-- commented out with addition of Navbar -->
 
     </div>
       <!-- Stefan's comment:
@@ -62,4 +66,5 @@
       <a href="/cart" class="cart-button">cart</a>
   </div>
   </body>
+{% endblock %}
 </html>
