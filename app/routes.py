@@ -212,7 +212,6 @@ def book_details(title):
 
     return render_template("book_details.html", book_data=book_data, description=description, BooksWithNoCover=books_with_no_cover)
 
-
 # Cart
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
@@ -419,9 +418,17 @@ def get_db_connection():
     return conn
 
 
-# Search Request
+from flask import render_template, request
+
 @app.route('/search')
 def search():
+    # Connect to database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # Fetching books data from the database
+    cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
+    books_data = cursor.fetchall()
     query = request.args.get('query')
     search_type = request.args.get('search_type')
 
@@ -442,5 +449,14 @@ def search():
 
     conn.close()
 
-    # may need to change to redirect to inventory page
-    return render_template('SearchResults.html', results=results, search_query=query)
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    file_path = url_for('static', filename='data/BooksWithNoCover.txt')
+    with open('app' + file_path, 'r', encoding='utf-8') as file:  # Add 'app' before the file path
+        books_with_no_cover = [line.strip() for line in file]
+
+    if not results:
+        # If no results found, render bookNotFound template
+        return render_template('bookNotFound.html', search_query=query, BooksWithNoCover=books_with_no_cover)
+
+    # Render the search results template
+    return render_template('SearchResults.html', results=results, search_query=query, BooksWithNoCover=books_with_no_cover)

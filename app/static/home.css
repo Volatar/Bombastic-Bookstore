@@ -34,7 +34,6 @@ h2 {
   font-size: 20px;
 }
 
-/* Add margin between search options */
 .search-option {
   margin-bottom: 5px;
 }
@@ -63,7 +62,7 @@ select[name="search_type"] {
 }
 
 button {
-  padding: 12px; 
+  padding: 12px;
   background-color: #4285f4;
   color: #fff;
   border: none;
@@ -90,11 +89,6 @@ button {
   align-items: left;
 }
 
-.book-description img {
-  max-width: 200px;
-  height: auto;
-}
-
 .book-cover {
   width: 100%;
   object-fit: cover;
@@ -114,7 +108,11 @@ div {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+}
+
+.book-description {
+  padding: 4%;
+  height: auto;
 }
 
 div > div {
@@ -143,17 +141,21 @@ ul {
 
 /* CSS styles for larger screens */
 @media screen and (min-width: 3000px) {
-  h2, .see-all {
+  h2,
+  .see-all,
+  p,
+  input,
+  button {
+    font-size: 2rem;
+  }
+
+  select[name="search_type"] {
     font-size: 2rem;
   }
 
   ul {
     font-size: 2rem;
     margin-right: 20%;
-  }
-
-  .search-input {
-    font-size: 18px;
   }
 
   .book-details {
