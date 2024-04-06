@@ -29,7 +29,7 @@
         {% if pagination.has_prev %}
           <a class="page-link" href="{{ url_for('inventory', data_type=data_type, page=pagination.page - 1) }}">Previous</a>
         {% endif %}
-        
+
         {% for page_num in pagination.pages %}
           {% if page_num %}
             <a class="page-link" href="{{ url_for('inventory', data_type=data_type, page=page_num) }}">{{ page_num }}</a>
@@ -37,7 +37,7 @@
             <span class="ellipsis">...</span>
           {% endif %}
         {% endfor %}
-        
+
         {% if pagination.has_next %}
           <a class="page-link" href="{{ url_for('inventory', data_type=data_type, page=pagination.page + 1) }}">Next</a>
         {% endif %}
@@ -53,10 +53,12 @@
           <p>{{ data }}</p>
           {% if data_type == 'orders' %}
           <div>
+              <!-- search
               <input type="text" id="searchKeyword" placeholder="Search for ISBN" />
               <button id="searchButton" book_title="">Search</button>
               <button>+</button>
               <button>-</button>
+              -->
         {# This is a Jinja2 comment block
         When the Search bar is done we can implement this
                         if ISBN != ''
@@ -146,12 +148,14 @@
       {% endif %}
       {% if data_type == 'inventory' %}
       <!-- Display inventory data here -->
+        <!-- filters
         <form action="{{ url_for('filter_inventory') }}" method="POST">
             <input type="text" name="title" placeholder="Title">
             <input type="text" name="author" placeholder="Author">
             <input type="text" name="genre" placeholder="Genre">
             <button type="submit">Search</button>
         </form>
+        -->
       <img src="data:image/png;base64,{{ image_url }}" alt="Bar Chart" class="data_img" />
       {% endif %}
   {% else %}
