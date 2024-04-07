@@ -7,11 +7,13 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='home.css') }}"
     />
+    <div>
     <table>
         <tr>
             <td><img src="{{ user.avatar(64) }}"></td>
             <td><h1>User: {{ user.username }}</h1></td>
         </tr>
     </table>
+    </div>
 {% endblock %}
 </html>
