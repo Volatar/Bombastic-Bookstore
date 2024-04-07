@@ -150,7 +150,10 @@ Pick who will impliment testing plan
 
 4-6-24
 Branches to merge
-Bug testing
-Cloud deployment
+	Tanner_pli
+	Stefan-branch https://github.com/Volatar/Bombastic-Bookstore/issues/22
+	profile-v4
 CSS
 Database changes
+Cloud deployment
+Bug testing

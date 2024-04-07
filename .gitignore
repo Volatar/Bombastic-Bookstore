@@ -235,3 +235,5 @@ fabric.properties
 .idea/misc.xml
 .idea/Bombastic-Bookstore.iml
 flask_session/
+.idea/misc.xml
+/.idea
