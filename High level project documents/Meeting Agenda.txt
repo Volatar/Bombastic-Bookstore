@@ -147,3 +147,10 @@ Branch Merges							Tanner & Stefan
 What's Daniel been up to?				Daniel
 User profiles							Matthew
 Pick who will impliment testing plan
+
+4-6-24
+Branches to merge
+Bug testing
+Cloud deployment
+CSS
+Database changes
