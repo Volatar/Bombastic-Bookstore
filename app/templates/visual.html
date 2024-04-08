@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizations</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='home.css') }}"
+    />
+
+    <style>
+        /* Hide images by default */
+        .hidden {
+            display: none;
+        }
+
+        h1 {
+            margin-bottom: 100px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+    <h1>Please select a visualization to choose from.</h1>
+
+    <h2>Monthly Sales Trend</h2>
+    <div>
+        <button onclick="toggleVisibility('monthly_sales_plot')">Show Image</button>
+        <img id="monthly_sales_plot" class="hidden" src="data:image/png;base64,{{ monthly_sales_plot }}" alt="Monthly Sales Trend">
+    </div>
+
+    <h2>Sales Amount by State</h2>
+    <div>
+        <button onclick="toggleVisibility('sales_by_state_plot')">Show Image</button>
+        <img id="sales_by_state_plot" class="hidden" src="data:image/png;base64,{{ sales_by_state_plot }}" alt="Sales Amount by State">
+    </div>
+
+    <h2>Top Selling Authors</h2>
+    <div>
+        <button onclick="toggleVisibility('top_authors_plot')">Show Image</button>
+        <img id="top_authors_plot" class="hidden" src="data:image/png;base64,{{ top_authors_plot }}" alt="Top Selling Authors">
+    </div>
+
+    <h2>Inventory Percentages</h2>
+    <div>
+        <button onclick="toggleVisibility('percentages_pie_plot')">Show Image</button>
+        <img id="percentages_pie_plot" class="hidden" src="data:image/png;base64,{{ percentages_pie_plot }}" alt="Inventory Percentages">
+    </div>
+
+    <h2>Top Selling Books</h2>
+    <div>
+        <button onclick="toggleVisibility('top_books_plot')">Show Image</button>
+        <img id="top_books_plot" class="hidden" src="data:image/png;base64,{{ top_books_plot }}" alt="Top Selling Books">
+    </div>
+
+    <script>
+        function toggleVisibility(imageId) {
+            var image = document.getElementById(imageId);
+            if (image.style.display === "none") {
+                image.style.display = "block";
+            } else {
+                image.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
