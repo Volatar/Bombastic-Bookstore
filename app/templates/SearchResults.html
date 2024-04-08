@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends "base.html" %}
-
-{% block content %}
-<head>
+  {% extends "base.html" %} {% block content %}
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Results</title>
+    <title>Bombastic Books</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='home.css') }}"
@@ -21,11 +19,19 @@
     <div class="container">
         <h1>Search Results</h1>
         <p>Search Request: {{ search_query }}</p>
+        {% if not results %}
+        <div class="book-not-found">
+          <p>No books found for "{{ search_query }}".</p>
+        </div>
+        {% endif %}
         <ul class="results-list">
             {% for result in results %}
                 <div class="book-description">
                     <!-- Still pulling book cover from open lib API -->
-                    {% set cover_url = 'https://covers.openlibrary.org/b/title/' + result['Title'] + '-L.jpg' %}
+                    {% set cover_url %} {% if result[0] in BooksWithNoCover %}
+                        /static/images/coverNotFound.png {% else %}
+                        https://covers.openlibrary.org/b/title/{{ result[0] }}-L.jpg {% endif %}
+                        {% endset %}
                     <img src="{{ cover_url }}" alt="Book Cover"><br>
                     <strong>Title:</strong> {{ result['Title'] }}<br>
                     <strong>Author:</strong> {{ result['Author'] }}<br>
@@ -38,10 +44,24 @@
                     <h1>Book Description</h1>
                     <p><a href="/book_details/{{ result[0] }}" class="view-details-button">View Details Here</a></p>
                     <!-- Any other details we want to display -->
+                    <form action="/add_to_cart" method="POST">
+                        <input type="hidden" name="index" value="{{ loop.index - 1 }}">
+                        <input type="hidden" name="title" value="{{ result['Title'] }}">
+                        <button type="submit" class="add-to-cart-button">Add to Cart</button>
+                    </form>
+
                 </div>
             {% endfor %}
         </ul>
     </div>
+
+    <div class="pagination">
+    {% if current_page > 1 %}
+        <a href="{{ url_for('search', query=search_query, search_type=search_type, page=current_page - 1) }}">Previous Page</a>
+    {% endif %}
+    <a href="{{ url_for('search', query=search_query, search_type=search_type, page=current_page + 1) }}">Next Page</a>
+    </div>
+
 </body>
-{% endblock %}
 </html>
+

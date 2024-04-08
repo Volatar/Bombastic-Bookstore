@@ -39,9 +39,9 @@ nav a:hover {
 }
 
 .pagination {
-  display: flex; /* This will lay out the child elements (e.g., page numbers) in a row */
+  display: flex;
   justify-content: center;
-  text-decoration: none; /* Removes underline from links */
+  text-decoration: none;
   color: black;
 }
 
@@ -54,7 +54,7 @@ nav a:hover {
 }
 
 .pagination ul {
-  list-style-type: none; /* Removes bullets */
+  list-style-type: none;
 }
 
 .ellipsis{
@@ -78,4 +78,15 @@ nav a:hover {
 
 #data-container p {
   color: #666;
+}
+
+/* CSS for screens larger than 1080 pixels */
+@media screen and (min-width: 3000px) {
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    font-size: 2rem;
+  }
 }
