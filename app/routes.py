@@ -20,22 +20,26 @@ import re
 chart_cache = {}
 
 
-@app.route('/')
-@app.route('/home')
+@app.route("/")
 def home():
     # Connect to database
     conn = sqlite3.connect('books.db')
     cursor = conn.cursor()
 
-    # limiting query to just 25 for home page
+    # Fetching books data from the database
     cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
     books_data = cursor.fetchall()
 
     # Close the database connection
     conn.close()
 
-    # Pass the fetched data to the template for rendering
-    return render_template("home.html", books_data=books_data)
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    file_path = url_for('static', filename='data/BooksWithNoCover.txt')
+    with open('app' + file_path, 'r', encoding='utf-8') as file:  # Add 'app' before the file path
+        books_with_no_cover = [line.strip() for line in file]
+
+    # Pass the fetched data and BooksWithNoCover list to the template for rendering
+    return render_template("home.html", books_data=books_data, BooksWithNoCover=books_with_no_cover)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -84,6 +88,15 @@ def user(username):
     user = db.first_or_404(sa.select(User).where(User.username == username))
     return render_template('user.html', user=user)
 
+@app.route('/admin')
+@login_required
+def admin():
+    id = current_user.id
+    if id == 1:
+        return render_template('admin.html')
+    else:
+        flash('Admin access required. Sorry, loser!')
+        return redirect(url_for('home'))
 
 @app.route("/display/<int:page>")
 def display(page):
@@ -97,7 +110,15 @@ def display(page):
     books_data = cursor.fetchall()
     conn.close()
 
-    return render_template("display.html", books_data=books_data, current_page=page)
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    file_path = url_for('static', filename='data/BooksWithNoCover.txt')
+    with open('app' + file_path, 'r', encoding='utf-8') as file:  # Add 'app' before the file path
+        books_with_no_cover = [line.strip() for line in file]
+
+    return render_template("display.html", books_data=books_data, current_page=page, BooksWithNoCover=books_with_no_cover)
+@app.route("/admin")
+def display_admin():
+    return render_template("admin.html")
 
 
 # This functions adds a placeholder display page, accessed by logging in.
@@ -174,6 +195,11 @@ def book_details(title):
     book_data = cursor.fetchone()
     conn.close()
 
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    file_path = url_for('static', filename='data/BooksWithNoCover.txt')
+    with open('app' + file_path, 'r', encoding='utf-8') as file:  # Add 'app' before the file path
+        books_with_no_cover = [line.strip() for line in file]
+
     # Using google API due to no description from open lib
     description = ""
     google_books_api_url = f"https://www.googleapis.com/books/v1/volumes?q={title}"  # item contains volume info
@@ -185,8 +211,7 @@ def book_details(title):
             if 'description' in book_info:
                 description = book_info['description']
 
-    return render_template("book_details.html", book_data=book_data, description=description)
-
+    return render_template("book_details.html", book_data=book_data, description=description, BooksWithNoCover=books_with_no_cover)
 
 # Cart
 @app.route('/add_to_cart', methods=['POST'])
@@ -286,6 +311,7 @@ def cart():
 
 
 @app.route('/checkout')
+@login_required
 def checkout():
     cart_titles = session.get('cart', [])
     cart_count = {}
@@ -364,7 +390,8 @@ def receipt():
             cart_details.append((book_info, count, price * count))
             total_of_all_books += price * count
     conn.close()
-
+    empty_cart()
+    
     # Round up the total to the nearest cent
     total_of_all_books = round(total_of_all_books, 2)
 
@@ -392,10 +419,18 @@ def get_db_connection():
     return conn
 
 
-# Search Request
+from flask import render_template, request
+
 @app.route('/search')
 @app.route('/search')
 def search():
+    # Connect to database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # Fetching books data from the database
+    cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
+    books_data = cursor.fetchall()
     query = request.args.get('query')
     search_type = request.args.get('search_type')
 
@@ -421,10 +456,20 @@ def search():
                        ('%' + query + '%', items_per_page, offset))
     results = cursor.fetchall()
 
+    # Read BooksWithNoCover.txt file with 'utf-8' encoding
+    file_path = url_for('static', filename='data/BooksWithNoCover.txt')
+    with open('app' + file_path, 'r', encoding='utf-8') as file:  # Add 'app' before the file path
+        books_with_no_cover = [line.strip() for line in file]
+
+    if not results:
+        # If no results found, render bookNotFound template
+        return render_template('bookNotFound.html', search_query=query, BooksWithNoCover=books_with_no_cover)
+    
     conn.close()
 
     # may need to change to redirect to inventory page
-    return render_template('SearchResults.html', results=results, search_query=query, search_type=search_type, current_page=page)
+    # Render the search results template
+    return render_template('SearchResults.html', results=results, search_query=query, search_type=search_type, current_page=page, BooksWithNoCover=books_with_no_cover)
 
 @app.route('/visual')
 def visuals():
@@ -435,3 +480,4 @@ def visuals():
     top_books_plot = top_selling_books()
     return render_template('visual.html', monthly_sales_plot=monthly_sales_plot, sales_by_state_plot=sales_by_state_plot, top_authors_plot=top_authors_plot,
                            percentages_pie_plot = percentages_pie_plot, top_books_plot = top_books_plot)
+

@@ -7,19 +7,29 @@
       {% else %}
       <title>Welcome to Bombastic Bookstore</title>
       {% endif %}
+      <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='base.css') }}"
+    />
     </head>
     <body>
-        <div>
-            Links:
-            <a href="{{ url_for('home') }}">Home</a>
-            {% if current_user.is_anonymous %}
-            <a href="{{ url_for('login') }}">Login</a>
-            {% else %}
-            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-            {% endif %}
+        <div class="navbar">
+            <navbar class="left">
+                <a href="{{ url_for('home') }}"><img src="../static/images/home.png" alt="Home"></a>
+            </navbar>
+            <navbar class="right">
+                {% if current_user.is_anonymous %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% else %}
+                <a href="{{ url_for('cart') }}"><img src="../static/images/cart.png" alt="Cart"></a>
+                <a href="{{ url_for('user', username=current_user.username) }}"><img src="../static/images/profile.png" alt="Profile"></a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+                {% endif %}
+                {% if current_user.id == 1 %}
+                <a href="{{ url_for('admin') }}">Admin</a>
+                {% endif %}
+            </navbar>
         </div>
-        <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>

@@ -1,10 +1,6 @@
-<!--
-    Colabrators
-    Stefan main structor of the website
-
--->
 <!DOCTYPE html>
 <html lang="en">
+  {% extends "base.html" %} {% block content %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,8 +11,6 @@
     <title>Receipt</title>
   </head>
   <body>
-    <a href="{{ url_for('home') }}">Home</a>
-
     <div class="container">
       <header>
         <h1>Receipt</h1>
@@ -60,4 +54,5 @@
       </section>
     </div>
   </body>
+  {% endblock %}
 </html>

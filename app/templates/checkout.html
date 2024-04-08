@@ -1,10 +1,6 @@
-<!--
-    Colabrators
-    Stefan main structor of the website
-
--->
 <!DOCTYPE html>
 <html lang="en">
+  {% extends "base.html" %} {% block content %}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,10 +18,10 @@
       </header>
       <form class="payment" id="payment-form" action="/receipt" method="post">
         <!--For testing
-            Valid: 4111111111111111
-            Valid: 4012888888881881
-            Invalid: 4222222222222
-        -->
+              Valid: 4111111111111111
+              Valid: 4012888888881881
+              Invalid: 4222222222222
+              -->
         <div class="form-group">
           <label for="card_number">Card Number:</label>
           <input type="text" id="card_number" name="card_number" required />
@@ -108,4 +104,5 @@
       </ul>
     </div>
   </body>
+  {% endblock %}
 </html>
