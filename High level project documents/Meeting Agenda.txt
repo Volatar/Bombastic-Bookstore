@@ -140,4 +140,25 @@ What's Daniel been up to?		Daniel
 	Missing stuff from agile board?
 User profiles					Matthew
 Testing plan					Stefan
-Sprint Retrospective]
+Sprint Retrospective
+
+4-2-24
+Branch Merges							Tanner & Stefan
+What's Daniel been up to?				Daniel
+User profiles							Matthew
+Pick who will impliment testing plan
+
+4-6-24
+Branches to merge
+	Tanner_pli
+	Stefan-branch https://github.com/Volatar/Bombastic-Bookstore/issues/22
+	profile-v4
+CSS
+Database changes
+Cloud deployment
+Bug testing
+
+4-9-24
+Branch merge issues
+Cloud deployment
+Bug Testing
