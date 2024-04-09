@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends "base.html" %}
-
-{% block content %}
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='home.css') }}"
-    />
-    <div>
-    <table>
-        <tr>
-            <td><img src="{{ user.avatar(64) }}"></td>
-            <td><h1>User: {{ user.username }}</h1></td>
-        </tr>
-    </table>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}">
+</head>
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="user-profile">
+        <img src="{{ user.avatar(64) }}" alt="User Avatar" class="avatar">
+        <h1 class="username">User: {{ user.username }}</h1>
     </div>
-{% endblock %}
+    {% endblock %}
+</body>
 </html>

@@ -3,11 +3,21 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='home.css') }}"
     />
     <h1>Admin</h1>
     <hr>
+    <body>
+    <h1>Welcome to the Admin Page!</h1>
+    <a href="/catalog">
+      <button>Go to Catalog Page</button>
+    </a>
+  </body>
 {% endblock %}
 </html>
+

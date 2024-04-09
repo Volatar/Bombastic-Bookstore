@@ -1,10 +1,16 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+.user-profile {
     text-align: center;
 }
 
-h1 {
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.username {
+    font-size: 24px;
     color: #333;
 }
 
@@ -29,13 +35,11 @@ input {
     cursor: pointer;
   }
 
-
-button:hover {
-    background-color: #0056b3;
-}
-
+/* CSS styles for larger screens */
 @media screen and (min-width: 3000px) {
-    h1, a, button{
+    .user-profile{
         font-size: 2rem;
+        width: 5%;
     }
   }
+  

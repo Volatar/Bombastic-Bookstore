@@ -1,47 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-{% extends "base.html" %}
-
-{% block content %}
-<head>
+  {% extends "base.html" %} {% block content %}
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Results</title>
+    <title>Bombastic Books</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='home.css') }}"
     />
     <script type="text/javascript" src="/static/search-option.js"></script>
     <script type="text/javascript" src="/static/book-details.js"></script>
-</head>
-<body>
-<!-- commented out for Navbar
-<a href="/" class="home-button">Home</a> -->
-    <div class="container">
-        <h1>Search Results</h1>
-        <p>Search Request: {{ search_query }}</p>
-        <ul class="results-list">
-            {% for result in results %}
-                <div class="book-description">
-                    <!-- Still pulling book cover from open lib API -->
-                    {% set cover_url = 'https://covers.openlibrary.org/b/title/' + result['Title'] + '-L.jpg' %}
-                    <img src="{{ cover_url }}" alt="Book Cover"><br>
-                    <strong>Title:</strong> {{ result['Title'] }}<br>
-                    <strong>Author:</strong> {{ result['Author'] }}<br>
-                    <strong>Publisher:</strong> {{ result['Publisher'] }}<br>
-                    <strong>Genre:</strong> {{ result['Genre'] }}<br>
-                    <strong>ISBN:</strong> {{ result['ISBN'] }}<br>
-                    <strong>Price:</strong> {{ result['Price'] }}<br>
-
-                    <!-- Description from google api -->
-                    <h1>Book Description</h1>
-                    <p><a href="/book_details/{{ result[0] }}" class="view-details-button">View Details Here</a></p>
-                    <!-- Any other details we want to display -->
-                </div>
-            {% endfor %}
-        </ul>
+  </head>
+  <body>
+    <h2>Search Results</h2>
+    <p>Search Request: {{ search_query }}</p>
+    {% if not results %}
+    <div class="book-not-found">
+      <p>No books found for "{{ search_query }}".</p>
     </div>
-</body>
-{% endblock %}
+    {% endif %}
+    <div class="book-details">
+      {% for result in results %}
+      <div class="book-card">
+        {% set cover_url %} {% if result[0] in BooksWithNoCover %}
+        /static/images/coverNotFound.png {% else %}
+        https://covers.openlibrary.org/b/title/{{ result[0] }}-L.jpg {% endif %}
+        {% endset %}
+        <img src="{{ cover_url }}" alt="Book Cover" />
+        <p>
+          <strong>Title:</strong> {{ result['Title'] }}<br />
+          <strong>Author:</strong> {{ result['Author'] }}<br />
+          <strong>Publisher:</strong> {{ result['Publisher'] }}<br />
+          <strong>Genre:</strong> {{ result['Genre'] }}<br />
+          <strong>ISBN:</strong> {{ result['ISBN'] }}<br />
+          <strong>Price:</strong> {{ result['Price'] }}<br />
+        </p>
+        <!-- Description from google api -->
+        <!--
+            There was no book Description so thought to get rid of it
+            <h3>Book Description</h3>
+        -->
+        <p>
+          <a href="/book_details/{{ result[0] }}" class="view-details-button"
+            >View Details Here</a
+          >
+        </p>
+        <form action="/add_to_cart" method="POST">
+          <input type="hidden" name="index" value="{{ loop.index - 1 }}" />
+          <input type="hidden" name="title" value="{{ result['Title'] }}" />
+          <button type="submit" class="add-to-cart-button">
+            Add to Cart
+          </button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+  {% endblock %}
 </html>

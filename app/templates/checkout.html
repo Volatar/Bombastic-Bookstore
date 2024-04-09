@@ -84,12 +84,12 @@
           <input type="text" id="postal_code" name="postal_code" required />
         </div>
 
-        <button type="button" onclick="submitForm()">Verify Payment</button>
+        <button class="button" type="button" onclick="submitForm()">Verify Payment</button>
 
         <p id="passOrFail" class="error-msg" style="color: red"></p>
 
         <form class="receipt" id="receipt-form" action="/receipt" method="post">
-          <button id="orderNowButton" style="display: none">Order Now</button>
+          <button class="button" id="orderNowButton" style="display: none">Order Now</button>
         </form>
       </form>
 

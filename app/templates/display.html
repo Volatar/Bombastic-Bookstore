@@ -17,7 +17,6 @@
     <script type="text/javascript" src="/static/checkout-box.js"></script>
   </head>
   <body>
-
   <!-- Button to return home -->
     <!-- <a href="/" class="home-button">Home</a> -->
     <!-- commented out with addition of Navbar -->
@@ -32,23 +31,26 @@
       {% set index = 0 %}
       {% for book in books_data %}
       <div class="book-card">
-          <ul>
-              {% set cover_url = 'https://covers.openlibrary.org/b/title/' + book[0] + '-L.jpg' %}
-              <img src="{{ cover_url }}" alt="Book Cover">
-              <strong>Title:</strong> {{ book[0] }}<br>
-              <strong>Author:</strong> {{ book[1] }}<br>
-              <strong>ISBN:</strong> {{ book[2] }}<br>
-              <strong>Price:</strong> {{ book[3] }}<br>
-              <strong>In stock: {{ book[4] }}</strong><br>
-              <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
-              <!-- Add to Cart form -->
-              <form action="/add_to_cart" method="POST">
-                <input type="hidden" name="index" value="{{ loop.index - 1 }}">
-                <input type="hidden" name="title" value="{{ book[0] }}">
-                <button type="submit" class="add-to-cart-button">Add to Cart</button>
-            </form>
-            
-          </ul>
+        <ul>
+          {% set cover_url %} {% if book[0] in BooksWithNoCover %}
+          /static/images/coverNotFound.png {% else %}
+          https://covers.openlibrary.org/b/title/{{ book[0] }}-L.jpg {% endif %}
+          {% endset %}
+            <img src="{{ cover_url }}" alt="Book Cover">
+            <strong>Title:</strong> {{ book[0] }}<br>
+            <strong>Author:</strong> {{ book[1] }}<br>
+            <strong>ISBN:</strong> {{ book[2] }}<br>
+            <strong>Price:</strong> {{ book[3] }}<br>
+            <strong>In stock: {{ book[4] }}</strong>
+            <a href="/book_details/{{ book[0] }}" class="view-details-button">View Details</a>
+            <!-- Add to Cart form -->
+            <form action="/add_to_cart" method="POST">
+              <input type="hidden" name="index" value="{{ loop.index - 1 }}">
+              <input type="hidden" name="title" value="{{ book[0] }}">
+              <button type="submit" class="add-to-cart-button">Add to Cart</button>
+          </form>
+          
+        </ul>
       </div>
       {% set index = index + 1 %}
       {% endfor %}
@@ -60,11 +62,7 @@
         {% endif %}
         <a href="{{ url_for('display', page=current_page + 1) }}">Next Page</a>
     </div>
-    <div class="shopping-cart">Shopping cart
-
-      <!-- Button two -->
-      <a href="/cart" class="cart-button">cart</a>
-  </div>
   </body>
+
 {% endblock %}
 </html>
