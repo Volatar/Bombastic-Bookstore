@@ -95,7 +95,7 @@ def admin():
     if id == 1:
         return render_template('admin.html')
     else:
-        flash('Admin access required. Sorry, loser!')
+        flash('Admin access required, sorry.')
         return redirect(url_for('home'))
 
 @app.route("/display/<int:page>")

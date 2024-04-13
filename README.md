@@ -54,5 +54,5 @@ The admin user's login is: admin
 and their password is: Capstone
 
 There is also a regular user login
-login: user
-password: user
+login: test
+password: test

@@ -162,3 +162,9 @@ Bug testing
 Branch merge issues
 Cloud deployment
 Bug Testing
+
+4-13-24
+Check out the working app
+Plan what documentation to do
+Plan for presentation
+Sprint Retrospective
