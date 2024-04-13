@@ -15,6 +15,8 @@ from app.payment import CreditCard
 import sqlite3
 import requests
 import re
+from app.visual import monthly_sales_trend, sales_by_state, top_selling_authors, plot_books_quantity_pie, top_selling_books
+
 
 chart_cache = {}
 
@@ -456,3 +458,13 @@ def search():
 
     # Render the search results template
     return render_template('SearchResults.html', results=results, search_query=query, BooksWithNoCover=books_with_no_cover)
+
+@app.route('/visual')
+def visuals():
+    monthly_sales_plot = monthly_sales_trend()
+    sales_by_state_plot = sales_by_state()
+    top_authors_plot = top_selling_authors()
+    percentages_pie_plot = plot_books_quantity_pie()
+    top_books_plot = top_selling_books()
+    return render_template('visual.html', monthly_sales_plot=monthly_sales_plot, sales_by_state_plot=sales_by_state_plot, top_authors_plot=top_authors_plot,
+                           percentages_pie_plot = percentages_pie_plot, top_books_plot = top_books_plot)

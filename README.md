@@ -46,3 +46,13 @@ You are now ready to run the application.
 
 To run the web app, type `flask run` into the PyCharm Terminal when it is at the root project folder and connect to the localhost ip it provides in it's output with your web browser.
 To stop the program, press ctrl-C in the same terminal.
+
+# User logins
+For testing purposes we have made several users.
+
+The admin user's login is: admin
+and their password is: Capstone
+
+There is also a regular user login
+login: user
+password: user
