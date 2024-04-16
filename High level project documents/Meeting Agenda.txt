@@ -168,3 +168,10 @@ Check out the working app
 Plan what documentation to do
 Plan for presentation
 Sprint Retrospective
+
+4-16-24
+Documentation we need to do
+	License agreements
+	User manual
+	Release Report
+	Installation guide done if we just wanna use pycharm
