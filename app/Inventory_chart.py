@@ -1,21 +1,29 @@
+from flask import Flask, render_template, request
 import matplotlib
-matplotlib.use('Agg')  # Set the backend to Agg (non-interactive) mode also use for not crashing the server
+matplotlib.use('Agg')
 import sqlite3
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 from collections import OrderedDict
 
+app = Flask(__name__)
+
 # Global variables for caching
-MAX_CACHE_SIZE = 100  # Maximum number of cached chart images
-chart_cache = OrderedDict()  # Ordered dictionary to store cached chart images
+MAX_CACHE_SIZE = 100
+chart_cache = OrderedDict()
 
-
-def generate_bar_chart(page=1, items_per_page=25):
+def generate_bar_chart(page=1, items_per_page=25, search_query=None):
     offset = (page - 1) * items_per_page
     conn = sqlite3.connect('books.db')
     c = conn.cursor()
-    c.execute(f"SELECT Quantity, Title FROM books LIMIT {items_per_page} OFFSET {offset}")
+
+    if search_query:
+        # Modify the query to include the search condition
+        c.execute(f"SELECT Quantity, Title FROM books WHERE Title LIKE ? LIMIT {items_per_page} OFFSET {offset}", ('%' + search_query + '%',))
+    else:
+        c.execute(f"SELECT Quantity, Title FROM books LIMIT {items_per_page} OFFSET {offset}")
+
     data = c.fetchall()
     quantities = [int(record[0]) for record in data]
     titles = [record[1] for record in data]
@@ -42,32 +50,36 @@ def generate_bar_chart(page=1, items_per_page=25):
     plt.close()
 
     # Cache the generated chart image
-    cache_key = f'{page}_{items_per_page}'
+    cache_key = f'{page}_{items_per_page}_{search_query}'
     cache_chart(cache_key, graph_data)
 
     return graph_data
 
-
 def cache_chart(cache_key, chart_data):
     global chart_cache
-    # Check if cache is full
     if len(chart_cache) >= MAX_CACHE_SIZE:
-        # Remove the least recently used chart from the cache
         chart_cache.popitem(last=False)
-    # Add the new chart to the cache
     chart_cache[cache_key] = chart_data
-
 
 def get_cached_chart(cache_key):
     global chart_cache
-    # Move the accessed chart to the end to mark it as most recently used
     if cache_key in chart_cache:
         chart_data = chart_cache.pop(cache_key)
         chart_cache[cache_key] = chart_data
         return chart_data
     return None
 
-
 def clear_cache():
     global chart_cache
     chart_cache.clear()
+
+@app.route('/')
+def catalog():
+    search_query = request.args.get('search_query')
+    page = int(request.args.get('page', 1))
+    items_per_page = 25
+    chart_data = generate_bar_chart(page=page, items_per_page=items_per_page, search_query=search_query)
+    return render_template('catalog.html', chart_data=chart_data)
+
+if __name__ == "__main__":
+    app.run(debug=True)
