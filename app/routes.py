@@ -511,7 +511,7 @@ def search():
     cursor = conn.cursor()
 
     # Fetching books data from the database
-    cursor.execute("SELECT title, author, isbn, price, quantity FROM books LIMIT 9")
+    cursor.execute("SELECT title, author, isbn, price, genres, quantity FROM books LIMIT 9")
     books_data = cursor.fetchall()
     query = request.args.get('query')
     search_type = request.args.get('search_type')
@@ -525,9 +525,9 @@ def search():
     if search_type == 'title':
         cursor.execute("SELECT * FROM books WHERE Title LIKE ?", ('%' + query + '%',))
     elif search_type == 'author':
-        cursor.execute("SELECT Title FROM books WHERE Author LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT * FROM books WHERE Author LIKE ?", ('%' + query + '%',))
     elif search_type == 'genre':
-        cursor.execute("SELECT Title FROM books WHERE Genre LIKE ?", ('%' + query + '%',))
+        cursor.execute("SELECT * FROM books WHERE Genres LIKE ?", ('%' + query + '%',))
 
     results = cursor.fetchall()
 
