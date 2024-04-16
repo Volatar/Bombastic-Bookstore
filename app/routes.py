@@ -143,15 +143,19 @@ def get_all_inventory_data():
     conn.close()
     return total_inventory_items
 
-
 @app.route('/catalog/<data_type>')
-def show_inventory(data_type):
-    data = {
-        'sales': 'This is the sales data.',
-        'order': 'This is the Order page.',
-        'inventory': 'This is the inventory data.'
-    }
+def display_catalog(data_type):
+    if data_type == 'sales':
+        return display_sales(data_type)
+    elif data_type == 'inventory':
+        return show_inventory(data_type)
+    elif data_type == 'orders':
+        return display_orders(data_type)
+    else:
+        return "Invalid data type"
 
+
+def show_inventory(data_type):
     if data_type == 'inventory':
         # Pagination logic
         page, per_page, offset = get_page_args()
@@ -180,7 +184,89 @@ def show_inventory(data_type):
         return render_template('catalog.html', data_type=data_type, image_url=image_url,
                                inventory_data=current_inventory_data, pagination=pagination, total_pages=total_pages)
 
-    return render_template('catalog.html', data_type=data_type, data=data.get(data_type, ''))
+#New Code from here
+def display_sales(data_type):
+    # Connect to the database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # Select data based on data_type
+    if data_type == 'sales':
+        cursor.execute("SELECT purchase_id, customer_id, purchase_date, isbn, amount, street, city, state, zip, last_4_credit_card FROM purchases")
+
+    # Fetch all the rows
+    rows = cursor.fetchall()
+
+    # Close the database connection
+    conn.close()
+
+    # Render the HTML template with the data
+    return render_template('catalog.html', data_type=data_type, rows=rows)
+
+def display_orders(data_type):
+    # Connect to the database
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    # Select data based on data_type
+    if data_type == 'orders':
+        cursor.execute("SELECT purchase_id, customer_id, purchase_date, isbn, amount, street, city, state, zip, last_4_credit_card FROM purchases")
+
+    # Fetch all the rows
+    rows = cursor.fetchall()
+
+    # Close the database connection
+    conn.close()
+
+    # Render the HTML template with the data
+    return render_template('catalog.html', data_type=data_type, rows=rows)
+
+# to here
+
+def fetch_filtered_inventory(filters):
+    conn = sqlite3.connect('books.db')
+    cursor = conn.cursor()
+
+    query = "SELECT DISTINCT * FROM books WHERE 1=1"
+    params = []
+
+    # Construct the SQL query based on the provided filters
+    if 'title' in filters:
+        query += " AND title LIKE ?"
+        params.append('%' + filters['title'] + '%')
+
+    if 'category' in filters:
+        query += " AND category = ?"
+        params.append(filters['category'])
+
+    if 'genre' in filters:
+        query += " AND genre = ?"
+        params.append(filters['genre'])
+
+    if 'author' in filters:
+        query += " AND author LIKE ?"
+        params.append('%' + filters['author'] + '%')
+
+    if 'publisher' in filters:
+        query += " AND publisher LIKE ?"
+        params.append('%' + filters['publisher'] + '%')
+
+    if 'price' in filters:
+        query += " AND price <= ?"
+        params.append(filters['price'])
+
+    cursor.execute(query, params)
+    result = cursor.fetchall()
+
+    conn.close()
+    return result
+
+
+@app.route('/filter_inventory', methods=['POST'])
+def filter_inventory():
+    filters = request.form
+    filtered_inventory = fetch_filtered_inventory(filters)
+    return render_template('catalog.html', data_type='inventory', inventory_data=filtered_inventory)
 
 
 @app.route("/book_details/<title>")
