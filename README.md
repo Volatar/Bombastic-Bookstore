@@ -56,3 +56,86 @@ and their password is: Capstone
 There is also a regular user login
 login: test
 password: test
+
+# The Features
+
+## Add to Cart Button
+
+- This button is on evey book and when pressed it will add the book and then direct the user to the cart page.
+
+## Navbar
+
+- If the user is not logged in, they will only see the Home and Login buttons.
+- If the user is logged in, they will see the Home, Cart, Profile, and Logout buttons.
+- If the user is an admin, they will see the Home, Cart, Profile, Logout, and Admin buttons.
+
+Below the Navbar buttons, there is a Search Bar.
+
+## Search Bar
+
+- Allows users to search for books within the website, with the ability to search by Title, Author, and Genre.
+- How to use: Enter your what you want in the input bar then on the right or below that you can see a drop down menu select how you want to search and then hit the search button.
+
+## Home Page
+
+- Serves as the landing page of the website, featuring highlights of books. Users have the option to navigate to the Display Page by pressing the "View All" button.
+
+## Display Page
+
+- Shows all the books in the database.
+
+## Book Details
+
+- Show all of the selected Book info
+
+## Search Results Page
+
+- Displays search results based on the user's query.
+
+## Login Page
+
+- Allows users to log in to their accounts.
+
+## Register Page
+
+- Enables new users to create an account.
+
+## Profile Page
+
+- Displays user information.
+
+## Cart Page
+
+- Shows items that the user has added to their shopping cart.
+
+## Checkout Page
+
+- Provides the necessary fields and steps for users to complete their purchases.
+
+## Receipt Page
+
+- Displays a receipt or confirmation message after a successful purchase.
+
+## Admin Page
+
+- Accessible only to admin users, this page allows management of products, inventory, and orders.
+
+## Catalog Page
+
+- Lists all available products or items in a categorized manner.
+
+## Inventory Page
+
+- Allows admin users to manage the inventory of products.
+
+## Order Page
+
+- Displays details of past orders and allows users to track their orders.
+
+## Sales Page
+
+- Provides insights and analytics on sales data.
+
+## Visual Page
+
+- Possibly visual data like Monthly Sales Trend, Sales Amount by State, Top Selling Authors, Inventory Percentages, and Top Selling Books.
