@@ -57,85 +57,123 @@ There is also a regular user login
 login: test
 password: test
 
-# The Features
+## Features
 
-## Add to Cart Button
+### Add to Cart Button
 
-- This button is on evey book and when pressed it will add the book and then direct the user to the cart page.
+- This button is available on every book. When pressed, it adds the book to the cart and redirects the user to the cart page.
 
-## Navbar
+    ![Add to Cart](https://i.imgur.com/vO50oFn.png)
 
-- If the user is not logged in, they will only see the Home and Login buttons.
-- If the user is logged in, they will see the Home, Cart, Profile, and Logout buttons.
-- If the user is an admin, they will see the Home, Cart, Profile, Logout, and Admin buttons.
+### Navbar
 
-Below the Navbar buttons, there is a Search Bar.
+- **Not Logged In**: Home and Login buttons.
+    ![Navbar](https://i.imgur.com/w7NsFR4.png)
+  
+- **Logged In**: Home, Cart, Profile, and Logout buttons.
+    ![Navbar](https://i.imgur.com/PVZ8x5O.png)
+  
+- **Admin**: Home, Cart, Profile, Logout, and Admin buttons.
+    ![Navbar](https://i.imgur.com/tKZLE2m.png)
 
-## Search Bar
+### Search Bar
 
-- Allows users to search for books within the website, with the ability to search by Title, Author, and Genre.
-- How to use: Enter your what you want in the input bar then on the right or below that you can see a drop down menu select how you want to search and then hit the search button.
+- Allows users to search for books within the website by Title, Author, and Genre.
 
-## Home Page
+    ![Search Bar](https://i.imgur.com/KXzcFvW.png)
 
-- Serves as the landing page of the website, featuring highlights of books. Users have the option to navigate to the Display Page by pressing the "View All" button.
+### Home Page
 
-## Display Page
+- Landing page featuring highlights of books. Users can navigate to the Display Page by pressing the "View All" button.
+
+    ![Home Page](https://i.imgur.com/XfJp4IL.png)
+
+### Display Page
 
 - Shows all the books in the database.
 
-## Book Details
+    ![Display Page](https://i.imgur.com/zRAUqMS.png)
 
-- Show all of the selected Book info
+### Book Details
 
-## Search Results Page
+- Displays all information about the selected book.
+
+    ![Book Details](https://i.imgur.com/d7luRER.png)
+
+### Search Results Page
 
 - Displays search results based on the user's query.
 
-## Login Page
+    ![Search Results](https://i.imgur.com/j6Y1rwD.png)
+
+### Login Page
 
 - Allows users to log in to their accounts.
 
-## Register Page
+    ![Login Page](https://i.imgur.com/ePnRNBk.png)
+
+### Register Page
 
 - Enables new users to create an account.
 
-## Profile Page
+    ![Register Page](https://i.imgur.com/zZLhwdM.png)
+
+### Profile Page
 
 - Displays user information.
 
-## Cart Page
+    ![Profile Page](https://i.imgur.com/RmdmKgd.png)
+
+### Cart Page
 
 - Shows items that the user has added to their shopping cart.
 
-## Checkout Page
+    ![Cart Page](https://i.imgur.com/me7PLmT.png)
 
-- Provides the necessary fields and steps for users to complete their purchases.
+### Checkout Page
 
-## Receipt Page
+- Provides fields and steps for users to complete their purchases.
+
+    ![Checkout Page](https://i.imgur.com/Dz2xzjM.png)
+
+### Receipt Page
 
 - Displays a receipt or confirmation message after a successful purchase.
 
-## Admin Page
+    ![Receipt Page](https://i.imgur.com/iSkQial.png)
 
-- Accessible only to admin users, this page allows management of products, inventory, and orders.
+### Admin Page
 
-## Catalog Page
+- Allows management of products, inventory, and orders.
+
+    ![Admin Page](https://i.imgur.com/ofsjCJ6.png)
+
+### Catalog Page
 
 - Lists all available products or items in a categorized manner.
 
-## Inventory Page
+    ![Catalog Page](https://i.imgur.com/asXlvS6.png)
+
+### Inventory Page
 
 - Allows admin users to manage the inventory of products.
 
-## Order Page
+    ![Inventory Page](https://i.imgur.com/W2Q3hUS.png)
+
+### Order Page
 
 - Displays details of past orders and allows users to track their orders.
 
-## Sales Page
+    ![Order Page](https://i.imgur.com/heX2XGP.png)
+
+### Sales Page
 
 - Provides insights and analytics on sales data.
 
-## Visual Page
+    ![Sales Page](https://i.imgur.com/uEwj47l.png)
 
-- Possibly visual data like Monthly Sales Trend, Sales Amount by State, Top Selling Authors, Inventory Percentages, and Top Selling Books.
+### Visual Page
+
+- Displays visual data such as Monthly Sales Trend, Sales Amount by State, Top Selling Authors, Inventory Percentages, and Top Selling Books.
+
+    ![Visual Page](https://i.imgur.com/5OgkSBC.png)
