@@ -166,4 +166,4 @@ Taylor Sanderson		yes
 Daniel Stanton			yes
 Matthew Wilamowski		no
 Stefan Slaczka			yes
-Tanner Plishka			no
+Tanner Plishka			yes
