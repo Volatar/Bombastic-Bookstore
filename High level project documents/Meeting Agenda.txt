@@ -172,6 +172,14 @@ Sprint Retrospective
 4-16-24
 Documentation we need to do
 	License agreements
-	User manual
+	User manual				Stefan
 	Release Report
 	Installation guide done if we just wanna use pycharm
+	
+4-20-24
+Readme update with features and pictures 		Stefan
+Powerpoint presentation 						Taylor and Matthew
+License Agreements 								Matthew
+Release report									Tanner
+catalog bug										Stefan
+Installation and run batch file					Daniel
