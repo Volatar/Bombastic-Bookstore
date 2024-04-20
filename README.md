@@ -1,6 +1,13 @@
 # Bombastic Bookstore
 SP2024-CSC289 Group project (group 2) at Wake Technical Community College
 
+### Contributors:
+- Daniel Stanton
+- Matthew Wilamowski
+- Stefan Slaczka
+- Tanner Plishka
+- Taylor Sanderson
+
 # Installation instructions using built in batch file
 
 First, clone the repo or otherwise download the project files.
