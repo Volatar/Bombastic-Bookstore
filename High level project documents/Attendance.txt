@@ -162,8 +162,8 @@ Stefan Slaczka			yes
 Tanner Plishka			yes
 
 4-20-24
-Taylor Sanderson		
-Daniel Stanton			
-Matthew Wilamowski		
-Stefan Slaczka			
-Tanner Plishka			
+Taylor Sanderson		yes
+Daniel Stanton			yes
+Matthew Wilamowski		no
+Stefan Slaczka			yes
+Tanner Plishka			no
