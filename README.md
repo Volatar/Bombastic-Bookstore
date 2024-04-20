@@ -1,17 +1,31 @@
 # Bombastic Bookstore
 SP2024-CSC289 Group project (group 2) at Wake Technical Community College
 
+# Installation instructions using built in batch file
+
+First, clone the repo or otherwise download the project files.
+You will need Python 3.10 or later to run this project.
+In the root folder of the project there will be a batch file named `Bombastic Bookstore Install.bat`.
+Simply run this file, and it will install a virtual environment and all the required dependencies, and then will start the application.
+
+![python installing dependancies](https://i.imgur.com/i50pFd5.png)
+
+![the server starting up](https://i.imgur.com/mN9FCLv.png)
+
+If you wish to stop the server from running, close the command line window that the batch file opened.
+
 # Installation Instructions using Pycharm
 
+If you want to modify the project you will want to install it via PyCharm.
 First, clone/download the git repo to a folder on your computer.
 Where this goes is up to you.
 Then, open PyCharm and click File -> New Project in the upper left.
 
-![](https://i.imgur.com/kT245zw.png)
+![PyCharm menu bar](https://i.imgur.com/kT245zw.png)
 
 On the next screen you have to change several settings.
 
-![](https://i.imgur.com/YM4q0qk.png)
+![PyCharm new project window](https://i.imgur.com/YM4q0qk.png)
 
 Change the location at the top to your new folder with the project files in it
 Select "New environment using `Virtualenv`", and select a location for this. 
@@ -25,7 +39,7 @@ Click create.
 
 Next you will be presented with this prompt:
 
-![](https://i.imgur.com/4UAbauQ.png)
+![Directory is not empty prompt](https://i.imgur.com/4UAbauQ.png)
 
 Click Create from Existing Sources.
 
@@ -34,15 +48,15 @@ There is one more step before you can run the application.
 
 Go to the PyCharm project Terminal in the lower left of the screen:
 
-![](https://i.imgur.com/JFLHGIW.png)
+![PyCharm bottom menu bar](https://i.imgur.com/JFLHGIW.png)
 
 Input the following command: `pip install -r requirements.txt`
 
-![](https://i.imgur.com/j9KTgad.png)
+![PyCharm terminal window](https://i.imgur.com/j9KTgad.png)
 
 You are now ready to run the application.
 
-# How to run the web application
+## How to run the web application
 
 To run the web app, type `flask run` into the PyCharm Terminal when it is at the root project folder and connect to the localhost ip it provides in it's output with your web browser.
 To stop the program, press ctrl-C in the same terminal.
@@ -57,11 +71,14 @@ There is also a regular user login
 login: test
 password: test
 
-## Features
+You can also freely register new regular users as you wish.
+
+# Features
 
 ### Add to Cart Button
 
-- This button is available on every book. When pressed, it adds the book to the cart and redirects the user to the cart page.
+- This button is available on every book. 
+When pressed, it adds the book to the cart and redirects the user to the cart page.
 
     ![Add to Cart](https://i.imgur.com/vO50oFn.png)
 
@@ -84,7 +101,8 @@ password: test
 
 ### Home Page
 
-- Landing page featuring highlights of books. Users can navigate to the Display Page by pressing the "View All" button.
+- Landing page featuring highlights of books.
+Users can navigate to the Display Page by pressing the "View All" button.
 
     ![Home Page](https://i.imgur.com/XfJp4IL.png)
 
